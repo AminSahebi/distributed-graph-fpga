@@ -1,0 +1,3 @@
+[submodule "hw_src/GPU/cugraph"]
+	path = hw_src/GPU/cugraph
+	url = https://github.com/rapidsai/cugraph.git

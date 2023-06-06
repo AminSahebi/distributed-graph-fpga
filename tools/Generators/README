@@ -1,0 +1,7 @@
+A Graph Generator developed for the ease of generate and study the different
+topology of graphs (mostly synthetic) and illustrate required information for the user.
+
+The Python code is using SNAP stanford library and produce different types of Graph
+based on given parameters by the user.
+
+...to be completed,

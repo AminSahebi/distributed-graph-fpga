@@ -1,0 +1,123 @@
+<ENTRY>
+{
+ "thisFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/spmv/spmv_hw.xo.compile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Tue Feb 28 14:18:58 2023",
+ "timestampMillis": "1677593938860",
+ "buildStep": {
+  "cmdId": "4cc13daa-9852-4f2d-9eb6-0ae631536893",
+  "name": "v++",
+  "logFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/spmv_hw/spmv_hw.steps.log",
+  "commandLine": "/opt/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -s -t hw --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 -I/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel --hls.jobs 8 --vivado.synth.jobs 8 --vivado.impl.jobs 8 -c -k spmv_hw -o /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/spmv//spmv_hw.xo /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/spmv/spmv_kernel.cpp ",
+  "args": [
+   "-s",
+   "-t",
+   "hw",
+   "--platform",
+   "xilinx_u250_gen3x16_xdma_4_1_202210_1",
+   "-I/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel",
+   "--hls.jobs",
+   "8",
+   "--vivado.synth.jobs",
+   "8",
+   "--vivado.impl.jobs",
+   "8",
+   "-c",
+   "-k",
+   "spmv_hw",
+   "-o",
+   "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/spmv//spmv_hw.xo",
+   "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/spmv/spmv_kernel.cpp"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/amin/distributed-graph-fpga/hw_src/FPGA"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Feb 28 14:18:58 2023",
+ "timestampMillis": "1677593938860",
+ "status": {
+  "cmdId": "4cc13daa-9852-4f2d-9eb6-0ae631536893",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Tue Feb 28 14:19:01 2023",
+ "timestampMillis": "1677593941560",
+ "buildSummary": {
+  "hardwarePlatform": "xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm",
+  "hardwareDsa": "",
+  "platformDirectory": "/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1",
+  "runtime": "OpenCL",
+  "systemConfig": "Linux",
+  "flow": "BF_COMPILE",
+  "target": "TT_HW",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "spmv_hw",
+     "file": "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/spmv/spmv_hw.xo",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/spmv/spmv_kernel.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "Vitis V++ Compiler Release 2022.2. SW Build 3671529 on 2022-10-13-17:52:11"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Tue Feb 28 14:19:01 2023",
+ "timestampMillis": "1677593941561",
+ "buildStep": {
+  "cmdId": "2763abd8-faca-4e2d-80d3-a85208833a09",
+  "name": "vitis_hls",
+  "logFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/spmv_hw/spmv_hw/vitis_hls.log",
+  "commandLine": "vitis_hls -f /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/spmv_hw/spmv_hw/spmv_hw.tcl -messageDb vitis_hls.pb",
+  "args": [
+   "vitis_hls",
+   "-f",
+   "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/spmv_hw/spmv_hw/spmv_hw.tcl",
+   "-messageDb",
+   "vitis_hls.pb"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/amin/distributed-graph-fpga/hw_src/FPGA"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Feb 28 14:19:01 2023",
+ "timestampMillis": "1677593941562",
+ "status": {
+  "cmdId": "2763abd8-faca-4e2d-80d3-a85208833a09",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>

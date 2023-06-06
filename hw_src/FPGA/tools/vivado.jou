@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Wed Apr 27 10:51:56 2022
+# Process ID: 10101
+# Current directory: /home/u250/distributed-graph-fpga/hw_src/tools
+# Command line: vivado -mode batch -source ../utils/report_usage.tcl -tclargs ../_x/link/vivado/vpl/prj/prj.xpr
+# Log file: /home/u250/distributed-graph-fpga/hw_src/tools/vivado.log
+# Journal file: /home/u250/distributed-graph-fpga/hw_src/tools/vivado.jou
+#-----------------------------------------------------------
+source ../utils/report_usage.tcl
