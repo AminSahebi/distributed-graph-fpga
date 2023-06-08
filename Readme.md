@@ -31,8 +31,17 @@ make
      * ``` sudo apt-get install -y libcilkrts5 ```
    
 <br>
-   
+
 This procedure compile the baseline files, plus the preprocessing step.
+If you would like to make changes in the software sources the tree of the directories are as follows:
+   
+* **sw_src**: includes the baseline sources including:
+    * **Sequential**: The pure sequential version of Pagerank, 
+    * **Shared-memory**: The parallel version of the Pagerank using OpenMP,
+    * **Grid**: implementation which has been adopted from the referenced version.
+
+
+There will be a readme file in each subdirectory to explain the procedure for each individual experiment. 
 
 ## Build hardware:
 
@@ -49,16 +58,6 @@ cd ./hw_src/FPGA
 make pagerank -- to create host program
 make pagerank_hw -- to create the xclbin file
 ```
-    
-* **sw_src**: includes the baseline sources including:
-    * **Sequential**: The pure sequential version of Pagerank, 
-    * **Shared-memory**: The parallel version of the Pagerank using OpenMP,
-    * **Grid**: implementation which has been adopted from the referenced version.
-
-
-There will be a readme file in each subdirectory to explain the procedure for each individual experiment. 
-The make procedure for FPGA bitstream and host file is different (is written in the readme file in the correspoding directory.)
-
 
 ## Evaluation
 
