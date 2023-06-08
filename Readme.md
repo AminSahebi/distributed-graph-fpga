@@ -66,18 +66,12 @@ List of available datasets for the evaluation:
 
 | Graph | Vertices | Edge | Size (GB) | Type |
 | :---: | :---: | :---: | :---: | :---: |
-| LiveJournal | 4.8 M | 68.9 M | 0.514 | Social Web |
+| LiveJournal | 4.8 M | 68.9 M | 1.1 | Social Web |
 | web-UK-2005 | 39.4 M | 936.3 M | 16  | Web Graph |
-| Twitter | 41.6 M | 1.4 B | 23  | Web Graph |
+| Twitter | 42.1 M | 1.47 B | 23  | Web Graph |
 | Friendster |   68.3 M | 2.58 B | 43  | Web Graph |
 
-
-
-NOTE: a wide range of recent research used **Yahoo** (altavista circa 2002) as a ultimate evaluation target, However,
-this dataset has 49% of zero Edges! so the half of the dataset consists of isolated nodes and they are not connected to any other node (largest component around 3%).
-Therefore, in our experiment we don't use this dataset and instead we use clueweb12 with the same range of size but with Largest Component around 80%.
-
-Reference for more reading : https://law.di.unimi.it/webdata/altavista-2002/
+The datasets links to dowanload: 
 
 Livejournal : https://snap.stanford.edu/data/soc-LiveJournal1.html
 
