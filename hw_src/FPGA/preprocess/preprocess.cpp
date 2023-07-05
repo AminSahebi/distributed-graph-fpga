@@ -54,11 +54,11 @@ VertexId *mapper = NULL;
 
 
 int get_partition_id_with_hash(VertexId vertex, int partitions) {
-	// Perform some hash-based calculation to determine the partition ID
-	//     // You can replace this with your own hash function or partitioning logic
 	return vertex % partitions;
 }
 //
+
+
 void renumber(std::string filename, std::string output, VertexId num_vertices,
 		int edge_type, int partitions) {
 	std::vector<struct pair> vertices(num_vertices);
@@ -150,7 +150,7 @@ void renumber(std::string filename, std::string output, VertexId num_vertices,
 	threads.clear();
 	printf("\n");
 	printf("renumbering done\n");
-	
+
 	std::sort(vertices.begin(), vertices.end(),[&](struct pair left, struct pair right) {
 			return (((left.out_degree * 1.0) / (left.in_degree)) < ((right.out_degree * 1.0) / (right.in_degree)));
 			});
@@ -315,9 +315,9 @@ void generate_edge_grid(std::string input, std::string output,
 				target = advanced
 					? mapper[*(VertexId *)(buffer + pos + sizeof(VertexId))]
 					: *(VertexId *)(buffer + pos + sizeof(VertexId));
-				int i = get_partition_id_with_hash(source, partitions);//amin
-				            int j = get_partition_id_with_hash(target, partitions);
-				
+				int i = get_partition_id_with_hash(source, partitions);//applying hash function
+				int j = get_partition_id_with_hash(target, partitions);
+
 				if (i <= j)
 					++local_propagation;
 				if (!advanced) {
@@ -338,9 +338,9 @@ void generate_edge_grid(std::string input, std::string output,
 					target = advanced
 						? mapper[*(VertexId *)(buffer + pos + sizeof(VertexId))]
 						: *(VertexId *)(buffer + pos + sizeof(VertexId));
-					
-					int i = get_partition_id_with_hash(source, partitions);//amin
-					            int j = get_partition_id_with_hash(target, partitions);
+
+					int i = get_partition_id_with_hash(source, partitions);
+					int j = get_partition_id_with_hash(target, partitions);
 
 					*(VertexId *)(local_buffer + local_grid_cursor[i * partitions + j]) =
 						source;
