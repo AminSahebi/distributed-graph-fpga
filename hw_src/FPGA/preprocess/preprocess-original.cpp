@@ -25,7 +25,7 @@ limitations under the License.
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <cmath>
+
 #include <algorithm>
 #include <string>
 #include <thread>
@@ -52,15 +52,8 @@ struct pair {
 
 VertexId *mapper = NULL;
 
-
-int get_partition_id_with_hash(VertexId vertex, int partitions) {
-	// Perform some hash-based calculation to determine the partition ID
-	//     // You can replace this with your own hash function or partitioning logic
-	return vertex % partitions;
-}
-//
 void renumber(std::string filename, std::string output, VertexId num_vertices,
-		int edge_type, int partitions) {
+		int edge_type) {
 	std::vector<struct pair> vertices(num_vertices);
 	for (VertexId i = 0; i < num_vertices; ++i) {
 		vertices[i].id = i;
@@ -150,13 +143,9 @@ void renumber(std::string filename, std::string output, VertexId num_vertices,
 	threads.clear();
 	printf("\n");
 	printf("renumbering done\n");
-	
 	std::sort(vertices.begin(), vertices.end(),[&](struct pair left, struct pair right) {
 			return (((left.out_degree * 1.0) / (left.in_degree)) < ((right.out_degree * 1.0) / (right.in_degree)));
-			});
-	//modification
-
-	printf("sorting done\n");
+	});
 
 	mapper = new VertexId[num_vertices];
 #pragma omp parallel for num_threads(parallelism)
@@ -315,9 +304,8 @@ void generate_edge_grid(std::string input, std::string output,
 				target = advanced
 					? mapper[*(VertexId *)(buffer + pos + sizeof(VertexId))]
 					: *(VertexId *)(buffer + pos + sizeof(VertexId));
-				int i = get_partition_id_with_hash(source, partitions);//amin
-				            int j = get_partition_id_with_hash(target, partitions);
-				
+				int i = get_partition_id(vertices, partitions, source);
+				int j = get_partition_id(vertices, partitions, target);
 				if (i <= j)
 					++local_propagation;
 				if (!advanced) {
@@ -338,10 +326,8 @@ void generate_edge_grid(std::string input, std::string output,
 					target = advanced
 						? mapper[*(VertexId *)(buffer + pos + sizeof(VertexId))]
 						: *(VertexId *)(buffer + pos + sizeof(VertexId));
-					
-					int i = get_partition_id_with_hash(source, partitions);//amin
-					            int j = get_partition_id_with_hash(target, partitions);
-
+					int i = get_partition_id(vertices, partitions, source);
+					int j = get_partition_id(vertices, partitions, target);
 					*(VertexId *)(local_buffer + local_grid_cursor[i * partitions + j]) =
 						source;
 					*(VertexId *)(local_buffer + local_grid_cursor[i * partitions + j] +
@@ -560,7 +546,7 @@ int main(int argc, char **argv) {
 
 	if (mode == 0) {
 		printf("mode = advanced\n");
-		renumber(input, output, vertices, edge_type, partitions);
+		renumber(input, output, vertices, edge_type);
 	} else {
 		printf("mode = naive\n");
 		printf("comment: choose advanced mode for higher cross-iteration "
