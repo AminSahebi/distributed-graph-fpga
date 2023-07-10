@@ -32,6 +32,9 @@ sssp_app := sssp
 PR_HW := pagerank_hw
 PR_XCLBIN := pagerank_hw.xclbin
 
+SSSP_HW := sssp_hw
+SSSP_XCLBIN := sssp_hw.xclbin
+
 # kernel rules
 # pagerank
 PR_XOS := pagerank_hw.xo
@@ -51,26 +54,26 @@ $(PR_XCLBIN): $(pr_hw_srcdir)/$(PR_XOS)
 	$(VPP) $(VPP_COMMON_OPTS) -l -o $(pr_hw_bindir)/$@ $+ $(PR_CONN) 
 
 
-SPMV_HW := spmv_hw
-SPMV_XCLBIN := spmv_hw.xclbin
+SSSP_HW := sssp_hw
+SSSP_XCLBIN := sssp_hw.xclbin
 
 # kernel rules
-# spmv
-SPMV_XOS := spmv_hw.xo
-SPMV_XCLBIN := spmv_hw.xclbin
-SPMV_CONN := --config $(CURRENT_DIR)/kernel/spmv/connectivity_spmv.cfg #--kernel_frequency=350
-spmv_hw_srcdir:= $(CURRENT_DIR)/kernel/spmv/
-spmv_hw_bindir:= $(CURRENT_DIR)/kernel/spmv/hardware
-spmv_hw_src:= $(wildcard $(CURRENT_DIR)/kernel/spmv/spmv_kernel.cpp)
+# sssp
+SSSP_XOS := sssp_hw.xo
+SSSP_XCLBIN := sssp_hw.xclbin
+SSSP_CONN := --config $(CURRENT_DIR)/kernel/sssp/connectivity_sssp.cfg #--kernel_frequency=350
+sssp_hw_srcdir:= $(CURRENT_DIR)/kernel/sssp
+sssp_hw_bindir:= $(CURRENT_DIR)/kernel/sssp/hardware
+sssp_hw_src:= $(wildcard ${sssp_hw_srcdir}/sssp_kernel.cpp)
 
-spmv_hw: $(SPMV_XCLBIN)
+sssp_hw: $(SSSP_XCLBIN)
 
-$(spmv_hw_srcdir)/$(SPMV_XOS): $(spmv_hw_src)
-	$(VPP) $(VPP_COMMON_OPTS) -c -k $(SPMV_HW) -o $@ $+
+$(sssp_hw_srcdir)/$(SSSP_XOS): $(sssp_hw_src)
+	$(VPP) $(VPP_COMMON_OPTS) -c -k $(SSSP_HW) -o $@ $+
 
-$(SPMV_XCLBIN): $(spmv_hw_srcdir)/$(SPMV_XOS)
-	mkdir -p $(spmv_hw_bindir)
-	$(VPP) $(VPP_COMMON_OPTS) -l -o $(spmv_hw_bindir)/$@ $+ $(SPMV_CONN) 
+$(SSSP_XCLBIN): $(sssp_hw_srcdir)/$(SSSP_XOS)
+	mkdir -p $(sssp_hw_bindir)
+	$(VPP) $(VPP_COMMON_OPTS) -l -o $(sssp_hw_bindir)/$@ $+ $(SSSP_CONN) 
 
 
 

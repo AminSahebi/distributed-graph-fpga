@@ -1,0 +1,291 @@
+
+
+================================================================
+== Vitis HLS Report for 'PE_kernel'
+================================================================
+* Date:           Mon Jul 10 16:40:57 2023
+
+* Version:        2021.1 (Build 3247384 on Thu Jun 10 19:36:07 MDT 2021)
+* Project:        prj
+* Solution:       sol (Vivado IP Flow Target)
+* Product family: virtexuplus
+* Target device:  xcu250-figd2104-2L-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.33 ns|  2.390 ns|     0.90 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |        ?|        ?|         ?|         ?|    ?|    ?|       no|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 6
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 2.39>
+ST_1 : Operation 7 [1/1] (0.00ns)   --->   "%local_in_a_offset_read = read i7 @_ssdm_op_Read.ap_auto.i7, i7 %local_in_a_offset"   --->   Operation 7 'read' 'local_in_a_offset_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 8 [1/1] (0.00ns)   --->   "%distance_buffer_0_3_loc = alloca i64 1"   --->   Operation 8 'alloca' 'distance_buffer_0_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 9 [1/1] (0.00ns)   --->   "%distance_buffer_1_3_loc = alloca i64 1"   --->   Operation 9 'alloca' 'distance_buffer_1_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "%distance_buffer_2_3_loc = alloca i64 1"   --->   Operation 10 'alloca' 'distance_buffer_2_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [1/1] (0.00ns)   --->   "%distance_buffer_3_3_loc = alloca i64 1"   --->   Operation 11 'alloca' 'distance_buffer_3_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 12 [1/1] (0.00ns)   --->   "%distance_buffer_4_3_loc = alloca i64 1"   --->   Operation 12 'alloca' 'distance_buffer_4_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 13 [1/1] (0.00ns)   --->   "%distance_buffer_5_3_loc = alloca i64 1"   --->   Operation 13 'alloca' 'distance_buffer_5_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 14 [1/1] (0.00ns)   --->   "%distance_buffer_6_3_loc = alloca i64 1"   --->   Operation 14 'alloca' 'distance_buffer_6_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 15 [1/1] (0.00ns)   --->   "%distance_buffer_7_3_loc = alloca i64 1"   --->   Operation 15 'alloca' 'distance_buffer_7_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 16 [1/1] (0.00ns)   --->   "%distance_buffer_8_3_loc = alloca i64 1"   --->   Operation 16 'alloca' 'distance_buffer_8_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 17 [1/1] (0.00ns)   --->   "%distance_buffer_9_3_loc = alloca i64 1"   --->   Operation 17 'alloca' 'distance_buffer_9_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 18 [1/1] (0.00ns)   --->   "%distance_buffer_10_3_loc = alloca i64 1"   --->   Operation 18 'alloca' 'distance_buffer_10_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 19 [1/1] (0.00ns)   --->   "%distance_buffer_11_3_loc = alloca i64 1"   --->   Operation 19 'alloca' 'distance_buffer_11_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 20 [1/1] (0.00ns)   --->   "%distance_buffer_12_3_loc = alloca i64 1"   --->   Operation 20 'alloca' 'distance_buffer_12_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 21 [1/1] (0.00ns)   --->   "%distance_buffer_13_3_loc = alloca i64 1"   --->   Operation 21 'alloca' 'distance_buffer_13_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 22 [1/1] (0.00ns)   --->   "%distance_buffer_14_3_loc = alloca i64 1"   --->   Operation 22 'alloca' 'distance_buffer_14_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 23 [1/1] (0.00ns)   --->   "%distance_buffer_15_3_loc = alloca i64 1"   --->   Operation 23 'alloca' 'distance_buffer_15_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 24 [1/1] (0.00ns)   --->   "%distance_buffer_16_3_loc = alloca i64 1"   --->   Operation 24 'alloca' 'distance_buffer_16_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 25 [1/1] (0.00ns)   --->   "%distance_buffer_17_3_loc = alloca i64 1"   --->   Operation 25 'alloca' 'distance_buffer_17_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 26 [1/1] (0.00ns)   --->   "%distance_buffer_18_3_loc = alloca i64 1"   --->   Operation 26 'alloca' 'distance_buffer_18_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 27 [1/1] (0.00ns)   --->   "%distance_buffer_19_3_loc = alloca i64 1"   --->   Operation 27 'alloca' 'distance_buffer_19_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 28 [1/1] (0.00ns)   --->   "%distance_buffer_20_3_loc = alloca i64 1"   --->   Operation 28 'alloca' 'distance_buffer_20_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 29 [1/1] (0.00ns)   --->   "%distance_buffer_21_3_loc = alloca i64 1"   --->   Operation 29 'alloca' 'distance_buffer_21_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 30 [1/1] (0.00ns)   --->   "%distance_buffer_22_3_loc = alloca i64 1"   --->   Operation 30 'alloca' 'distance_buffer_22_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 31 [1/1] (0.00ns)   --->   "%distance_buffer_23_3_loc = alloca i64 1"   --->   Operation 31 'alloca' 'distance_buffer_23_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 32 [1/1] (0.00ns)   --->   "%distance_buffer_24_3_loc = alloca i64 1"   --->   Operation 32 'alloca' 'distance_buffer_24_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 33 [1/1] (0.00ns)   --->   "%distance_buffer_25_3_loc = alloca i64 1"   --->   Operation 33 'alloca' 'distance_buffer_25_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 34 [1/1] (0.00ns)   --->   "%distance_buffer_26_3_loc = alloca i64 1"   --->   Operation 34 'alloca' 'distance_buffer_26_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 35 [1/1] (0.00ns)   --->   "%distance_buffer_27_3_loc = alloca i64 1"   --->   Operation 35 'alloca' 'distance_buffer_27_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 36 [1/1] (0.00ns)   --->   "%distance_buffer_28_3_loc = alloca i64 1"   --->   Operation 36 'alloca' 'distance_buffer_28_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 37 [1/1] (0.00ns)   --->   "%distance_buffer_29_3_loc = alloca i64 1"   --->   Operation 37 'alloca' 'distance_buffer_29_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 38 [1/1] (0.00ns)   --->   "%distance_buffer_30_3_loc = alloca i64 1"   --->   Operation 38 'alloca' 'distance_buffer_30_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 39 [1/1] (0.00ns)   --->   "%distance_buffer_31_3_loc = alloca i64 1"   --->   Operation 39 'alloca' 'distance_buffer_31_3_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 40 [1/1] (0.00ns)   --->   "%distance_buffer_0_0_loc = alloca i64 1"   --->   Operation 40 'alloca' 'distance_buffer_0_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 41 [1/1] (0.00ns)   --->   "%distance_buffer_1_0_loc = alloca i64 1"   --->   Operation 41 'alloca' 'distance_buffer_1_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 42 [1/1] (0.00ns)   --->   "%distance_buffer_2_0_loc = alloca i64 1"   --->   Operation 42 'alloca' 'distance_buffer_2_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 43 [1/1] (0.00ns)   --->   "%distance_buffer_3_0_loc = alloca i64 1"   --->   Operation 43 'alloca' 'distance_buffer_3_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 44 [1/1] (0.00ns)   --->   "%distance_buffer_4_0_loc = alloca i64 1"   --->   Operation 44 'alloca' 'distance_buffer_4_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 45 [1/1] (0.00ns)   --->   "%distance_buffer_5_0_loc = alloca i64 1"   --->   Operation 45 'alloca' 'distance_buffer_5_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 46 [1/1] (0.00ns)   --->   "%distance_buffer_6_0_loc = alloca i64 1"   --->   Operation 46 'alloca' 'distance_buffer_6_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 47 [1/1] (0.00ns)   --->   "%distance_buffer_7_0_loc = alloca i64 1"   --->   Operation 47 'alloca' 'distance_buffer_7_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 48 [1/1] (0.00ns)   --->   "%distance_buffer_8_0_loc = alloca i64 1"   --->   Operation 48 'alloca' 'distance_buffer_8_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 49 [1/1] (0.00ns)   --->   "%distance_buffer_9_0_loc = alloca i64 1"   --->   Operation 49 'alloca' 'distance_buffer_9_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 50 [1/1] (0.00ns)   --->   "%distance_buffer_10_0_loc = alloca i64 1"   --->   Operation 50 'alloca' 'distance_buffer_10_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 51 [1/1] (0.00ns)   --->   "%distance_buffer_11_0_loc = alloca i64 1"   --->   Operation 51 'alloca' 'distance_buffer_11_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 52 [1/1] (0.00ns)   --->   "%distance_buffer_12_0_loc = alloca i64 1"   --->   Operation 52 'alloca' 'distance_buffer_12_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 53 [1/1] (0.00ns)   --->   "%distance_buffer_13_0_loc = alloca i64 1"   --->   Operation 53 'alloca' 'distance_buffer_13_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 54 [1/1] (0.00ns)   --->   "%distance_buffer_14_0_loc = alloca i64 1"   --->   Operation 54 'alloca' 'distance_buffer_14_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 55 [1/1] (0.00ns)   --->   "%distance_buffer_15_0_loc = alloca i64 1"   --->   Operation 55 'alloca' 'distance_buffer_15_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 56 [1/1] (0.00ns)   --->   "%distance_buffer_16_0_loc = alloca i64 1"   --->   Operation 56 'alloca' 'distance_buffer_16_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 57 [1/1] (0.00ns)   --->   "%distance_buffer_17_0_loc = alloca i64 1"   --->   Operation 57 'alloca' 'distance_buffer_17_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 58 [1/1] (0.00ns)   --->   "%distance_buffer_18_0_loc = alloca i64 1"   --->   Operation 58 'alloca' 'distance_buffer_18_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 59 [1/1] (0.00ns)   --->   "%distance_buffer_19_0_loc = alloca i64 1"   --->   Operation 59 'alloca' 'distance_buffer_19_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 60 [1/1] (0.00ns)   --->   "%distance_buffer_20_0_loc = alloca i64 1"   --->   Operation 60 'alloca' 'distance_buffer_20_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 61 [1/1] (0.00ns)   --->   "%distance_buffer_21_0_loc = alloca i64 1"   --->   Operation 61 'alloca' 'distance_buffer_21_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 62 [1/1] (0.00ns)   --->   "%distance_buffer_22_0_loc = alloca i64 1"   --->   Operation 62 'alloca' 'distance_buffer_22_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 63 [1/1] (0.00ns)   --->   "%distance_buffer_23_0_loc = alloca i64 1"   --->   Operation 63 'alloca' 'distance_buffer_23_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 64 [1/1] (0.00ns)   --->   "%distance_buffer_24_0_loc = alloca i64 1"   --->   Operation 64 'alloca' 'distance_buffer_24_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 65 [1/1] (0.00ns)   --->   "%distance_buffer_25_0_loc = alloca i64 1"   --->   Operation 65 'alloca' 'distance_buffer_25_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 66 [1/1] (0.00ns)   --->   "%distance_buffer_26_0_loc = alloca i64 1"   --->   Operation 66 'alloca' 'distance_buffer_26_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 67 [1/1] (0.00ns)   --->   "%distance_buffer_27_0_loc = alloca i64 1"   --->   Operation 67 'alloca' 'distance_buffer_27_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 68 [1/1] (0.00ns)   --->   "%distance_buffer_28_0_loc = alloca i64 1"   --->   Operation 68 'alloca' 'distance_buffer_28_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 69 [1/1] (0.00ns)   --->   "%distance_buffer_29_0_loc = alloca i64 1"   --->   Operation 69 'alloca' 'distance_buffer_29_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 70 [1/1] (0.00ns)   --->   "%distance_buffer_30_0_loc = alloca i64 1"   --->   Operation 70 'alloca' 'distance_buffer_30_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 71 [1/1] (0.00ns)   --->   "%distance_buffer_31_0_loc = alloca i64 1"   --->   Operation 71 'alloca' 'distance_buffer_31_0_loc' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 72 [1/1] (0.00ns)   --->   "%tmp_144 = bitconcatenate i12 @_ssdm_op_BitConcatenate.i12.i7.i5, i7 %local_in_a_offset_read, i5 0" [sssp_kernel.cpp:27]   --->   Operation 72 'bitconcatenate' 'tmp_144' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 73 [2/2] (2.39ns)   --->   "%call_ln27 = call void @PE_kernel_Pipeline_init_distances, i12 %tmp_144, i32 %local_in_a, i32 %distance_buffer_31_0_loc, i32 %distance_buffer_30_0_loc, i32 %distance_buffer_29_0_loc, i32 %distance_buffer_28_0_loc, i32 %distance_buffer_27_0_loc, i32 %distance_buffer_26_0_loc, i32 %distance_buffer_25_0_loc, i32 %distance_buffer_24_0_loc, i32 %distance_buffer_23_0_loc, i32 %distance_buffer_22_0_loc, i32 %distance_buffer_21_0_loc, i32 %distance_buffer_20_0_loc, i32 %distance_buffer_19_0_loc, i32 %distance_buffer_18_0_loc, i32 %distance_buffer_17_0_loc, i32 %distance_buffer_16_0_loc, i32 %distance_buffer_15_0_loc, i32 %distance_buffer_14_0_loc, i32 %distance_buffer_13_0_loc, i32 %distance_buffer_12_0_loc, i32 %distance_buffer_11_0_loc, i32 %distance_buffer_10_0_loc, i32 %distance_buffer_9_0_loc, i32 %distance_buffer_8_0_loc, i32 %distance_buffer_7_0_loc, i32 %distance_buffer_6_0_loc, i32 %distance_buffer_5_0_loc, i32 %distance_buffer_4_0_loc, i32 %distance_buffer_3_0_loc, i32 %distance_buffer_2_0_loc, i32 %distance_buffer_1_0_loc, i32 %distance_buffer_0_0_loc" [sssp_kernel.cpp:27]   --->   Operation 73 'call' 'call_ln27' <Predicate = true> <Delay = 2.39> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 2 <SV = 1> <Delay = 0.00>
+ST_2 : Operation 74 [1/2] (0.00ns)   --->   "%call_ln27 = call void @PE_kernel_Pipeline_init_distances, i12 %tmp_144, i32 %local_in_a, i32 %distance_buffer_31_0_loc, i32 %distance_buffer_30_0_loc, i32 %distance_buffer_29_0_loc, i32 %distance_buffer_28_0_loc, i32 %distance_buffer_27_0_loc, i32 %distance_buffer_26_0_loc, i32 %distance_buffer_25_0_loc, i32 %distance_buffer_24_0_loc, i32 %distance_buffer_23_0_loc, i32 %distance_buffer_22_0_loc, i32 %distance_buffer_21_0_loc, i32 %distance_buffer_20_0_loc, i32 %distance_buffer_19_0_loc, i32 %distance_buffer_18_0_loc, i32 %distance_buffer_17_0_loc, i32 %distance_buffer_16_0_loc, i32 %distance_buffer_15_0_loc, i32 %distance_buffer_14_0_loc, i32 %distance_buffer_13_0_loc, i32 %distance_buffer_12_0_loc, i32 %distance_buffer_11_0_loc, i32 %distance_buffer_10_0_loc, i32 %distance_buffer_9_0_loc, i32 %distance_buffer_8_0_loc, i32 %distance_buffer_7_0_loc, i32 %distance_buffer_6_0_loc, i32 %distance_buffer_5_0_loc, i32 %distance_buffer_4_0_loc, i32 %distance_buffer_3_0_loc, i32 %distance_buffer_2_0_loc, i32 %distance_buffer_1_0_loc, i32 %distance_buffer_0_0_loc" [sssp_kernel.cpp:27]   --->   Operation 74 'call' 'call_ln27' <Predicate = true> <Delay = 0.00> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 3 <SV = 2> <Delay = 1.26>
+ST_3 : Operation 75 [1/1] (0.00ns)   --->   "%local_in_c_offset_read = read i7 @_ssdm_op_Read.ap_auto.i7, i7 %local_in_c_offset"   --->   Operation 75 'read' 'local_in_c_offset_read' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 76 [1/1] (0.00ns)   --->   "%local_in_b_offset_read = read i7 @_ssdm_op_Read.ap_auto.i7, i7 %local_in_b_offset"   --->   Operation 76 'read' 'local_in_b_offset_read' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 77 [1/1] (0.00ns)   --->   "%tmp_142 = bitconcatenate i12 @_ssdm_op_BitConcatenate.i12.i7.i5, i7 %local_in_c_offset_read, i5 0" [sssp_kernel.cpp:37]   --->   Operation 77 'bitconcatenate' 'tmp_142' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 78 [1/1] (0.00ns)   --->   "%tmp_143 = bitconcatenate i12 @_ssdm_op_BitConcatenate.i12.i7.i5, i7 %local_in_b_offset_read, i5 0" [sssp_kernel.cpp:36]   --->   Operation 78 'bitconcatenate' 'tmp_143' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 79 [1/1] (0.00ns)   --->   "%distance_buffer_31_0_loc_load = load i32 %distance_buffer_31_0_loc"   --->   Operation 79 'load' 'distance_buffer_31_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 80 [1/1] (0.00ns)   --->   "%distance_buffer_30_0_loc_load = load i32 %distance_buffer_30_0_loc"   --->   Operation 80 'load' 'distance_buffer_30_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 81 [1/1] (0.00ns)   --->   "%distance_buffer_29_0_loc_load = load i32 %distance_buffer_29_0_loc"   --->   Operation 81 'load' 'distance_buffer_29_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 82 [1/1] (0.00ns)   --->   "%distance_buffer_28_0_loc_load = load i32 %distance_buffer_28_0_loc"   --->   Operation 82 'load' 'distance_buffer_28_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 83 [1/1] (0.00ns)   --->   "%distance_buffer_27_0_loc_load = load i32 %distance_buffer_27_0_loc"   --->   Operation 83 'load' 'distance_buffer_27_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 84 [1/1] (0.00ns)   --->   "%distance_buffer_26_0_loc_load = load i32 %distance_buffer_26_0_loc"   --->   Operation 84 'load' 'distance_buffer_26_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 85 [1/1] (0.00ns)   --->   "%distance_buffer_25_0_loc_load = load i32 %distance_buffer_25_0_loc"   --->   Operation 85 'load' 'distance_buffer_25_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 86 [1/1] (0.00ns)   --->   "%distance_buffer_24_0_loc_load = load i32 %distance_buffer_24_0_loc"   --->   Operation 86 'load' 'distance_buffer_24_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 87 [1/1] (0.00ns)   --->   "%distance_buffer_23_0_loc_load = load i32 %distance_buffer_23_0_loc"   --->   Operation 87 'load' 'distance_buffer_23_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 88 [1/1] (0.00ns)   --->   "%distance_buffer_22_0_loc_load = load i32 %distance_buffer_22_0_loc"   --->   Operation 88 'load' 'distance_buffer_22_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 89 [1/1] (0.00ns)   --->   "%distance_buffer_21_0_loc_load = load i32 %distance_buffer_21_0_loc"   --->   Operation 89 'load' 'distance_buffer_21_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 90 [1/1] (0.00ns)   --->   "%distance_buffer_20_0_loc_load = load i32 %distance_buffer_20_0_loc"   --->   Operation 90 'load' 'distance_buffer_20_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 91 [1/1] (0.00ns)   --->   "%distance_buffer_19_0_loc_load = load i32 %distance_buffer_19_0_loc"   --->   Operation 91 'load' 'distance_buffer_19_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 92 [1/1] (0.00ns)   --->   "%distance_buffer_18_0_loc_load = load i32 %distance_buffer_18_0_loc"   --->   Operation 92 'load' 'distance_buffer_18_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 93 [1/1] (0.00ns)   --->   "%distance_buffer_17_0_loc_load = load i32 %distance_buffer_17_0_loc"   --->   Operation 93 'load' 'distance_buffer_17_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 94 [1/1] (0.00ns)   --->   "%distance_buffer_16_0_loc_load = load i32 %distance_buffer_16_0_loc"   --->   Operation 94 'load' 'distance_buffer_16_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 95 [1/1] (0.00ns)   --->   "%distance_buffer_15_0_loc_load = load i32 %distance_buffer_15_0_loc"   --->   Operation 95 'load' 'distance_buffer_15_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 96 [1/1] (0.00ns)   --->   "%distance_buffer_14_0_loc_load = load i32 %distance_buffer_14_0_loc"   --->   Operation 96 'load' 'distance_buffer_14_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 97 [1/1] (0.00ns)   --->   "%distance_buffer_13_0_loc_load = load i32 %distance_buffer_13_0_loc"   --->   Operation 97 'load' 'distance_buffer_13_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 98 [1/1] (0.00ns)   --->   "%distance_buffer_12_0_loc_load = load i32 %distance_buffer_12_0_loc"   --->   Operation 98 'load' 'distance_buffer_12_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 99 [1/1] (0.00ns)   --->   "%distance_buffer_11_0_loc_load = load i32 %distance_buffer_11_0_loc"   --->   Operation 99 'load' 'distance_buffer_11_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 100 [1/1] (0.00ns)   --->   "%distance_buffer_10_0_loc_load = load i32 %distance_buffer_10_0_loc"   --->   Operation 100 'load' 'distance_buffer_10_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 101 [1/1] (0.00ns)   --->   "%distance_buffer_9_0_loc_load = load i32 %distance_buffer_9_0_loc"   --->   Operation 101 'load' 'distance_buffer_9_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 102 [1/1] (0.00ns)   --->   "%distance_buffer_8_0_loc_load = load i32 %distance_buffer_8_0_loc"   --->   Operation 102 'load' 'distance_buffer_8_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 103 [1/1] (0.00ns)   --->   "%distance_buffer_7_0_loc_load = load i32 %distance_buffer_7_0_loc"   --->   Operation 103 'load' 'distance_buffer_7_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 104 [1/1] (0.00ns)   --->   "%distance_buffer_6_0_loc_load = load i32 %distance_buffer_6_0_loc"   --->   Operation 104 'load' 'distance_buffer_6_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 105 [1/1] (0.00ns)   --->   "%distance_buffer_5_0_loc_load = load i32 %distance_buffer_5_0_loc"   --->   Operation 105 'load' 'distance_buffer_5_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 106 [1/1] (0.00ns)   --->   "%distance_buffer_4_0_loc_load = load i32 %distance_buffer_4_0_loc"   --->   Operation 106 'load' 'distance_buffer_4_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 107 [1/1] (0.00ns)   --->   "%distance_buffer_3_0_loc_load = load i32 %distance_buffer_3_0_loc"   --->   Operation 107 'load' 'distance_buffer_3_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 108 [1/1] (0.00ns)   --->   "%distance_buffer_2_0_loc_load = load i32 %distance_buffer_2_0_loc"   --->   Operation 108 'load' 'distance_buffer_2_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 109 [1/1] (0.00ns)   --->   "%distance_buffer_1_0_loc_load = load i32 %distance_buffer_1_0_loc"   --->   Operation 109 'load' 'distance_buffer_1_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 110 [1/1] (0.00ns)   --->   "%distance_buffer_0_0_loc_load = load i32 %distance_buffer_0_0_loc"   --->   Operation 110 'load' 'distance_buffer_0_0_loc_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 111 [1/1] (0.00ns)   --->   "%v_load = load i32 %v"   --->   Operation 111 'load' 'v_load' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 112 [1/1] (0.88ns)   --->   "%add_ln32 = add i32 %v_load, i32 4294967295" [sssp_kernel.cpp:32]   --->   Operation 112 'add' 'add_ln32' <Predicate = true> <Delay = 0.88> <CoreInst = "Adder">   --->   Core 1 'Adder' <Latency = 0> <II = 1> <Delay = 0.88> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 113 [1/1] (0.00ns)   --->   "%tmp_145 = bitconcatenate i37 @_ssdm_op_BitConcatenate.i37.i32.i5, i32 %add_ln32, i5 0" [sssp_kernel.cpp:32]   --->   Operation 113 'bitconcatenate' 'tmp_145' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 114 [2/2] (0.38ns)   --->   "%call_ln32 = call void @PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1, i32 %distance_buffer_31_0_loc_load, i32 %distance_buffer_30_0_loc_load, i32 %distance_buffer_29_0_loc_load, i32 %distance_buffer_28_0_loc_load, i32 %distance_buffer_27_0_loc_load, i32 %distance_buffer_26_0_loc_load, i32 %distance_buffer_25_0_loc_load, i32 %distance_buffer_24_0_loc_load, i32 %distance_buffer_23_0_loc_load, i32 %distance_buffer_22_0_loc_load, i32 %distance_buffer_21_0_loc_load, i32 %distance_buffer_20_0_loc_load, i32 %distance_buffer_19_0_loc_load, i32 %distance_buffer_18_0_loc_load, i32 %distance_buffer_17_0_loc_load, i32 %distance_buffer_16_0_loc_load, i32 %distance_buffer_15_0_loc_load, i32 %distance_buffer_14_0_loc_load, i32 %distance_buffer_13_0_loc_load, i32 %distance_buffer_12_0_loc_load, i32 %distance_buffer_11_0_loc_load, i32 %distance_buffer_10_0_loc_load, i32 %distance_buffer_9_0_loc_load, i32 %distance_buffer_8_0_loc_load, i32 %distance_buffer_7_0_loc_load, i32 %distance_buffer_6_0_loc_load, i32 %distance_buffer_5_0_loc_load, i32 %distance_buffer_4_0_loc_load, i32 %distance_buffer_3_0_loc_load, i32 %distance_buffer_2_0_loc_load, i32 %distance_buffer_1_0_loc_load, i32 %distance_buffer_0_0_loc_load, i37 %tmp_145, i12 %tmp_144, i32 %local_in_a, i12 %tmp_143, i5 %local_in_b, i12 %tmp_142, i32 %local_in_c, i32 %distance_buffer_31_3_loc, i32 %distance_buffer_30_3_loc, i32 %distance_buffer_29_3_loc, i32 %distance_buffer_28_3_loc, i32 %distance_buffer_27_3_loc, i32 %distance_buffer_26_3_loc, i32 %distance_buffer_25_3_loc, i32 %distance_buffer_24_3_loc, i32 %distance_buffer_23_3_loc, i32 %distance_buffer_22_3_loc, i32 %distance_buffer_21_3_loc, i32 %distance_buffer_20_3_loc, i32 %distance_buffer_19_3_loc, i32 %distance_buffer_18_3_loc, i32 %distance_buffer_17_3_loc, i32 %distance_buffer_16_3_loc, i32 %distance_buffer_15_3_loc, i32 %distance_buffer_14_3_loc, i32 %distance_buffer_13_3_loc, i32 %distance_buffer_12_3_loc, i32 %distance_buffer_11_3_loc, i32 %distance_buffer_10_3_loc, i32 %distance_buffer_9_3_loc, i32 %distance_buffer_8_3_loc, i32 %distance_buffer_7_3_loc, i32 %distance_buffer_6_3_loc, i32 %distance_buffer_5_3_loc, i32 %distance_buffer_4_3_loc, i32 %distance_buffer_3_3_loc, i32 %distance_buffer_2_3_loc, i32 %distance_buffer_1_3_loc, i32 %distance_buffer_0_3_loc" [sssp_kernel.cpp:32]   --->   Operation 114 'call' 'call_ln32' <Predicate = true> <Delay = 0.38> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 4 <SV = 3> <Delay = 0.00>
+ST_4 : Operation 115 [1/2] (0.00ns)   --->   "%call_ln32 = call void @PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1, i32 %distance_buffer_31_0_loc_load, i32 %distance_buffer_30_0_loc_load, i32 %distance_buffer_29_0_loc_load, i32 %distance_buffer_28_0_loc_load, i32 %distance_buffer_27_0_loc_load, i32 %distance_buffer_26_0_loc_load, i32 %distance_buffer_25_0_loc_load, i32 %distance_buffer_24_0_loc_load, i32 %distance_buffer_23_0_loc_load, i32 %distance_buffer_22_0_loc_load, i32 %distance_buffer_21_0_loc_load, i32 %distance_buffer_20_0_loc_load, i32 %distance_buffer_19_0_loc_load, i32 %distance_buffer_18_0_loc_load, i32 %distance_buffer_17_0_loc_load, i32 %distance_buffer_16_0_loc_load, i32 %distance_buffer_15_0_loc_load, i32 %distance_buffer_14_0_loc_load, i32 %distance_buffer_13_0_loc_load, i32 %distance_buffer_12_0_loc_load, i32 %distance_buffer_11_0_loc_load, i32 %distance_buffer_10_0_loc_load, i32 %distance_buffer_9_0_loc_load, i32 %distance_buffer_8_0_loc_load, i32 %distance_buffer_7_0_loc_load, i32 %distance_buffer_6_0_loc_load, i32 %distance_buffer_5_0_loc_load, i32 %distance_buffer_4_0_loc_load, i32 %distance_buffer_3_0_loc_load, i32 %distance_buffer_2_0_loc_load, i32 %distance_buffer_1_0_loc_load, i32 %distance_buffer_0_0_loc_load, i37 %tmp_145, i12 %tmp_144, i32 %local_in_a, i12 %tmp_143, i5 %local_in_b, i12 %tmp_142, i32 %local_in_c, i32 %distance_buffer_31_3_loc, i32 %distance_buffer_30_3_loc, i32 %distance_buffer_29_3_loc, i32 %distance_buffer_28_3_loc, i32 %distance_buffer_27_3_loc, i32 %distance_buffer_26_3_loc, i32 %distance_buffer_25_3_loc, i32 %distance_buffer_24_3_loc, i32 %distance_buffer_23_3_loc, i32 %distance_buffer_22_3_loc, i32 %distance_buffer_21_3_loc, i32 %distance_buffer_20_3_loc, i32 %distance_buffer_19_3_loc, i32 %distance_buffer_18_3_loc, i32 %distance_buffer_17_3_loc, i32 %distance_buffer_16_3_loc, i32 %distance_buffer_15_3_loc, i32 %distance_buffer_14_3_loc, i32 %distance_buffer_13_3_loc, i32 %distance_buffer_12_3_loc, i32 %distance_buffer_11_3_loc, i32 %distance_buffer_10_3_loc, i32 %distance_buffer_9_3_loc, i32 %distance_buffer_8_3_loc, i32 %distance_buffer_7_3_loc, i32 %distance_buffer_6_3_loc, i32 %distance_buffer_5_3_loc, i32 %distance_buffer_4_3_loc, i32 %distance_buffer_3_3_loc, i32 %distance_buffer_2_3_loc, i32 %distance_buffer_1_3_loc, i32 %distance_buffer_0_3_loc" [sssp_kernel.cpp:32]   --->   Operation 115 'call' 'call_ln32' <Predicate = true> <Delay = 0.00> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 5 <SV = 4> <Delay = 2.39>
+ST_5 : Operation 116 [1/1] (0.00ns)   --->   "%local_out_offset_read = read i7 @_ssdm_op_Read.ap_auto.i7, i7 %local_out_offset"   --->   Operation 116 'read' 'local_out_offset_read' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 117 [1/1] (0.00ns)   --->   "%tmp_s = bitconcatenate i12 @_ssdm_op_BitConcatenate.i12.i7.i5, i7 %local_out_offset_read, i5 0" [sssp_kernel.cpp:49]   --->   Operation 117 'bitconcatenate' 'tmp_s' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 118 [1/1] (0.00ns)   --->   "%distance_buffer_31_3_loc_load = load i32 %distance_buffer_31_3_loc"   --->   Operation 118 'load' 'distance_buffer_31_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 119 [1/1] (0.00ns)   --->   "%distance_buffer_30_3_loc_load = load i32 %distance_buffer_30_3_loc"   --->   Operation 119 'load' 'distance_buffer_30_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 120 [1/1] (0.00ns)   --->   "%distance_buffer_29_3_loc_load = load i32 %distance_buffer_29_3_loc"   --->   Operation 120 'load' 'distance_buffer_29_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 121 [1/1] (0.00ns)   --->   "%distance_buffer_28_3_loc_load = load i32 %distance_buffer_28_3_loc"   --->   Operation 121 'load' 'distance_buffer_28_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 122 [1/1] (0.00ns)   --->   "%distance_buffer_27_3_loc_load = load i32 %distance_buffer_27_3_loc"   --->   Operation 122 'load' 'distance_buffer_27_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 123 [1/1] (0.00ns)   --->   "%distance_buffer_26_3_loc_load = load i32 %distance_buffer_26_3_loc"   --->   Operation 123 'load' 'distance_buffer_26_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 124 [1/1] (0.00ns)   --->   "%distance_buffer_25_3_loc_load = load i32 %distance_buffer_25_3_loc"   --->   Operation 124 'load' 'distance_buffer_25_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 125 [1/1] (0.00ns)   --->   "%distance_buffer_24_3_loc_load = load i32 %distance_buffer_24_3_loc"   --->   Operation 125 'load' 'distance_buffer_24_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 126 [1/1] (0.00ns)   --->   "%distance_buffer_23_3_loc_load = load i32 %distance_buffer_23_3_loc"   --->   Operation 126 'load' 'distance_buffer_23_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 127 [1/1] (0.00ns)   --->   "%distance_buffer_22_3_loc_load = load i32 %distance_buffer_22_3_loc"   --->   Operation 127 'load' 'distance_buffer_22_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 128 [1/1] (0.00ns)   --->   "%distance_buffer_21_3_loc_load = load i32 %distance_buffer_21_3_loc"   --->   Operation 128 'load' 'distance_buffer_21_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 129 [1/1] (0.00ns)   --->   "%distance_buffer_20_3_loc_load = load i32 %distance_buffer_20_3_loc"   --->   Operation 129 'load' 'distance_buffer_20_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 130 [1/1] (0.00ns)   --->   "%distance_buffer_19_3_loc_load = load i32 %distance_buffer_19_3_loc"   --->   Operation 130 'load' 'distance_buffer_19_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 131 [1/1] (0.00ns)   --->   "%distance_buffer_18_3_loc_load = load i32 %distance_buffer_18_3_loc"   --->   Operation 131 'load' 'distance_buffer_18_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 132 [1/1] (0.00ns)   --->   "%distance_buffer_17_3_loc_load = load i32 %distance_buffer_17_3_loc"   --->   Operation 132 'load' 'distance_buffer_17_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 133 [1/1] (0.00ns)   --->   "%distance_buffer_16_3_loc_load = load i32 %distance_buffer_16_3_loc"   --->   Operation 133 'load' 'distance_buffer_16_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 134 [1/1] (0.00ns)   --->   "%distance_buffer_15_3_loc_load = load i32 %distance_buffer_15_3_loc"   --->   Operation 134 'load' 'distance_buffer_15_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 135 [1/1] (0.00ns)   --->   "%distance_buffer_14_3_loc_load = load i32 %distance_buffer_14_3_loc"   --->   Operation 135 'load' 'distance_buffer_14_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 136 [1/1] (0.00ns)   --->   "%distance_buffer_13_3_loc_load = load i32 %distance_buffer_13_3_loc"   --->   Operation 136 'load' 'distance_buffer_13_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 137 [1/1] (0.00ns)   --->   "%distance_buffer_12_3_loc_load = load i32 %distance_buffer_12_3_loc"   --->   Operation 137 'load' 'distance_buffer_12_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 138 [1/1] (0.00ns)   --->   "%distance_buffer_11_3_loc_load = load i32 %distance_buffer_11_3_loc"   --->   Operation 138 'load' 'distance_buffer_11_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 139 [1/1] (0.00ns)   --->   "%distance_buffer_10_3_loc_load = load i32 %distance_buffer_10_3_loc"   --->   Operation 139 'load' 'distance_buffer_10_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 140 [1/1] (0.00ns)   --->   "%distance_buffer_9_3_loc_load = load i32 %distance_buffer_9_3_loc"   --->   Operation 140 'load' 'distance_buffer_9_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 141 [1/1] (0.00ns)   --->   "%distance_buffer_8_3_loc_load = load i32 %distance_buffer_8_3_loc"   --->   Operation 141 'load' 'distance_buffer_8_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 142 [1/1] (0.00ns)   --->   "%distance_buffer_7_3_loc_load = load i32 %distance_buffer_7_3_loc"   --->   Operation 142 'load' 'distance_buffer_7_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 143 [1/1] (0.00ns)   --->   "%distance_buffer_6_3_loc_load = load i32 %distance_buffer_6_3_loc"   --->   Operation 143 'load' 'distance_buffer_6_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 144 [1/1] (0.00ns)   --->   "%distance_buffer_5_3_loc_load = load i32 %distance_buffer_5_3_loc"   --->   Operation 144 'load' 'distance_buffer_5_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 145 [1/1] (0.00ns)   --->   "%distance_buffer_4_3_loc_load = load i32 %distance_buffer_4_3_loc"   --->   Operation 145 'load' 'distance_buffer_4_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 146 [1/1] (0.00ns)   --->   "%distance_buffer_3_3_loc_load = load i32 %distance_buffer_3_3_loc"   --->   Operation 146 'load' 'distance_buffer_3_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 147 [1/1] (0.00ns)   --->   "%distance_buffer_2_3_loc_load = load i32 %distance_buffer_2_3_loc"   --->   Operation 147 'load' 'distance_buffer_2_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 148 [1/1] (0.00ns)   --->   "%distance_buffer_1_3_loc_load = load i32 %distance_buffer_1_3_loc"   --->   Operation 148 'load' 'distance_buffer_1_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 149 [1/1] (0.00ns)   --->   "%distance_buffer_0_3_loc_load = load i32 %distance_buffer_0_3_loc"   --->   Operation 149 'load' 'distance_buffer_0_3_loc_load' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 150 [2/2] (2.39ns)   --->   "%call_ln49 = call void @PE_kernel_Pipeline_write_distances, i12 %tmp_s, i32 %local_out, i32 %distance_buffer_0_3_loc_load, i32 %distance_buffer_1_3_loc_load, i32 %distance_buffer_2_3_loc_load, i32 %distance_buffer_3_3_loc_load, i32 %distance_buffer_4_3_loc_load, i32 %distance_buffer_5_3_loc_load, i32 %distance_buffer_6_3_loc_load, i32 %distance_buffer_7_3_loc_load, i32 %distance_buffer_8_3_loc_load, i32 %distance_buffer_9_3_loc_load, i32 %distance_buffer_10_3_loc_load, i32 %distance_buffer_11_3_loc_load, i32 %distance_buffer_12_3_loc_load, i32 %distance_buffer_13_3_loc_load, i32 %distance_buffer_14_3_loc_load, i32 %distance_buffer_15_3_loc_load, i32 %distance_buffer_16_3_loc_load, i32 %distance_buffer_17_3_loc_load, i32 %distance_buffer_18_3_loc_load, i32 %distance_buffer_19_3_loc_load, i32 %distance_buffer_20_3_loc_load, i32 %distance_buffer_21_3_loc_load, i32 %distance_buffer_22_3_loc_load, i32 %distance_buffer_23_3_loc_load, i32 %distance_buffer_24_3_loc_load, i32 %distance_buffer_25_3_loc_load, i32 %distance_buffer_26_3_loc_load, i32 %distance_buffer_27_3_loc_load, i32 %distance_buffer_28_3_loc_load, i32 %distance_buffer_29_3_loc_load, i32 %distance_buffer_30_3_loc_load, i32 %distance_buffer_31_3_loc_load" [sssp_kernel.cpp:49]   --->   Operation 150 'call' 'call_ln49' <Predicate = true> <Delay = 2.39> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+
+State 6 <SV = 5> <Delay = 0.00>
+ST_6 : Operation 151 [1/2] (0.00ns)   --->   "%call_ln49 = call void @PE_kernel_Pipeline_write_distances, i12 %tmp_s, i32 %local_out, i32 %distance_buffer_0_3_loc_load, i32 %distance_buffer_1_3_loc_load, i32 %distance_buffer_2_3_loc_load, i32 %distance_buffer_3_3_loc_load, i32 %distance_buffer_4_3_loc_load, i32 %distance_buffer_5_3_loc_load, i32 %distance_buffer_6_3_loc_load, i32 %distance_buffer_7_3_loc_load, i32 %distance_buffer_8_3_loc_load, i32 %distance_buffer_9_3_loc_load, i32 %distance_buffer_10_3_loc_load, i32 %distance_buffer_11_3_loc_load, i32 %distance_buffer_12_3_loc_load, i32 %distance_buffer_13_3_loc_load, i32 %distance_buffer_14_3_loc_load, i32 %distance_buffer_15_3_loc_load, i32 %distance_buffer_16_3_loc_load, i32 %distance_buffer_17_3_loc_load, i32 %distance_buffer_18_3_loc_load, i32 %distance_buffer_19_3_loc_load, i32 %distance_buffer_20_3_loc_load, i32 %distance_buffer_21_3_loc_load, i32 %distance_buffer_22_3_loc_load, i32 %distance_buffer_23_3_loc_load, i32 %distance_buffer_24_3_loc_load, i32 %distance_buffer_25_3_loc_load, i32 %distance_buffer_26_3_loc_load, i32 %distance_buffer_27_3_loc_load, i32 %distance_buffer_28_3_loc_load, i32 %distance_buffer_29_3_loc_load, i32 %distance_buffer_30_3_loc_load, i32 %distance_buffer_31_3_loc_load" [sssp_kernel.cpp:49]   --->   Operation 151 'call' 'call_ln49' <Predicate = true> <Delay = 0.00> <CoreType = "Generic">   --->   Core 0 '' <Latency = 0> <II = 1> <Delay = 1.00> <Generic> <Opcode : >
+ST_6 : Operation 152 [1/1] (0.00ns)   --->   "%ret_ln51 = ret" [sssp_kernel.cpp:51]   --->   Operation 152 'ret' 'ret_ln51' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 3.33ns, clock uncertainty: 0.9ns.
+
+ <State 1>: 2.39ns
+The critical path consists of the following:
+	wire read operation ('local_in_a_offset_read') on port 'local_in_a_offset' [13]  (0 ns)
+	'call' operation ('call_ln27', sssp_kernel.cpp:27) to 'PE_kernel_Pipeline_init_distances' [82]  (2.39 ns)
+
+ <State 2>: 0ns
+The critical path consists of the following:
+
+ <State 3>: 1.27ns
+The critical path consists of the following:
+	'load' operation ('v_load') on static variable 'v' [115]  (0 ns)
+	'add' operation ('add_ln32', sssp_kernel.cpp:32) [116]  (0.88 ns)
+	'call' operation ('call_ln32', sssp_kernel.cpp:32) to 'PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1' [118]  (0.387 ns)
+
+ <State 4>: 0ns
+The critical path consists of the following:
+
+ <State 5>: 2.39ns
+The critical path consists of the following:
+	wire read operation ('local_out_offset_read') on port 'local_out_offset' [10]  (0 ns)
+	'call' operation ('call_ln49', sssp_kernel.cpp:49) to 'PE_kernel_Pipeline_write_distances' [151]  (2.39 ns)
+
+ <State 6>: 0ns
+The critical path consists of the following:
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

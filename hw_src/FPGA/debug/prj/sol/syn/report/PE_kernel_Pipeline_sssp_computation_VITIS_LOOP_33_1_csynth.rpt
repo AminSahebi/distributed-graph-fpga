@@ -1,0 +1,437 @@
+
+
+================================================================
+== Vitis HLS Report for 'PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1'
+================================================================
+* Date:           Mon Jul 10 16:45:24 2023
+
+* Version:        2021.1 (Build 3247384 on Thu Jun 10 19:36:07 MDT 2021)
+* Project:        prj
+* Solution:       sol (Vivado IP Flow Target)
+* Product family: virtexuplus
+* Target device:  xcu250-figd2104-2L-e
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+---------+----------+------------+
+    |  Clock |  Target | Estimated| Uncertainty|
+    +--------+---------+----------+------------+
+    |ap_clk  |  3.33 ns|  2.390 ns|     0.90 ns|
+    +--------+---------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+-----+---------+
+    |  Latency (cycles) |  Latency (absolute) |  Interval | Pipeline|
+    |   min   |   max   |    min   |    max   | min | max |   Type  |
+    +---------+---------+----------+----------+-----+-----+---------+
+    |        ?|        ?|         ?|         ?|    ?|    ?|       no|
+    +---------+---------+----------+----------+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        +------------------------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |                                    |  Latency (cycles) | Iteration|  Initiation Interval  | Trip |          |
+        |              Loop Name             |   min   |   max   |  Latency |  achieved |   target  | Count| Pipelined|
+        +------------------------------------+---------+---------+----------+-----------+-----------+------+----------+
+        |- sssp_computation_VITIS_LOOP_33_1  |        ?|        ?|         4|          1|          1|     ?|       yes|
+        +------------------------------------+---------+---------+----------+-----------+-----------+------+----------+
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++---------------------+---------+-------+---------+---------+------+
+|         Name        | BRAM_18K|  DSP  |    FF   |   LUT   | URAM |
++---------------------+---------+-------+---------+---------+------+
+|DSP                  |        -|      -|        -|        -|     -|
+|Expression           |        -|      -|        0|      295|     -|
+|FIFO                 |        -|      -|        -|        -|     -|
+|Instance             |        -|      -|        0|      296|     -|
+|Memory               |        -|      -|        -|        -|     -|
+|Multiplexer          |        -|      -|        -|      621|     -|
+|Register             |        -|      -|     2176|        -|     -|
++---------------------+---------+-------+---------+---------+------+
+|Total                |        0|      0|     2176|     1212|     0|
++---------------------+---------+-------+---------+---------+------+
+|Available SLR        |     1344|   3072|   864000|   432000|   320|
++---------------------+---------+-------+---------+---------+------+
+|Utilization SLR (%)  |        0|      0|       ~0|       ~0|     0|
++---------------------+---------+-------+---------+---------+------+
+|Available            |     5376|  12288|  3456000|  1728000|  1280|
++---------------------+---------+-------+---------+---------+------+
+|Utilization (%)      |        0|      0|       ~0|       ~0|     0|
++---------------------+---------+-------+---------+---------+------+
+
++ Detail: 
+    * Instance: 
+    +---------------------+----------------+---------+----+---+-----+-----+
+    |       Instance      |     Module     | BRAM_18K| DSP| FF| LUT | URAM|
+    +---------------------+----------------+---------+----+---+-----+-----+
+    |mux_325_32_1_1_U465  |mux_325_32_1_1  |        0|   0|  0|  148|    0|
+    |mux_325_32_1_1_U466  |mux_325_32_1_1  |        0|   0|  0|  148|    0|
+    +---------------------+----------------+---------+----+---+-----+-----+
+    |Total                |                |        0|   0|  0|  296|    0|
+    +---------------------+----------------+---------+----+---+-----+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    N/A
+
+    * Expression: 
+    +---------------------------------+----------+----+---+----+------------+------------+
+    |          Variable Name          | Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +---------------------------------+----------+----+---+----+------------+------------+
+    |add_ln32_fu_1035_p2              |         +|   0|  0|  44|          37|           1|
+    |add_ln33_fu_1058_p2              |         +|   0|  0|  13|           6|           1|
+    |add_ln35_fu_1077_p2              |         +|   0|  0|  19|          12|          12|
+    |add_ln36_fu_1087_p2              |         +|   0|  0|  19|          12|          12|
+    |add_ln37_fu_1097_p2              |         +|   0|  0|  19|          12|          12|
+    |distance_buffer_1_33_fu_1282_p2  |         +|   0|  0|  39|          32|          32|
+    |ap_condition_1000                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1003                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1006                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1009                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1012                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1015                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1018                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1021                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1024                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1027                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1030                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1033                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1036                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1039                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1042                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1045                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1048                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1051                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1054                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1057                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1060                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1063                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1066                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1069                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1072                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1075                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1078                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1081                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1084                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1087                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1090                |       and|   0|  0|   2|           1|           1|
+    |ap_condition_1093                |       and|   0|  0|   2|           1|           1|
+    |icmp_ln32_fu_1030_p2             |      icmp|   0|  0|  20|          37|          37|
+    |icmp_ln33_fu_1044_p2             |      icmp|   0|  0|  10|           6|           7|
+    |icmp_ln39_1_fu_1323_p2           |      icmp|   0|  0|  20|          32|          32|
+    |icmp_ln39_fu_1277_p2             |      icmp|   0|  0|  20|          32|           2|
+    |select_ln32_fu_1050_p3           |    select|   0|  0|   6|           1|           1|
+    |ap_enable_pp0                    |       xor|   0|  0|   2|           1|           2|
+    +---------------------------------+----------+----+---+----+------------+------------+
+    |Total                            |          |   0|  0| 295|         252|         183|
+    +---------------------------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    +----------------------------------------------+----+-----------+-----+-----------+
+    |                     Name                     | LUT| Input Size| Bits| Total Bits|
+    +----------------------------------------------+----+-----------+-----+-----------+
+    |ap_done_int                                   |   9|          2|    1|          2|
+    |ap_enable_reg_pp0_iter1                       |   9|          2|    1|          2|
+    |ap_enable_reg_pp0_iter2                       |   9|          2|    1|          2|
+    |ap_sig_allocacmp_distance_buffer_1_10_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_11_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_12_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_13_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_14_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_15_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_16_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_17_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_18_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_19_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_1_load_1   |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_20_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_21_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_22_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_23_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_24_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_25_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_26_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_27_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_28_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_29_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_2_load_1   |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_30_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_31_load_1  |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_3_load_1   |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_4_load_1   |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_5_load_1   |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_6_load_1   |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_7_load_1   |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_8_load_1   |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_9_load_1   |   9|          2|   32|         64|
+    |ap_sig_allocacmp_distance_buffer_1_load_1     |   9|          2|   32|         64|
+    |distance_buffer_1_10_fu_290                   |   9|          2|   32|         64|
+    |distance_buffer_1_11_fu_294                   |   9|          2|   32|         64|
+    |distance_buffer_1_12_fu_298                   |   9|          2|   32|         64|
+    |distance_buffer_1_13_fu_302                   |   9|          2|   32|         64|
+    |distance_buffer_1_14_fu_306                   |   9|          2|   32|         64|
+    |distance_buffer_1_15_fu_310                   |   9|          2|   32|         64|
+    |distance_buffer_1_16_fu_314                   |   9|          2|   32|         64|
+    |distance_buffer_1_17_fu_318                   |   9|          2|   32|         64|
+    |distance_buffer_1_18_fu_322                   |   9|          2|   32|         64|
+    |distance_buffer_1_19_fu_326                   |   9|          2|   32|         64|
+    |distance_buffer_1_1_fu_254                    |   9|          2|   32|         64|
+    |distance_buffer_1_20_fu_330                   |   9|          2|   32|         64|
+    |distance_buffer_1_21_fu_334                   |   9|          2|   32|         64|
+    |distance_buffer_1_22_fu_338                   |   9|          2|   32|         64|
+    |distance_buffer_1_23_fu_342                   |   9|          2|   32|         64|
+    |distance_buffer_1_24_fu_346                   |   9|          2|   32|         64|
+    |distance_buffer_1_25_fu_350                   |   9|          2|   32|         64|
+    |distance_buffer_1_26_fu_354                   |   9|          2|   32|         64|
+    |distance_buffer_1_27_fu_358                   |   9|          2|   32|         64|
+    |distance_buffer_1_28_fu_362                   |   9|          2|   32|         64|
+    |distance_buffer_1_29_fu_366                   |   9|          2|   32|         64|
+    |distance_buffer_1_2_fu_258                    |   9|          2|   32|         64|
+    |distance_buffer_1_30_fu_370                   |   9|          2|   32|         64|
+    |distance_buffer_1_31_fu_374                   |   9|          2|   32|         64|
+    |distance_buffer_1_3_fu_262                    |   9|          2|   32|         64|
+    |distance_buffer_1_4_fu_266                    |   9|          2|   32|         64|
+    |distance_buffer_1_5_fu_270                    |   9|          2|   32|         64|
+    |distance_buffer_1_6_fu_274                    |   9|          2|   32|         64|
+    |distance_buffer_1_7_fu_278                    |   9|          2|   32|         64|
+    |distance_buffer_1_8_fu_282                    |   9|          2|   32|         64|
+    |distance_buffer_1_9_fu_286                    |   9|          2|   32|         64|
+    |distance_buffer_1_fu_250                      |   9|          2|   32|         64|
+    |indvar_flatten_fu_246                         |   9|          2|   37|         74|
+    |j_1_fu_242                                    |   9|          2|    6|         12|
+    +----------------------------------------------+----+-----------+-----+-----------+
+    |Total                                         | 621|        138| 2094|       4188|
+    +----------------------------------------------+----+-----------+-----+-----------+
+
+    * Register: 
+    +--------------------------------------+----+----+-----+-----------+
+    |                 Name                 | FF | LUT| Bits| Const Bits|
+    +--------------------------------------+----+----+-----+-----------+
+    |ap_CS_fsm                             |   1|   0|    1|          0|
+    |ap_done_reg                           |   1|   0|    1|          0|
+    |ap_enable_reg_pp0_iter1               |   1|   0|    1|          0|
+    |ap_enable_reg_pp0_iter2               |   1|   0|    1|          0|
+    |ap_enable_reg_pp0_iter3               |   1|   0|    1|          0|
+    |ap_enable_reg_pp0_iter4               |   1|   0|    1|          0|
+    |ap_loop_exit_ready_pp0_iter2_reg      |   1|   0|    1|          0|
+    |ap_loop_exit_ready_pp0_iter3_reg      |   1|   0|    1|          0|
+    |distance_buffer_1_10_fu_290           |  32|   0|   32|          0|
+    |distance_buffer_1_10_load_1_reg_1981  |  32|   0|   32|          0|
+    |distance_buffer_1_11_fu_294           |  32|   0|   32|          0|
+    |distance_buffer_1_11_load_1_reg_1986  |  32|   0|   32|          0|
+    |distance_buffer_1_12_fu_298           |  32|   0|   32|          0|
+    |distance_buffer_1_12_load_1_reg_1991  |  32|   0|   32|          0|
+    |distance_buffer_1_13_fu_302           |  32|   0|   32|          0|
+    |distance_buffer_1_13_load_1_reg_1996  |  32|   0|   32|          0|
+    |distance_buffer_1_14_fu_306           |  32|   0|   32|          0|
+    |distance_buffer_1_14_load_1_reg_2001  |  32|   0|   32|          0|
+    |distance_buffer_1_15_fu_310           |  32|   0|   32|          0|
+    |distance_buffer_1_15_load_1_reg_2006  |  32|   0|   32|          0|
+    |distance_buffer_1_16_fu_314           |  32|   0|   32|          0|
+    |distance_buffer_1_16_load_1_reg_2011  |  32|   0|   32|          0|
+    |distance_buffer_1_17_fu_318           |  32|   0|   32|          0|
+    |distance_buffer_1_17_load_1_reg_2016  |  32|   0|   32|          0|
+    |distance_buffer_1_18_fu_322           |  32|   0|   32|          0|
+    |distance_buffer_1_18_load_1_reg_2021  |  32|   0|   32|          0|
+    |distance_buffer_1_19_fu_326           |  32|   0|   32|          0|
+    |distance_buffer_1_19_load_1_reg_2026  |  32|   0|   32|          0|
+    |distance_buffer_1_1_fu_254            |  32|   0|   32|          0|
+    |distance_buffer_1_1_load_1_reg_1936   |  32|   0|   32|          0|
+    |distance_buffer_1_20_fu_330           |  32|   0|   32|          0|
+    |distance_buffer_1_20_load_1_reg_2031  |  32|   0|   32|          0|
+    |distance_buffer_1_21_fu_334           |  32|   0|   32|          0|
+    |distance_buffer_1_21_load_1_reg_2036  |  32|   0|   32|          0|
+    |distance_buffer_1_22_fu_338           |  32|   0|   32|          0|
+    |distance_buffer_1_22_load_1_reg_2041  |  32|   0|   32|          0|
+    |distance_buffer_1_23_fu_342           |  32|   0|   32|          0|
+    |distance_buffer_1_23_load_1_reg_2046  |  32|   0|   32|          0|
+    |distance_buffer_1_24_fu_346           |  32|   0|   32|          0|
+    |distance_buffer_1_24_load_1_reg_2051  |  32|   0|   32|          0|
+    |distance_buffer_1_25_fu_350           |  32|   0|   32|          0|
+    |distance_buffer_1_25_load_1_reg_2056  |  32|   0|   32|          0|
+    |distance_buffer_1_26_fu_354           |  32|   0|   32|          0|
+    |distance_buffer_1_26_load_1_reg_2061  |  32|   0|   32|          0|
+    |distance_buffer_1_27_fu_358           |  32|   0|   32|          0|
+    |distance_buffer_1_27_load_1_reg_2066  |  32|   0|   32|          0|
+    |distance_buffer_1_28_fu_362           |  32|   0|   32|          0|
+    |distance_buffer_1_28_load_1_reg_2071  |  32|   0|   32|          0|
+    |distance_buffer_1_29_fu_366           |  32|   0|   32|          0|
+    |distance_buffer_1_29_load_1_reg_2076  |  32|   0|   32|          0|
+    |distance_buffer_1_2_fu_258            |  32|   0|   32|          0|
+    |distance_buffer_1_2_load_1_reg_1941   |  32|   0|   32|          0|
+    |distance_buffer_1_30_fu_370           |  32|   0|   32|          0|
+    |distance_buffer_1_30_load_1_reg_2081  |  32|   0|   32|          0|
+    |distance_buffer_1_31_fu_374           |  32|   0|   32|          0|
+    |distance_buffer_1_31_load_1_reg_2086  |  32|   0|   32|          0|
+    |distance_buffer_1_3_fu_262            |  32|   0|   32|          0|
+    |distance_buffer_1_3_load_1_reg_1946   |  32|   0|   32|          0|
+    |distance_buffer_1_4_fu_266            |  32|   0|   32|          0|
+    |distance_buffer_1_4_load_1_reg_1951   |  32|   0|   32|          0|
+    |distance_buffer_1_5_fu_270            |  32|   0|   32|          0|
+    |distance_buffer_1_5_load_1_reg_1956   |  32|   0|   32|          0|
+    |distance_buffer_1_6_fu_274            |  32|   0|   32|          0|
+    |distance_buffer_1_6_load_1_reg_1961   |  32|   0|   32|          0|
+    |distance_buffer_1_7_fu_278            |  32|   0|   32|          0|
+    |distance_buffer_1_7_load_1_reg_1966   |  32|   0|   32|          0|
+    |distance_buffer_1_8_fu_282            |  32|   0|   32|          0|
+    |distance_buffer_1_8_load_1_reg_1971   |  32|   0|   32|          0|
+    |distance_buffer_1_9_fu_286            |  32|   0|   32|          0|
+    |distance_buffer_1_9_load_1_reg_1976   |  32|   0|   32|          0|
+    |distance_buffer_1_fu_250              |  32|   0|   32|          0|
+    |distance_buffer_1_load_1_reg_1931     |  32|   0|   32|          0|
+    |dst_reg_2091                          |   5|   0|    5|          0|
+    |icmp_ln32_reg_1907                    |   1|   0|    1|          0|
+    |icmp_ln32_reg_1907_pp0_iter2_reg      |   1|   0|    1|          0|
+    |indvar_flatten_fu_246                 |  37|   0|   37|          0|
+    |j_1_fu_242                            |   6|   0|    6|          0|
+    |select_ln32_reg_1911                  |   6|   0|    6|          0|
+    |tmp_reg_2101                          |  32|   0|   32|          0|
+    |weight_reg_2096                       |  32|   0|   32|          0|
+    +--------------------------------------+----+----+-----+-----------+
+    |Total                                 |2176|   0| 2176|          0|
+    +--------------------------------------+----+----+-----+-----------+
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++---------------------------------+-----+-----+------------+-----------------------------------------------------+--------------+
+|            RTL Ports            | Dir | Bits|  Protocol  |                    Source Object                    |    C Type    |
++---------------------------------+-----+-----+------------+-----------------------------------------------------+--------------+
+|ap_clk                           |   in|    1|  ap_ctrl_hs|  PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1|  return value|
+|ap_rst                           |   in|    1|  ap_ctrl_hs|  PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1|  return value|
+|ap_start                         |   in|    1|  ap_ctrl_hs|  PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1|  return value|
+|ap_done                          |  out|    1|  ap_ctrl_hs|  PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1|  return value|
+|ap_idle                          |  out|    1|  ap_ctrl_hs|  PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1|  return value|
+|ap_ready                         |  out|    1|  ap_ctrl_hs|  PE_kernel_Pipeline_sssp_computation_VITIS_LOOP_33_1|  return value|
+|distance_buffer_31_0_reload      |   in|   32|     ap_none|                          distance_buffer_31_0_reload|        scalar|
+|distance_buffer_30_0_reload      |   in|   32|     ap_none|                          distance_buffer_30_0_reload|        scalar|
+|distance_buffer_29_0_reload      |   in|   32|     ap_none|                          distance_buffer_29_0_reload|        scalar|
+|distance_buffer_28_0_reload      |   in|   32|     ap_none|                          distance_buffer_28_0_reload|        scalar|
+|distance_buffer_27_0_reload      |   in|   32|     ap_none|                          distance_buffer_27_0_reload|        scalar|
+|distance_buffer_26_0_reload      |   in|   32|     ap_none|                          distance_buffer_26_0_reload|        scalar|
+|distance_buffer_25_0_reload      |   in|   32|     ap_none|                          distance_buffer_25_0_reload|        scalar|
+|distance_buffer_24_0_reload      |   in|   32|     ap_none|                          distance_buffer_24_0_reload|        scalar|
+|distance_buffer_23_0_reload      |   in|   32|     ap_none|                          distance_buffer_23_0_reload|        scalar|
+|distance_buffer_22_0_reload      |   in|   32|     ap_none|                          distance_buffer_22_0_reload|        scalar|
+|distance_buffer_21_0_reload      |   in|   32|     ap_none|                          distance_buffer_21_0_reload|        scalar|
+|distance_buffer_20_0_reload      |   in|   32|     ap_none|                          distance_buffer_20_0_reload|        scalar|
+|distance_buffer_19_0_reload      |   in|   32|     ap_none|                          distance_buffer_19_0_reload|        scalar|
+|distance_buffer_18_0_reload      |   in|   32|     ap_none|                          distance_buffer_18_0_reload|        scalar|
+|distance_buffer_17_0_reload      |   in|   32|     ap_none|                          distance_buffer_17_0_reload|        scalar|
+|distance_buffer_16_0_reload      |   in|   32|     ap_none|                          distance_buffer_16_0_reload|        scalar|
+|distance_buffer_15_0_reload      |   in|   32|     ap_none|                          distance_buffer_15_0_reload|        scalar|
+|distance_buffer_14_0_reload      |   in|   32|     ap_none|                          distance_buffer_14_0_reload|        scalar|
+|distance_buffer_13_0_reload      |   in|   32|     ap_none|                          distance_buffer_13_0_reload|        scalar|
+|distance_buffer_12_0_reload      |   in|   32|     ap_none|                          distance_buffer_12_0_reload|        scalar|
+|distance_buffer_11_0_reload      |   in|   32|     ap_none|                          distance_buffer_11_0_reload|        scalar|
+|distance_buffer_10_0_reload      |   in|   32|     ap_none|                          distance_buffer_10_0_reload|        scalar|
+|distance_buffer_9_0_reload       |   in|   32|     ap_none|                           distance_buffer_9_0_reload|        scalar|
+|distance_buffer_8_0_reload       |   in|   32|     ap_none|                           distance_buffer_8_0_reload|        scalar|
+|distance_buffer_7_0_reload       |   in|   32|     ap_none|                           distance_buffer_7_0_reload|        scalar|
+|distance_buffer_6_0_reload       |   in|   32|     ap_none|                           distance_buffer_6_0_reload|        scalar|
+|distance_buffer_5_0_reload       |   in|   32|     ap_none|                           distance_buffer_5_0_reload|        scalar|
+|distance_buffer_4_0_reload       |   in|   32|     ap_none|                           distance_buffer_4_0_reload|        scalar|
+|distance_buffer_3_0_reload       |   in|   32|     ap_none|                           distance_buffer_3_0_reload|        scalar|
+|distance_buffer_2_0_reload       |   in|   32|     ap_none|                           distance_buffer_2_0_reload|        scalar|
+|distance_buffer_1_0_reload       |   in|   32|     ap_none|                           distance_buffer_1_0_reload|        scalar|
+|distance_buffer_0_0_reload       |   in|   32|     ap_none|                           distance_buffer_0_0_reload|        scalar|
+|bound                            |   in|   37|     ap_none|                                                bound|        scalar|
+|zext_ln27                        |   in|   12|     ap_none|                                            zext_ln27|        scalar|
+|local_in_a_address0              |  out|   12|   ap_memory|                                           local_in_a|         array|
+|local_in_a_ce0                   |  out|    1|   ap_memory|                                           local_in_a|         array|
+|local_in_a_q0                    |   in|   32|   ap_memory|                                           local_in_a|         array|
+|zext_ln36                        |   in|   12|     ap_none|                                            zext_ln36|        scalar|
+|local_in_b_address0              |  out|   12|   ap_memory|                                           local_in_b|         array|
+|local_in_b_ce0                   |  out|    1|   ap_memory|                                           local_in_b|         array|
+|local_in_b_q0                    |   in|    5|   ap_memory|                                           local_in_b|         array|
+|zext_ln37                        |   in|   12|     ap_none|                                            zext_ln37|        scalar|
+|local_in_c_address0              |  out|   12|   ap_memory|                                           local_in_c|         array|
+|local_in_c_ce0                   |  out|    1|   ap_memory|                                           local_in_c|         array|
+|local_in_c_q0                    |   in|   32|   ap_memory|                                           local_in_c|         array|
+|distance_buffer_31_3_out         |  out|   32|      ap_vld|                             distance_buffer_31_3_out|       pointer|
+|distance_buffer_31_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_31_3_out|       pointer|
+|distance_buffer_30_3_out         |  out|   32|      ap_vld|                             distance_buffer_30_3_out|       pointer|
+|distance_buffer_30_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_30_3_out|       pointer|
+|distance_buffer_29_3_out         |  out|   32|      ap_vld|                             distance_buffer_29_3_out|       pointer|
+|distance_buffer_29_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_29_3_out|       pointer|
+|distance_buffer_28_3_out         |  out|   32|      ap_vld|                             distance_buffer_28_3_out|       pointer|
+|distance_buffer_28_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_28_3_out|       pointer|
+|distance_buffer_27_3_out         |  out|   32|      ap_vld|                             distance_buffer_27_3_out|       pointer|
+|distance_buffer_27_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_27_3_out|       pointer|
+|distance_buffer_26_3_out         |  out|   32|      ap_vld|                             distance_buffer_26_3_out|       pointer|
+|distance_buffer_26_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_26_3_out|       pointer|
+|distance_buffer_25_3_out         |  out|   32|      ap_vld|                             distance_buffer_25_3_out|       pointer|
+|distance_buffer_25_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_25_3_out|       pointer|
+|distance_buffer_24_3_out         |  out|   32|      ap_vld|                             distance_buffer_24_3_out|       pointer|
+|distance_buffer_24_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_24_3_out|       pointer|
+|distance_buffer_23_3_out         |  out|   32|      ap_vld|                             distance_buffer_23_3_out|       pointer|
+|distance_buffer_23_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_23_3_out|       pointer|
+|distance_buffer_22_3_out         |  out|   32|      ap_vld|                             distance_buffer_22_3_out|       pointer|
+|distance_buffer_22_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_22_3_out|       pointer|
+|distance_buffer_21_3_out         |  out|   32|      ap_vld|                             distance_buffer_21_3_out|       pointer|
+|distance_buffer_21_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_21_3_out|       pointer|
+|distance_buffer_20_3_out         |  out|   32|      ap_vld|                             distance_buffer_20_3_out|       pointer|
+|distance_buffer_20_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_20_3_out|       pointer|
+|distance_buffer_19_3_out         |  out|   32|      ap_vld|                             distance_buffer_19_3_out|       pointer|
+|distance_buffer_19_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_19_3_out|       pointer|
+|distance_buffer_18_3_out         |  out|   32|      ap_vld|                             distance_buffer_18_3_out|       pointer|
+|distance_buffer_18_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_18_3_out|       pointer|
+|distance_buffer_17_3_out         |  out|   32|      ap_vld|                             distance_buffer_17_3_out|       pointer|
+|distance_buffer_17_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_17_3_out|       pointer|
+|distance_buffer_16_3_out         |  out|   32|      ap_vld|                             distance_buffer_16_3_out|       pointer|
+|distance_buffer_16_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_16_3_out|       pointer|
+|distance_buffer_15_3_out         |  out|   32|      ap_vld|                             distance_buffer_15_3_out|       pointer|
+|distance_buffer_15_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_15_3_out|       pointer|
+|distance_buffer_14_3_out         |  out|   32|      ap_vld|                             distance_buffer_14_3_out|       pointer|
+|distance_buffer_14_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_14_3_out|       pointer|
+|distance_buffer_13_3_out         |  out|   32|      ap_vld|                             distance_buffer_13_3_out|       pointer|
+|distance_buffer_13_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_13_3_out|       pointer|
+|distance_buffer_12_3_out         |  out|   32|      ap_vld|                             distance_buffer_12_3_out|       pointer|
+|distance_buffer_12_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_12_3_out|       pointer|
+|distance_buffer_11_3_out         |  out|   32|      ap_vld|                             distance_buffer_11_3_out|       pointer|
+|distance_buffer_11_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_11_3_out|       pointer|
+|distance_buffer_10_3_out         |  out|   32|      ap_vld|                             distance_buffer_10_3_out|       pointer|
+|distance_buffer_10_3_out_ap_vld  |  out|    1|      ap_vld|                             distance_buffer_10_3_out|       pointer|
+|distance_buffer_9_3_out          |  out|   32|      ap_vld|                              distance_buffer_9_3_out|       pointer|
+|distance_buffer_9_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_9_3_out|       pointer|
+|distance_buffer_8_3_out          |  out|   32|      ap_vld|                              distance_buffer_8_3_out|       pointer|
+|distance_buffer_8_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_8_3_out|       pointer|
+|distance_buffer_7_3_out          |  out|   32|      ap_vld|                              distance_buffer_7_3_out|       pointer|
+|distance_buffer_7_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_7_3_out|       pointer|
+|distance_buffer_6_3_out          |  out|   32|      ap_vld|                              distance_buffer_6_3_out|       pointer|
+|distance_buffer_6_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_6_3_out|       pointer|
+|distance_buffer_5_3_out          |  out|   32|      ap_vld|                              distance_buffer_5_3_out|       pointer|
+|distance_buffer_5_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_5_3_out|       pointer|
+|distance_buffer_4_3_out          |  out|   32|      ap_vld|                              distance_buffer_4_3_out|       pointer|
+|distance_buffer_4_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_4_3_out|       pointer|
+|distance_buffer_3_3_out          |  out|   32|      ap_vld|                              distance_buffer_3_3_out|       pointer|
+|distance_buffer_3_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_3_3_out|       pointer|
+|distance_buffer_2_3_out          |  out|   32|      ap_vld|                              distance_buffer_2_3_out|       pointer|
+|distance_buffer_2_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_2_3_out|       pointer|
+|distance_buffer_1_3_out          |  out|   32|      ap_vld|                              distance_buffer_1_3_out|       pointer|
+|distance_buffer_1_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_1_3_out|       pointer|
+|distance_buffer_0_3_out          |  out|   32|      ap_vld|                              distance_buffer_0_3_out|       pointer|
+|distance_buffer_0_3_out_ap_vld   |  out|    1|      ap_vld|                              distance_buffer_0_3_out|       pointer|
++---------------------------------+-----+-----+------------+-----------------------------------------------------+--------------+
+

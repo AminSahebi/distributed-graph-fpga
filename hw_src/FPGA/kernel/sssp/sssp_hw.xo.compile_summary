@@ -1,0 +1,54 @@
+<ENTRY>
+{
+ "thisFile": "/home/u250/temp/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_hw.xo.compile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Mon Jul 10 17:14:16 2023",
+ "timestampMillis": "1689002056785",
+ "buildStep": {
+  "cmdId": "d59cc4f8-18c2-45c2-9d06-21be910e51c0",
+  "name": "v++",
+  "logFile": "/home/u250/temp/distributed-graph-fpga/hw_src/FPGA/_x/sssp_hw/sssp_hw.steps.log",
+  "commandLine": "/tools/Xilinx/Vitis/2021.1/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -s -t hw --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 -I/home/u250/temp/distributed-graph-fpga/hw_src/FPGA/kernel --hls.jobs 8 --vivado.synth.jobs 8 --vivado.impl.jobs 8 -c -k sssp_hw -o /home/u250/temp/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_hw.xo /home/u250/temp/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_kernel.cpp ",
+  "args": [
+   "-s",
+   "-t",
+   "hw",
+   "--platform",
+   "xilinx_u250_gen3x16_xdma_4_1_202210_1",
+   "-I/home/u250/temp/distributed-graph-fpga/hw_src/FPGA/kernel",
+   "--hls.jobs",
+   "8",
+   "--vivado.synth.jobs",
+   "8",
+   "--vivado.impl.jobs",
+   "8",
+   "-c",
+   "-k",
+   "sssp_hw",
+   "-o",
+   "/home/u250/temp/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_hw.xo",
+   "/home/u250/temp/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_kernel.cpp"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/u250/temp/distributed-graph-fpga/hw_src/FPGA"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Mon Jul 10 17:14:16 2023",
+ "timestampMillis": "1689002056785",
+ "status": {
+  "cmdId": "d59cc4f8-18c2-45c2-9d06-21be910e51c0",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
