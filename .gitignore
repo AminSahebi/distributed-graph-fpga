@@ -5,9 +5,16 @@
 
 # Node artifact files
 node_modules/
-
+debug/
+_x/
+sssp/hardware/
+wcc/hardware/
+pagerank/hardware/
+spmv/hardware/
+bfs/hardware
 dist/
-
+hw_src/FPGA/.ipcache
+hw_src/FPGA/_x
 build/
 
 hw_src/fpga/.ipcache

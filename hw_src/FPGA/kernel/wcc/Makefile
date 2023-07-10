@@ -32,6 +32,9 @@ sssp_app := sssp
 PR_HW := pagerank_hw
 PR_XCLBIN := pagerank_hw.xclbin
 
+SSSP_HW := sssp_hw
+SSSP_XCLBIN := sssp_hw.xclbin
+
 # kernel rules
 # pagerank
 PR_XOS := pagerank_hw.xo
@@ -51,13 +54,13 @@ $(PR_XCLBIN): $(pr_hw_srcdir)/$(PR_XOS)
 	$(VPP) $(VPP_COMMON_OPTS) -l -o $(pr_hw_bindir)/$@ $+ $(PR_CONN) 
 
 
-SSSP_HW := sssp_kernel_0
-SSSP_XCLBIN := sssp_kernel_0.xclbin
+SSSP_HW := sssp_hw
+SSSP_XCLBIN := sssp_hw.xclbin
 
 # kernel rules
 # sssp
-SSSP_XOS := sssp_kernel_0.xo
-SSSP_XCLBIN := sssp_kernel_0.xclbin
+SSSP_XOS := sssp_hw.xo
+SSSP_XCLBIN := sssp_hw.xclbin
 SSSP_CONN := --config $(CURRENT_DIR)/kernel/sssp/connectivity_sssp.cfg #--kernel_frequency=350
 sssp_hw_srcdir:= $(CURRENT_DIR)/kernel/sssp
 sssp_hw_bindir:= $(CURRENT_DIR)/kernel/sssp/hardware

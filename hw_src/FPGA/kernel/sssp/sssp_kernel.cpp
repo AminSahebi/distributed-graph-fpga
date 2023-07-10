@@ -4,9 +4,9 @@
 //#include "defn.h"
 
 #define DAMPING_FACTOR 	0.85
-#define BUFFER_SIZE 	4096
+#define BUFFER_SIZE 	2048
 #define DATA_WIDTH 	512
-#define PE 		128
+#define PE 		64
 
 #define BUF_PER_PE	BUFFER_SIZE/PE
 
