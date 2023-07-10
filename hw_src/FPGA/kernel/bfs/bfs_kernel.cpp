@@ -17,77 +17,112 @@ limitations under the License.
 
 #include <ap_int.h>
 #include <stdint.h>
-#include "defn.h"
+#include <string.h>
+//#include "defn.h"
 
-#define DAMPING_FACTOR 	0.85
-#define BUFFER_SIZE 	128
+#define BUFFER_SIZE 	4096
 #define DATA_WIDTH 	512
-#define PE 		8	
+#define PE 		64	
 
 
 #define BUF_PER_PE	BUFFER_SIZE/PE
 
 typedef ap_uint<DATA_WIDTH> u_data;
+//typedef ap_uint<64> u32;
+
 typedef unsigned int u32;
 typedef unsigned int u16;
 int v;
+
+int CAS(long * ptr, long oldV, long newV){
+		return(__sync_bool_compare_and_swap((long*)ptr, *((long*)&oldV), *((long*)&newV)));
+}
+
+
 void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_in_c[], u32 local_out[]) {
-    u32 vector_buffer[BUF_PER_PE]; // Local memory to store the input vector
-    u32 result_buffer[BUF_PER_PE]; // Local memory to store the partial results
+    u32 frontier_buffer[BUF_PER_PE]; // Local memory to store the frontier
+    u32 next_frontier_buffer[BUF_PER_PE]; // Local memory to store the next frontier
+    bool visited_buffer[BUF_PER_PE]; // Local memory to store visited flags
 
-    // Load the input vector
+    // Initialize frontier, next frontier, and visited flags
     for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-        vector_buffer[j] = local_in_a[j];
-        result_buffer[j] = 0;
+        frontier_buffer[j] = (local_in_a[j] == 0) ? 1 : 0; // Set the source vertex as the initial frontier
+        next_frontier_buffer[j] = 0;
+        visited_buffer[j] = false;
     }
 
-    // Perform SPMV computation
-    for (int j = 0; j < BUF_PER_PE; j++) {
+    // Perform BFS traversal
+    int level = 0;
+    while (true) {
+        bool frontier_empty = true;
+        for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-        u32 row = local_in_b[j]; // Row index buffer
-        u32 col = local_in_c[j]; // Column index buffer
-        u32 value = local_in_a[j]; // Non-zero value buffer
+            if (frontier_buffer[j]) {
+                frontier_empty = false;
+                u32 src = local_in_a[j]; // Edge source buffer
+                u32 dst = local_in_b[j]; // Edge destination buffer
 
-        result_buffer[row] += value * vector_buffer[col];
+                // Visit unvisited vertices and add them to the next frontier
+                if (!visited_buffer[dst]) {
+                    visited_buffer[dst] = true;
+                    next_frontier_buffer[dst] = 1;
+                }
+            }
+        }
+
+        // Exit the loop if the frontier is empty
+        if (frontier_empty) {
+            break;
+        }
+
+        // Copy the next frontier to the current frontier
+        for (int j = 0; j < BUF_PER_PE; j++) {
+#pragma HLS pipeline
+            frontier_buffer[j] = next_frontier_buffer[j];
+            next_frontier_buffer[j] = 0;
+        }
+
+        level++;
     }
 
-    // Write the computed results to the output buffer
+    // Write the computed levels to the output buffer
     for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-        local_out[j] = result_buffer[j];
+        local_out[j] = level * visited_buffer[j]; // Write the level only if the vertex was visited
     }
 }
 
 
 void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u_data *global_in_a, u_data *global_in_b, u_data *global_in_c) {
 	// burst read
-load_loop:	for(int i = 0; i < PE; i++){
+	memcpy(local_in_a,global_in_a,BUF_PER_PE);
+	memcpy(local_in_b,global_in_b,BUF_PER_PE);
+	memcpy(local_in_c,global_in_c,BUF_PER_PE);
+/*load_loop:	for(int i = 0; i < PE; i++){
 			for(int j = 0; j < BUF_PER_PE; j++) { // for each PE
-#pragma HLS pipeline II = 1
-				local_in_a[i][j] = global_in_a[i*BUF_PER_PE + j];
-				//DEBUG_PRINTF("local_in_a  %d %d %d\n", i, local_in_a[i][j]);
-
+#pragma HLS pipeline II = 1 
 				local_in_b[i][j] = global_in_b[i*BUF_PER_PE + j];
 				local_in_c[i][j] = global_in_c[i*BUF_PER_PE + j];
+				local_in_a[i][j] = global_in_a[i*BUF_PER_PE + j];
 			}
-		}
+		}*/
 }
 
 void buffer_compute(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE]) {
 	// kernel replication
 compute_loop:	for (int i=0; i < PE; i++) {
-#pragma HLS unroll
+#pragma HLS UNROLL
 			PE_kernel(local_in_a[i], local_in_b[i], local_in_c[i], local_out[i]);
-
 		}
+
 }
 
 void buffer_store(u_data global_out, u32 local_out[PE][BUF_PER_PE]) {
 
 store_loop:	for(int i = 0; i < PE; i++)
 			for(int j = 0; j < BUF_PER_PE; j++) { // for each PE
-#pragma HLS pipeline II = 1
+#pragma HLS pipeline //II = 2
 				u32 temp = local_out[i][j];
 				global_out[i*BUF_PER_PE] = temp;
 			}
@@ -95,7 +130,7 @@ store_loop:	for(int i = 0; i < PE; i++)
 
 
 extern "C" {
-	void spmv_hw(
+	void kernel_pagerank_0(
 			u_data *e_src, 		// edge souces
 			u_data *e_dst, 		// edge destinations
 			u_data *out_degree, 	// out_degrees
@@ -103,10 +138,10 @@ extern "C" {
 			int size,               // size of each edge block
 			int vertices		// number of vertices
 			) {
-#pragma HLS INTERFACE m_axi port = e_src offset = slave bundle=gmem num_write_outstanding=128 max_write_burst_length=128 num_read_outstanding=128 max_read_burst_length=128
-#pragma HLS INTERFACE m_axi port = e_dst offset = slave bundle=gmem num_write_outstanding=128 max_write_burst_length=128 num_read_outstanding=128 max_read_burst_length=128
-#pragma HLS INTERFACE m_axi port = out_degree offset = slave bundle=gmem num_write_outstanding=128 max_write_burst_length=128 num_read_outstanding=128 max_read_burst_length=128
-#pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem num_write_outstanding=128 max_write_burst_length=128 num_read_outstanding=128 max_read_burst_length=128
+#pragma HLS INTERFACE m_axi port = e_src offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = e_dst offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = out_degree offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 		v = vertices;
 		//create local buffers
 		u32 e_src_buffer_a[PE][BUF_PER_PE];   // Local memory to store edge source
@@ -145,17 +180,17 @@ extern "C" {
 		u32 local_in_c[PE][BUF_PER_PE]; // Local temp for kernel computation
 #pragma HLS ARRAY_PARTITION variable=local_in_c dim=1 complete
 
-#pragma HLS DATAFLOW
+
 		for (int i = 0; i < size/BUFFER_SIZE+1; i++) {
 			//double duffering
 			if(i % 2 ==0) {
-				buffer_load(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, e_src+i*BUFFER_SIZE, e_dst+i*BUFFER_SIZE, out_degree+i*BUFFER_SIZE);
+				buffer_load(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, e_src+i*BUF_PER_PE, e_dst+i*BUF_PER_PE, out_degree+i*BUF_PER_PE);
 				buffer_compute(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, output_buffer_b);
-				buffer_store(*out_r+i*BUFFER_SIZE, output_buffer_a);
+				buffer_store(*out_r+i*BUF_PER_PE, output_buffer_a);
 			} else {
-				buffer_load(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, e_src+i*BUFFER_SIZE, e_dst+i*BUFFER_SIZE, out_degree+i*BUFFER_SIZE);
+				buffer_load(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, e_src+i*BUF_PER_PE, e_dst+i*BUF_PER_PE, out_degree+i*BUF_PER_PE);
 				buffer_compute(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, output_buffer_a);
-				buffer_store(out_r+i*BUFFER_SIZE, output_buffer_b);
+				buffer_store(out_r+i*BUF_PER_PE, output_buffer_b);
 
 			}
 		}

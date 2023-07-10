@@ -38,35 +38,40 @@ int CAS(long * ptr, long oldV, long newV){
 		return(__sync_bool_compare_and_swap((long*)ptr, *((long*)&oldV), *((long*)&newV)));
 }
 
-
 void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_in_c[], u32 local_out[]) {
+    u32 distance_buffer[BUF_PER_PE]; // Local memory to store distances
+#pragma HLS ARRAY_PARTITION variable=distance_buffer dim=0
 
-	u32 prev_buffer[BUF_PER_PE]; // Local Memory to store result
-#pragma HLS ARRAY_PARTITION variable=prev_buffer dim=0
-	u32 rank_buffer[BUF_PER_PE]; // Local Memory to store result
-#pragma HLS ARRAY_PARTITION variable=rank_buffer dim=0
-	// start init grid algorithm and
-	// init "rank" and "prev" memories.
-
-	float adding_constant = (1 - DAMPING_FACTOR) * 1/(float)v;
-	float one_over_n = 1.0/(float)v;
-
-loop_initialization:	for(int j = 0; j < BUF_PER_PE; j++){
+    // Initialize distances
+init_distances:
+    for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-				prev_buffer[j] = one_over_n;
-				rank_buffer[j] = 0.0;
-			}
+        distance_buffer[j] = (local_in_a[j] == 0) ? 0 : UINT32_MAX;
+    }
 
+    // Perform SSSP computation
+sssp_computation:
+    for (int k = 0; k < v - 1; k++) {
+        for (int j = 0; j < BUF_PER_PE; j++) {
+#pragma HLS pipeline
+            if (distance_buffer[j] != UINT32_MAX) {
+                u32 src = local_in_a[j]; // Edge source buffer
+                u32 dst = local_in_b[j]; // Edge destination buffer
+                u32 weight = local_in_c[j]; // Edge weight buffer
 
-kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
-#pragma HLS pipeline //II=1
-				u32 src = local_in_a[j]; //edge src buffer
-				u32 dst = local_in_b[j]; //edge dst buffer
-				u32 deg = local_in_c[j]; //outdegree buffer
-				u32 temp = prev_buffer[src]/deg;
-				rank_buffer[dst] = temp;
-				local_out[j] = rank_buffer[dst];
-			}
+                if (distance_buffer[src] + weight < distance_buffer[dst]) {
+                    distance_buffer[dst] = distance_buffer[src] + weight;
+                }
+            }
+        }
+    }
+
+    // Write computed distances to output buffer
+write_distances:
+    for (int j = 0; j < BUF_PER_PE; j++) {
+#pragma HLS pipeline
+        local_out[j] = distance_buffer[j];
+    }
 }
 
 
