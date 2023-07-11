@@ -101,7 +101,7 @@ printf("[%d][%d] , begin offset %ld , end offset %ld \n", i , j, begin_offset,en
 	 * the aligned buffers in the host RAM) 
 	 */
 	int p2=partitions*partitions;
-	int num_cu=partitions-1;
+	int num_cu=p2-1;
 	//	int* ffsize = new int [p2];
 	std::vector<int, aligned_allocator<int> > fsize(p2);
 	for(int i =0 ; i < partitions; i++){
@@ -200,28 +200,28 @@ delete[] fileBuf;
 
 
 /** Create Kernels */
-//OCL_CHECK(err, cl::Kernel kernel(program,"kernel_pagerank_0", &err));
+//OCL_CHECK(err, cl::Kernel kernel(program,"sssp_kernel_0", &err));
 std::vector<cl::Kernel> krnls(num_cu);
-//	OCL_CHECK(err, krnls[i] = cl::Kernel(program, "kernel_pagerank_0", &err));
+//	OCL_CHECK(err, krnls[i] = cl::Kernel(program, "sssp_kernel_0", &err));
 
-krnls[0] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_1}", &err);
-krnls[1] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_2}", &err);
-krnls[2] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_3}", &err);
-krnls[3] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_4}", &err);
-krnls[4] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_5}", &err);
-krnls[5] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_6}", &err);
-krnls[6] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_7}", &err);
-krnls[7] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_8}", &err);
-krnls[8] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_9}", &err);
-krnls[9] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_10}", &err);
-krnls[10] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_11}", &err);
-krnls[11] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_12}", &err);
-krnls[12] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_13}", &err);
-krnls[13] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_14}", &err);
-krnls[14] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_15}", &err);
+krnls[0] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_1}", &err);
+krnls[1] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_2}", &err);
+krnls[2] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_3}", &err);
+krnls[3] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_4}", &err);
+krnls[4] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_5}", &err);
+krnls[5] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_6}", &err);
+krnls[6] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_7}", &err);
+krnls[7] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_8}", &err);
+krnls[8] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_9}", &err);
+krnls[9] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_10}", &err);
+krnls[10] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_11}", &err);
+krnls[11] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_12}", &err);
+krnls[12] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_13}", &err);
+krnls[13] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_14}", &err);
+krnls[14] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_15}", &err);
 
 
-std::vector<cl::Buffer> outDegree(num_cu);
+//std::vector<cl::Buffer> outDegree(num_cu);
 std::vector<cl::Buffer> edgeSrc(num_cu);
 std::vector<cl::Buffer> edgeDst(num_cu);
 std::vector<cl::Buffer> output(num_cu);
@@ -229,14 +229,14 @@ std::vector<cl::Buffer> ffsize(num_cu);
 
 for (int i = 0; i < num_cu; i++) {
 	/** Host buffers pointers */
-	OCL_CHECK(err, 
-			outDegree[i] = 
-			cl::Buffer(context, 
-				CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, 
-				DATA_SIZE * sizeof(uint32_t), 
-				outdegree.data(), 
-				&err)
-		 );
+//	OCL_CHECK(err, 
+//			outDegree[i] = 
+//			cl::Buffer(context, 
+//				CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, 
+//				DATA_SIZE * sizeof(uint32_t), 
+//				outdegree.data(), 
+//				&err)
+//		 );
 
 	OCL_CHECK(err,
 			edgeSrc[i] = 
@@ -278,17 +278,17 @@ for (int i = 0; i < num_cu; i++) {
 	/** setting the kernel arguments */
 	OCL_CHECK(err, err = krnls[i].setArg(0, edgeSrc[i]));
 	OCL_CHECK(err, err = krnls[i].setArg(1, edgeDst[i]));	
-	OCL_CHECK(err, err = krnls[i].setArg(2, outDegree[i]));	
+//	OCL_CHECK(err, err = krnls[i].setArg(2, outDegree[i]));	
 
 	OCL_CHECK(err, err = krnls[i].setArg(3, output[i]));	
 	OCL_CHECK(err, err = krnls[i].setArg(4, fsize[i]));	
 	OCL_CHECK(err, err = krnls[i].setArg(5, vertices));
-	OCL_CHECK(err, err = krnls[i].setArg(6, partitions));
+//	OCL_CHECK(err, err = krnls[i].setArg(6, partitions));
 
 	/** copy data to the device global memory */
 	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({edgeSrc[i]}, 0 ));
 	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({edgeDst[i]}, 0 ));
-	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({outDegree[i]}, 0 ));
+//	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({outDegree[i]}, 0 ));
 	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({ffsize[i]}, 0 ));
 }
 
