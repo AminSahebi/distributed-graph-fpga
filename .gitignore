@@ -16,9 +16,12 @@ dist/
 hw_src/FPGA/.ipcache
 hw_src/FPGA/_x
 build/
-
+*.o
+*.report
+*.log
+*.jou
 hw_src/fpga/.ipcache
-
+hw_src/FPGA/tools/.Xil/
 cmake-build-debug/
 # Compiled Java class files
 *.class

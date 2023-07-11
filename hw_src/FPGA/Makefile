@@ -29,13 +29,13 @@ spmv_app := spmv
 sssp_app := sssp
 
 # kernel targets
-PR_HW := pagerank_hw
-PR_XCLBIN := pagerank_hw.xclbin
+PR_HW := pagerank_kernel
+PR_XCLBIN := pagerank_kernel.xclbin
 
 # kernel rules
 # pagerank
-PR_XOS := pagerank_hw.xo
-PR_XCLBIN := pagerank_hw.xclbin
+PR_XOS := pagerank_kernel.xo
+PR_XCLBIN := pagerank_kernel.xclbin
 PR_CONN := --config $(CURRENT_DIR)/kernel/pagerank/connectivity_pagerank.cfg #--kernel_frequency=350
 pr_hw_srcdir:= $(CURRENT_DIR)/kernel/pagerank/
 pr_hw_bindir:= $(CURRENT_DIR)/kernel/pagerank/hardware
