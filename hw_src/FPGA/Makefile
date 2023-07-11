@@ -18,8 +18,8 @@ VPP_COMMON_OPTS := -s -t $(MODE) --platform $(PLATFORM) #  -g --profile.data all
 CFLAGS := -std=c++14 -I$(XILINX_XRT)/include -I$(CURRENT_DIR)/utils #-I/$(CURRENT_DIR)/fpga
 #CLAGS += -g
 
-VPP_COMMON_OPTS += -I$(CURRENT_DIR)/kernel --hls.jobs 8
-VPP_COMMON_OPTS += --vivado.synth.jobs 8 --vivado.impl.jobs 8
+VPP_COMMON_OPTS += -I$(CURRENT_DIR)/kernel --hls.jobs 16 
+VPP_COMMON_OPTS += --vivado.synth.jobs 8 --vivado.impl.jobs 16
 #VPP_COMMON_OPTS += --optimize 3
 
 LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lpthread -lrt
