@@ -221,7 +221,6 @@ krnls[13] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_14}", &err);
 krnls[14] = cl::Kernel(program, "sssp_kernel_0:{sssp_kernel_0_15}", &err);
 
 
-//std::vector<cl::Buffer> outDegree(num_cu);
 std::vector<cl::Buffer> edgeSrc(num_cu);
 std::vector<cl::Buffer> edgeDst(num_cu);
 std::vector<cl::Buffer> output(num_cu);
@@ -229,15 +228,6 @@ std::vector<cl::Buffer> ffsize(num_cu);
 
 for (int i = 0; i < num_cu; i++) {
 	/** Host buffers pointers */
-//	OCL_CHECK(err, 
-//			outDegree[i] = 
-//			cl::Buffer(context, 
-//				CL_MEM_READ_ONLY | CL_MEM_USE_HOST_PTR, 
-//				DATA_SIZE * sizeof(uint32_t), 
-//				outdegree.data(), 
-//				&err)
-//		 );
-
 	OCL_CHECK(err,
 			edgeSrc[i] = 
 			cl::Buffer(context,
@@ -278,17 +268,12 @@ for (int i = 0; i < num_cu; i++) {
 	/** setting the kernel arguments */
 	OCL_CHECK(err, err = krnls[i].setArg(0, edgeSrc[i]));
 	OCL_CHECK(err, err = krnls[i].setArg(1, edgeDst[i]));	
-//	OCL_CHECK(err, err = krnls[i].setArg(2, outDegree[i]));	
-
-	OCL_CHECK(err, err = krnls[i].setArg(3, output[i]));	
-	OCL_CHECK(err, err = krnls[i].setArg(4, fsize[i]));	
-	OCL_CHECK(err, err = krnls[i].setArg(5, vertices));
-//	OCL_CHECK(err, err = krnls[i].setArg(6, partitions));
-
+	OCL_CHECK(err, err = krnls[i].setArg(2, output[i]));	
+	OCL_CHECK(err, err = krnls[i].setArg(3, ffsize[i]));	
+	OCL_CHECK(err, err = krnls[i].setArg(4, vertices));
 	/** copy data to the device global memory */
 	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({edgeSrc[i]}, 0 ));
 	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({edgeDst[i]}, 0 ));
-//	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({outDegree[i]}, 0 ));
 	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({ffsize[i]}, 0 ));
 }
 
@@ -304,88 +289,28 @@ OCL_CHECK(err, err = q.finish());
 printf("[INFO] Kernel(s) execution time: %f sec\n", get_time() - start_krnl);
 
 /*
-   auto start_cp_out = get_time();
-   for (int i = 0; i < num_cu; i++) {
+auto start_cp_out = get_time();
+for (int i = 0; i < num_cu; i++) {
 
-   OCL_CHECK(err,
-   err = q.enqueueMigrateMemObjects({output[i]},
-   CL_MIGRATE_MEM_OBJECT_HOST));
-   }
-   printf("[INFO] move from Global Memory to host: %f sec\n", get_time() - start_cp_out);
+	OCL_CHECK(err,
+			err = q.enqueueMigrateMemObjects({output[i]},
+				CL_MIGRATE_MEM_OBJECT_HOST));
+}
+printf("[INFO] move from Global Memory to host: %f sec\n", get_time() - start_cp_out);
 
 // write the output result into a file 
 std::ofstream out ("out.txt");
 if (out.is_open())
 {
-for(int count = 0; count < size; count ++){
-out << buffer_out[count] << "\n";
-}
-out.close();
+	for(int count = 0; count < size; count ++){
+		out << buffer_out[count] << "\n";
+	}
+	out.close();
 }
 */
 printf("finish\n");
 q.finish();
 
 }
-//   std::vector<cl::Event> events_enqueueTask(numIter);
-//
-/*
-#ifndef USE_HBM
-std::vector<cl_mem_ext_ptr_t> mext_in(9);
-
-mext_in[0].flags = XCL_MEM_DDR_BANK0;
-mext_in[0].obj = offsetArr; // pagerank2;
-mext_in[0].param = 0;
-mext_in[1].flags = XCL_MEM_DDR_BANK0;
-mext_in[1].obj = indiceArr;
-mext_in[1].param = 0;
-mext_in[2].flags = XCL_MEM_DDR_BANK0;
-mext_in[2].obj = weightArr;
-mext_in[2].param = 0;
-mext_in[3].flags = XCL_MEM_DDR_BANK0;
-mext_in[3].flags = XCL_MEM_DDR_BANK0;
-mext_in[3].obj = degreeCSR;
-mext_in[3].param = 0;
-mext_in[4].flags = XCL_MEM_DDR_BANK0;
-mext_in[4].obj = cntValFull;
-mext_in[4].param = 0;
-mext_in[5].flags = XCL_MEM_DDR_BANK0;
-mext_in[5].obj = buffPing;
-mext_in[5].param = 0;
-mext_in[6].flags = XCL_MEM_DDR_BANK0;
-mext_in[6].obj = buffPong;
-mext_in[6].param = 0;
-mext_in[7].flags = XCL_MEM_DDR_BANK0;
-mext_in[7].obj = resultInfo;
-mext_in[7].param = 0;
-mext_in[8].flags = XCL_MEM_DDR_BANK0;
-mext_in[8].obj = orderUnroll;
-mext_in[8].param = 0;
-#else
-
-std::vector<cl_mem_ext_ptr_t> mem_ext(9);
-mext_in[0].flags = XCL_BANK0;
-mext_in[0].obj = offsetArr;
-mext_in[0].param = 0;
-mext_in[1].flags = XCL_BANK2;
-mext_in[1].obj = indiceArr;
-mext_in[1].param = 0;
-mext_in[2].flags = XCL_BANK4;
-mext_in[2].obj = weightArr;
-mext_in[2].param = 0;
-mext_in[3].flags = XCL_BANK6;
-mext_in[3].obj = degreeCSR;
-mext_in[3].param = 0;
-mext_in[4].flags = XCL_BANK8;
-mext_in[4].obj = cntValFull;
-mext_in[4].param = 0;
-mext_in[5].flags = XCL_BANK10;
-mext_in[5].obj = buffPing;
-#endif
-*/
-
-/** after all preparations call the kernel */
-//pagerank_kernel();
-
 
 
