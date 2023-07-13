@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                sssp_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          afd3e725-443f-4668-6501-b76d4c7a6d7f
+   UUID (xclbin):          61b4bd45-b779-edf6-7e69-a70ff3809246
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -141,7 +141,7 @@ Kernel: sssp_kernel_0
 
 Definition
 ----------
-   Signature: sssp_kernel_0 (void* e_src, void* e_dst, void* out_degree, void* out_r, unsigned int size, unsigned int vertices)
+   Signature: sssp_kernel_0 (void* e_src, void* e_dst, void* out_r, unsigned int size, unsigned int vertices)
 
 Ports
 -----
@@ -153,7 +153,7 @@ Ports
 
    Port:          S_AXI_CONTROL
    Mode:          slave
-   Range (bytes): 0x50
+   Range (bytes): 0x44
    Data Width:    32 bits
    Port Type:     addressable
 
@@ -171,23 +171,18 @@ Instance:        sssp_kernel_0_1
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -205,23 +200,18 @@ Instance:        sssp_kernel_0_2
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -239,23 +229,18 @@ Instance:        sssp_kernel_0_3
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -273,23 +258,18 @@ Instance:        sssp_kernel_0_4
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -307,23 +287,18 @@ Instance:        sssp_kernel_0_5
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -341,23 +316,18 @@ Instance:        sssp_kernel_0_6
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -375,23 +345,18 @@ Instance:        sssp_kernel_0_7
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -409,23 +374,18 @@ Instance:        sssp_kernel_0_8
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -443,23 +403,18 @@ Instance:        sssp_kernel_0_9
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -477,23 +432,18 @@ Instance:        sssp_kernel_0_10
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -511,23 +461,18 @@ Instance:        sssp_kernel_0_11
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -545,23 +490,18 @@ Instance:        sssp_kernel_0_12
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -579,23 +519,18 @@ Instance:        sssp_kernel_0_13
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -613,23 +548,18 @@ Instance:        sssp_kernel_0_14
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -647,23 +577,18 @@ Instance:        sssp_kernel_0_15
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          out_r
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
-   Register Offset:   0x34
-   Port:              M_AXI_GMEM
-   Memory:            HOST[0] (MEM_DRAM)
-
    Argument:          size
-   Register Offset:   0x40
+   Register Offset:   0x34
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x48
+   Register Offset:   0x3C
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 ==============================================================================
@@ -671,7 +596,7 @@ Generated By
 ------------
    Command:       v++
    Version:       2022.2 - 2022-10-13-17:52:11 (SW BUILD: 3671529)
-   Command Line:  v++ --config /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/connectivity_sssp.cfg --connectivity.nk sssp_kernel_0:15:sssp_kernel_0_1.sssp_kernel_0_2.sssp_kernel_0_3.sssp_kernel_0_4.sssp_kernel_0_5.sssp_kernel_0_6.sssp_kernel_0_7.sssp_kernel_0_8.sssp_kernel_0_9.sssp_kernel_0_10.sssp_kernel_0_11.sssp_kernel_0_12.sssp_kernel_0_13.sssp_kernel_0_14.sssp_kernel_0_15 --connectivity.slr sssp_kernel_0_1:SLR0 --connectivity.slr sssp_kernel_0_2:SLR0 --connectivity.slr sssp_kernel_0_3:SLR0 --connectivity.slr sssp_kernel_0_4:SLR0 --connectivity.slr sssp_kernel_0_5:SLR1 --connectivity.slr sssp_kernel_0_6:SLR1 --connectivity.slr sssp_kernel_0_7:SLR1 --connectivity.slr sssp_kernel_0_8:SLR1 --connectivity.slr sssp_kernel_0_9:SLR2 --connectivity.slr sssp_kernel_0_10:SLR2 --connectivity.slr sssp_kernel_0_11:SLR2 --connectivity.slr sssp_kernel_0_12:SLR2 --connectivity.slr sssp_kernel_0_13:SLR3 --connectivity.slr sssp_kernel_0_14:SLR3 --connectivity.slr sssp_kernel_0_15:SLR3 --connectivity.sp sssp_kernel_0_1.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_2.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_3.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_4.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_5.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_6.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_7.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_8.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_9.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_10.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_11.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_12.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_13.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_14.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_15.m_axi_gmem:HOST[0] --hls.jobs 16 --include /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel --input_files /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_kernel_0.xo --link --optimize 0 --output /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/hardware/sssp_kernel_0.xclbin --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 --report_level 0 --save-temps --target hw --vivado.impl.jobs 16 --vivado.synth.jobs 8 
+   Command Line:  v++ --config /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/connectivity_sssp.cfg --connectivity.nk sssp_kernel_0:15:sssp_kernel_0_1.sssp_kernel_0_2.sssp_kernel_0_3.sssp_kernel_0_4.sssp_kernel_0_5.sssp_kernel_0_6.sssp_kernel_0_7.sssp_kernel_0_8.sssp_kernel_0_9.sssp_kernel_0_10.sssp_kernel_0_11.sssp_kernel_0_12.sssp_kernel_0_13.sssp_kernel_0_14.sssp_kernel_0_15 --connectivity.slr sssp_kernel_0_1:SLR0 --connectivity.slr sssp_kernel_0_2:SLR0 --connectivity.slr sssp_kernel_0_3:SLR0 --connectivity.slr sssp_kernel_0_4:SLR0 --connectivity.slr sssp_kernel_0_5:SLR1 --connectivity.slr sssp_kernel_0_6:SLR1 --connectivity.slr sssp_kernel_0_7:SLR1 --connectivity.slr sssp_kernel_0_8:SLR1 --connectivity.slr sssp_kernel_0_9:SLR2 --connectivity.slr sssp_kernel_0_10:SLR2 --connectivity.slr sssp_kernel_0_11:SLR2 --connectivity.slr sssp_kernel_0_12:SLR2 --connectivity.slr sssp_kernel_0_13:SLR3 --connectivity.slr sssp_kernel_0_14:SLR3 --connectivity.slr sssp_kernel_0_15:SLR3 --connectivity.sp sssp_kernel_0_1.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_2.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_3.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_4.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_5.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_6.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_7.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_8.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_9.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_10.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_11.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_12.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_13.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_14.m_axi_gmem:HOST[0] --connectivity.sp sssp_kernel_0_15.m_axi_gmem:HOST[0] --hls.jobs 8 --include /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel --input_files /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_kernel_0.xo --link --optimize 0 --output /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/hardware/sssp_kernel_0.xclbin --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 --report_level 0 --save-temps --target hw --vivado.impl.jobs 8 --vivado.synth.jobs 8 
    Options:       --config /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/connectivity_sssp.cfg
                   --connectivity.nk sssp_kernel_0:15:sssp_kernel_0_1.sssp_kernel_0_2.sssp_kernel_0_3.sssp_kernel_0_4.sssp_kernel_0_5.sssp_kernel_0_6.sssp_kernel_0_7.sssp_kernel_0_8.sssp_kernel_0_9.sssp_kernel_0_10.sssp_kernel_0_11.sssp_kernel_0_12.sssp_kernel_0_13.sssp_kernel_0_14.sssp_kernel_0_15
                   --connectivity.slr sssp_kernel_0_1:SLR0
@@ -704,7 +629,7 @@ Generated By
                   --connectivity.sp sssp_kernel_0_13.m_axi_gmem:HOST[0]
                   --connectivity.sp sssp_kernel_0_14.m_axi_gmem:HOST[0]
                   --connectivity.sp sssp_kernel_0_15.m_axi_gmem:HOST[0]
-                  --hls.jobs 16
+                  --hls.jobs 8
                   --include /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel
                   --input_files /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_kernel_0.xo
                   --link
@@ -714,7 +639,7 @@ Generated By
                   --report_level 0
                   --save-temps
                   --target hw
-                  --vivado.impl.jobs 16
+                  --vivado.impl.jobs 8
                   --vivado.synth.jobs 8 
 ==============================================================================
 User Added Key Value Pairs
