@@ -2,8 +2,8 @@
 # Vivado v2022.2 (64-bit)
 # SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
 # IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
-# Start of session at: Tue Jul 11 16:46:18 2023
-# Process ID: 24662
+# Start of session at: Thu Jul 13 11:02:26 2023
+# Process ID: 3415
 # Current directory: /home/amin/distributed-graph-fpga/hw_src/FPGA/tools
 # Command line: vivado -mode batch -source ../utils/report_usage.tcl -tclargs ../_x/link/vivado/vpl/prj/prj.xpr
 # Log file: /home/amin/distributed-graph-fpga/hw_src/FPGA/tools/vivado.log

@@ -4,7 +4,7 @@
 //#include "defn.h"
 
 #define DAMPING_FACTOR 	0.85
-#define BUFFER_SIZE 	16
+#define BUFFER_SIZE 	64
 #define DATA_WIDTH 	32
 #define PE 		4
 
@@ -116,6 +116,7 @@ buffer_store_outer:
 	for (int i = 0; i < PE; i++) {
 buffer_store_inner:
 		for (int k = 0; k < BUFFER_SIZE; k++) {
+#pragma HLS pipeline
 			for (int j = 0; j < BUF_PER_PE; j++) {
 				u32 element = local_out[i][j][k];
 				u_data wide_element = (u_data)element;
@@ -133,9 +134,9 @@ extern "C" {
 			int size,             // Size of each edge block
 			int vertices          // Number of vertices
 			) {
-#pragma HLS INTERFACE m_axi port = e_src /*depth=32*/ offset= slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port = e_dst /*depth=32*/ offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port = out_r /*depth=32*/ offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = e_src /*depth=32*/ offset= slave bundle=gmem //num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = e_dst /*depth=32*/ offset = slave bundle=gmem //num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = out_r /*depth=32*/ offset = slave bundle=gmem1 //num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 
 		int v ;
 		v = vertices;

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date         : Tue Jul 11 16:57:48 2023
+| Date         : Thu Jul 13 11:11:11 2023
 | Host         : amin-iot running 64-bit Ubuntu 18.04 LTS
 | Command      : report_utilization -hierarchical -hierarchical_depth 3 -file util_slr.report
 | Design       : level0_wrapper
@@ -22,15 +22,15 @@ Table of Contents
 +--------------------+----------------------------------------+--------------+--------------+------------+------------+---------+-------+--------+--------+--------+------+------------+
 |      Instance      |                 Module                 | PR Attribute | Total PPLOCs | Total LUTs | Logic LUTs | LUTRAMs |  SRLs |   FFs  | RAMB36 | RAMB18 | URAM | DSP Blocks |
 +--------------------+----------------------------------------+--------------+--------------+------------+------------+---------+-------+--------+--------+--------+------+------------+
-| level0_wrapper     |                                  (top) |            - |         9959 |     260366 |     211805 |   18744 | 29817 | 406473 |   1350 |     35 |    0 |          4 |
+| level0_wrapper     |                                  (top) |            - |         9959 |     280499 |     228707 |   22044 | 29748 | 443423 |   1365 |     35 |    0 |          4 |
 |   (level0_wrapper) |                                  (top) |            - |            - |          0 |          0 |       0 |     0 |      0 |      0 |      0 |    0 |          0 |
-|   level0_i         |                                 level0 |            - |            - |     260366 |     211805 |   18744 | 29817 | 406473 |   1350 |     35 |    0 |          4 |
+|   level0_i         |                                 level0 |            - |            - |     280499 |     228707 |   22044 | 29748 | 443423 |   1365 |     35 |    0 |          4 |
 |     blp            |                            blp_wrapper |       Static |            - |      31536 |      29608 |     560 |  1368 |  56705 |     68 |      4 |    0 |          4 |
 |       blp_i        |                                    blp |       Static |            - |      31536 |      29608 |     560 |  1368 |  56705 |     68 |      4 |    0 |          4 |
 |     ii_level0_pipe |                level0_ii_level0_pipe_0 |       Static |            - |       3405 |       3405 |       0 |     0 |   6280 |      0 |      0 |    0 |          0 |
 |       inst         | level0_ii_level0_pipe_0_ii_level0_pipe |       Static |            - |       3405 |       3405 |       0 |     0 |   6280 |      0 |      0 |    0 |          0 |
-|     level1         |                         level1_wrapper |            - |            - |     225425 |     178792 |   18184 | 28449 | 343488 |   1282 |     31 |    0 |          0 |
-|       level1_i     |                                 level1 |            - |            - |     225425 |     178792 |   18184 | 28449 | 343488 |   1282 |     31 |    0 |          0 |
+|     level1         |                         level1_wrapper |            - |            - |     245558 |     195694 |   21484 | 28380 | 380438 |   1297 |     31 |    0 |          0 |
+|       level1_i     |                                 level1 |            - |            - |     245558 |     195694 |   21484 | 28380 | 380438 |   1297 |     31 |    0 |          0 |
 +--------------------+----------------------------------------+--------------+--------------+------------+------------+---------+-------+--------+--------+--------+------+------------+
 * Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
 

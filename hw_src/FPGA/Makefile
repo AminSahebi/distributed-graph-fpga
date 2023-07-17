@@ -2,7 +2,7 @@ CURRENT_DIR = $(PWD)
 VPP := $(XILINX_VITIS)/bin/v++
 EMCONFIGUTIL := $(XILINX_VITIS)/bin/emconfigutil
 EMCONFIG_FILE := emconfig.json
-
+#
 MODE := hw
 #MODE := hw_emu
 
@@ -121,6 +121,15 @@ $(sssp_app): $(sssp_srcdir)/sssp.o
 		g++ $(CFLAGS) -o $(sssp_bindir)/$@ $? $(LFLAGS)
 $(sssp_srcdir)/sssp.o: $(sssp_src)
 	       	g++ -c -o $@ $?
+
+
+run: $(XCLBIN) $(HOST_EXE) $(EMCONFIG_FILE)
+ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+	XCL_EMULATION_MODE=${TARGET} ./$(HOST_EXE) $(EXE_OPT)
+else
+	./$(HOST_EXE) $(EXE_OPT)
+endif
+
 
 # primary build targets
 .PHONY: pagerank spmv all clean pagerank_hw
