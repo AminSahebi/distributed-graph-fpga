@@ -162,31 +162,36 @@ extern "C" {
 		// Perform dual-buffering
 		for (int i = 0; i < size / (PE * BUFFER_SIZE) + 1; i++) {
 			// Double buffering
-			switch (i % 4)
+			switch (i % 4){
 				
 			case 0:
 				buffer_load_a(e_src_buffer_a, &e_src[i * 1 * BUF_PER_PE * BUFFER_SIZE]);
 				buffer_load_b(e_dst_buffer_a, &e_dst[i * 1 * BUF_PER_PE * BUFFER_SIZE]);
 				buffer_compute(e_src_buffer_a, e_dst_buffer_a, output_buffer_a, v);
 				buffer_store(&out_r[i * 1 * BUF_PER_PE * BUFFER_SIZE], output_buffer_a);
-			case 1:
+				break;
 
+			case 1:
 				buffer_load_a(e_src_buffer_b, &e_src[i * 2 * BUF_PER_PE * BUFFER_SIZE]);
 				buffer_load_b(e_dst_buffer_b, &e_dst[i * 2 * BUF_PER_PE * BUFFER_SIZE]);
 				buffer_compute(e_src_buffer_b, e_dst_buffer_b, output_buffer_b, v);
 				buffer_store(&out_r[i * 2 * BUF_PER_PE * BUFFER_SIZE], output_buffer_b);
+				break;
 
 			case 2:
 				buffer_load_a(e_src_buffer_a, &e_src[i * 3 * BUF_PER_PE * BUFFER_SIZE]);
 				buffer_load_b(e_dst_buffer_a, &e_dst[i * 3 * BUF_PER_PE * BUFFER_SIZE]);
 				buffer_compute(e_src_buffer_a, e_dst_buffer_a, output_buffer_a, v);
 				buffer_store(&out_r[i * 3 * BUF_PER_PE * BUFFER_SIZE], output_buffer_a);
+				break;
+			
 			case 3:
-
 				buffer_load_a(e_src_buffer_b, &e_src[i * 4 * BUF_PER_PE * BUFFER_SIZE]);
 				buffer_load_b(e_dst_buffer_b, &e_dst[i * 4 * BUF_PER_PE * BUFFER_SIZE]);
 				buffer_compute(e_src_buffer_b, e_dst_buffer_b, output_buffer_b, v);
 				buffer_store(&out_r[i * 4 * BUF_PER_PE * BUFFER_SIZE], output_buffer_b);
+				break;
+			}
 		}
 	}
 }
