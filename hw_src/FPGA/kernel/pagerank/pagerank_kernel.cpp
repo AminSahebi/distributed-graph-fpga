@@ -33,9 +33,9 @@ typedef ap_uint<DATA_WIDTH> u_data;
 
 typedef unsigned int u32;
 typedef unsigned int u16;
-int v;
 
-void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_in_c[], u32 local_out[]) {
+
+void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_in_c[], u32 local_out[], int v) {
 
 	u32 prev_buffer[BUF_PER_PE]; // Local Memory to store result
 #pragma HLS ARRAY_PARTITION variable=prev_buffer dim=0
@@ -81,11 +81,11 @@ void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE],
 		}*/
 }
 
-void buffer_compute(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE]) {
+void buffer_compute(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], int v) {
 	// kernel replication
 compute_loop:	for (int i=0; i < PE; i++) {
 #pragma HLS UNROLL
-			PE_kernel(local_in_a[i], local_in_b[i], local_in_c[i], local_out[i]);
+			PE_kernel(local_in_a[i], local_in_b[i], local_in_c[i], local_out[i], v);
 		}
 
 }
@@ -102,7 +102,7 @@ store_loop:	for(int i = 0; i < PE; i++)
 
 
 extern "C" {
-	void pagerank_hw(
+	void pagerank_kernel_0(
 			u_data *e_src, 		// edge souces
 			u_data *e_dst, 		// edge destinations
 			u_data *out_degree, 	// out_degrees
@@ -114,7 +114,7 @@ extern "C" {
 #pragma HLS INTERFACE m_axi port = e_dst offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 #pragma HLS INTERFACE m_axi port = out_degree offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 #pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-		v = vertices;
+		int v = vertices;
 		//create local buffers
 		u32 e_src_buffer_a[PE][BUF_PER_PE];   // Local memory to store edge source
 #pragma HLS ARRAY_PARTITION variable=e_src_buffer_a dim=1 complete 
@@ -157,11 +157,11 @@ extern "C" {
 			//double duffering
 			if(i % 2 ==0) {
 				buffer_load(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, e_src+i*BUF_PER_PE, e_dst+i*BUF_PER_PE, out_degree+i*BUF_PER_PE);
-				buffer_compute(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, output_buffer_b);
+				buffer_compute(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, output_buffer_b, v);
 				buffer_store(*out_r+i*BUF_PER_PE, output_buffer_a);
 			} else {
 				buffer_load(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, e_src+i*BUF_PER_PE, e_dst+i*BUF_PER_PE, out_degree+i*BUF_PER_PE);
-				buffer_compute(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, output_buffer_a);
+				buffer_compute(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, output_buffer_a, v);
 				buffer_store(out_r+i*BUF_PER_PE, output_buffer_b);
 
 			}

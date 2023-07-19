@@ -19,7 +19,7 @@ CFLAGS := -std=c++14 -I$(XILINX_XRT)/include -I$(CURRENT_DIR)/utils #-I/$(CURREN
 #CLAGS += -g
 
 VPP_COMMON_OPTS += -I$(CURRENT_DIR)/kernel --hls.jobs 8
-VPP_COMMON_OPTS += --vivado.synth.jobs 8 --vivado.impl.jobs 8 --advanced.param compiler.axiDeadLockFree=yes -O0
+VPP_COMMON_OPTS += --vivado.synth.jobs 8 --vivado.impl.jobs 8 #--advanced.param compiler.axiDeadLockFree=yes -O0
 #VPP_COMMON_OPTS += --optimize 3
 
 LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lpthread -lrt
@@ -29,13 +29,13 @@ spmv_app := spmv
 sssp_app := sssp
 
 # kernel targets
-PR_HW := pagerank_kernel
-PR_XCLBIN := pagerank_kernel.xclbin
+PR_HW := pagerank_kernel_0
+PR_XCLBIN := pagerank_kernel_0.xclbin
 
 # kernel rules
 # pagerank
-PR_XOS := pagerank_kernel.xo
-PR_XCLBIN := pagerank_kernel.xclbin
+PR_XOS := pagerank_kernel_0.xo
+PR_XCLBIN := pagerank_kernel_0.xclbin
 PR_CONN := --config $(CURRENT_DIR)/kernel/pagerank/connectivity_pagerank.cfg #--kernel_frequency=350
 pr_hw_srcdir:= $(CURRENT_DIR)/kernel/pagerank/
 pr_hw_bindir:= $(CURRENT_DIR)/kernel/pagerank/hardware
