@@ -19,7 +19,7 @@ CFLAGS := -std=c++14 -I$(XILINX_XRT)/include -I$(CURRENT_DIR)/utils #-I/$(CURREN
 #CLAGS += -g
 
 VPP_COMMON_OPTS += -I$(CURRENT_DIR)/kernel --hls.jobs 8
-VPP_COMMON_OPTS += --vivado.synth.jobs 8 --vivado.impl.jobs 8
+VPP_COMMON_OPTS += --vivado.synth.jobs 8 --vivado.impl.jobs 8 --advanced.param compiler.axiDeadLockFree=yes -O0
 #VPP_COMMON_OPTS += --optimize 3
 
 LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lpthread -lrt

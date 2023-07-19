@@ -42,7 +42,7 @@ void PE_kernel(u32 local_in_a[BUF_PER_PE][BUFFER_SIZE], u32 local_in_b[BUF_PER_P
 	// Local memory to store distances
 	u32 distance_buffer[BUF_PER_PE][BUFFER_SIZE];
 #pragma HLS ARRAY_PARTITION variable=distance_buffer dim=1
-#pragma HLS bind_storage variable=distance_buffer type=RAM_1P
+//#pragma HLS bind_storage variable=distance_buffer type=RAM_1P
 
 	// Initialize distances
 	for (int j = 0; j < BUF_PER_PE; j++) {
@@ -110,53 +110,53 @@ extern "C" {
 			int size,             // Size of each edge block
 			int vertices          // Number of vertices
 			) {
-#pragma HLS INTERFACE m_axi port = e_src /*depth=32*/ offset= slave bundle=gmem max_widen_bitwidth=256 //num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port = e_dst /*depth=32*/ offset = slave bundle=gmem max_widen_bitwidth=256 //num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port = out_r /*depth=32*/ offset = slave bundle=gmem max_widen_bitwidth=256 //num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = e_src /*depth=32*/ offset= slave bundle=gmem max_widen_bitwidth=512 num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = e_dst /*depth=32*/ offset = slave bundle=gmem max_widen_bitwidth=512 num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = out_r /*depth=32*/ offset = slave bundle=gmem max_widen_bitwidth=512 num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 
 		int v = vertices;
 		u32 e_src_buffer_a[PE][BUF_PER_PE][BUFFER_SIZE];   // Local memory to store edge source
-#pragma HLS bind_storage variable=e_src_buffer_a type=RAM_1P
+//#pragma HLS bind_storage variable=e_src_buffer_a type=RAM_1P
 #pragma HLS ARRAY_PARTITION variable=e_src_buffer_a dim=1 complete 
 #pragma HLS array_partition var=e_src_buffer_a cyclic=PE dim=2
 
 		u32 e_src_buffer_b[PE][BUF_PER_PE][BUFFER_SIZE];   // Local memory to store edge source
-#pragma HLS bind_storage variable=e_src_buffer_b type=RAM_1P
+//#pragma HLS bind_storage variable=e_src_buffer_b type=RAM_1P
 #pragma HLS ARRAY_PARTITION variable=e_src_buffer_b dim=1 complete
 #pragma HLS array_partition var=e_src_buffer_b cyclic=PE dim=2
 
 		u32 e_dst_buffer_a[PE][BUF_PER_PE][BUFFER_SIZE];   // Local memory to store edge dest
-#pragma HLS bind_storage variable=e_dst_buffer_a type=RAM_1P
+//#pragma HLS bind_storage variable=e_dst_buffer_a type=RAM_1P
 #pragma HLS ARRAY_PARTITION variable=e_dst_buffer_a dim=1 complete
 #pragma HLS array_partition var=e_dst_buffer_a cyclic=PE dim=2
 
 		u32 e_dst_buffer_b[PE][BUF_PER_PE][BUFFER_SIZE];   // Local memory to store edge dest
-#pragma HLS bind_storage variable=e_dst_buffer_b type=RAM_1P
+//#pragma HLS bind_storage variable=e_dst_buffer_b type=RAM_1P
 #pragma HLS ARRAY_PARTITION variable=e_dst_buffer_b dim=1 complete
 #pragma HLS array_partition var=e_dst_buffer_b cyclic=PE dim=2
 
 		u32 output_buffer_a[PE][BUF_PER_PE][BUFFER_SIZE]; // Local Memory to store result
-#pragma HLS bind_storage variable=output_buffer_a type=RAM_1P
+//#pragma HLS bind_storage variable=output_buffer_a type=RAM_1P
 #pragma HLS ARRAY_PARTITION variable=output_buffer_a dim=1 complete
 #pragma HLS array_partition var=output_buffer_a cyclic=PE dim=2
 
 		u32 output_buffer_b[PE][BUF_PER_PE][BUFFER_SIZE]; // Local Memory to store result
-#pragma HLS bind_storage variable=output_buffer_b type=RAM_1P
+//#pragma HLS bind_storage variable=output_buffer_b type=RAM_1P
 #pragma HLS ARRAY_PARTITION variable=output_buffer_b dim=1 complete
 #pragma HLS array_partition var=output_buffer_b cyclic=PE dim=2
 
 		u32 local_out[PE][BUF_PER_PE][BUFFER_SIZE]; // Local temp for kernel output
-#pragma HLS bind_storage variable=local_out type=RAM_1P
+//#pragma HLS bind_storage variable=local_out type=RAM_1P
 #pragma HLS ARRAY_PARTITION variable=local_out dim=1 complete
 #pragma HLS array_partition var=local_out cyclic=PE dim=2
 
 		u32 local_in_a[PE][BUF_PER_PE][BUFFER_SIZE]; // Local temp for kernel computation
-#pragma HLS bind_storage variable=local_in_a type=RAM_1P
+//#pragma HLS bind_storage variable=local_in_a type=RAM_1P
 #pragma HLS ARRAY_PARTITION variable=local_in_a dim=1 complete
 #pragma HLS array_partition var=local_in_a cyclic=PE dim=2
 
 		u32 local_in_b[PE][BUF_PER_PE][BUFFER_SIZE]; // Local temp for kernel computation
-#pragma HLS bind_storage variable=local_in_b type=RAM_1P
+//#pragma HLS bind_storage variable=local_in_b type=RAM_1P
 #pragma HLS ARRAY_PARTITION variable=local_in_b dim=1 complete
 #pragma HLS array_partition var=local_in_b cyclic=PE dim=2
 		// Perform dual-buffering
