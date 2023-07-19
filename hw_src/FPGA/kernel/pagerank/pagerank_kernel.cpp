@@ -21,12 +21,12 @@ limitations under the License.
 //#include "defn.h"
 
 #define DAMPING_FACTOR 	0.85
-#define BUFFER_SIZE 	2048
+#define BUFFER_SIZE 	512
 #define DATA_WIDTH 	512
-#define PE 		128	
+#define PE 		4	
 
 
-#define BUF_PER_PE	BUFFER_SIZE/PE
+#define BUF_PER_PE	32//BUFFER_SIZE/PE
 
 typedef ap_uint<DATA_WIDTH> u_data;
 //typedef ap_uint<64> u32;
@@ -68,42 +68,29 @@ kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
 
 void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u_data *global_in_a, u_data *global_in_b, u_data *global_in_c) {
 	// burst read
-	memcpy(local_in_a,global_in_a,BUF_PER_PE);
-	memcpy(local_in_b,global_in_b,BUF_PER_PE);
-	memcpy(local_in_c,global_in_c,BUF_PER_PE);
-/*load_loop:	for(int i = 0; i < PE; i++){
-			for(int j = 0; j < BUF_PER_PE; j++) { // for each PE
-#pragma HLS pipeline II = 1 
-				local_in_b[i][j] = global_in_b[i*BUF_PER_PE + j];
-				local_in_c[i][j] = global_in_c[i*BUF_PER_PE + j];
-				local_in_a[i][j] = global_in_a[i*BUF_PER_PE + j];
-			}
-		}*/
+load_loop:	for(int i = 0; i < PE; i++){
+			memcpy(local_in_a[i], &global_in_a[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
+			memcpy(local_in_b[i], &global_in_b[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
+			memcpy(local_in_c[i], &global_in_c[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
+		}
 }
 
 void buffer_compute(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], int v) {
 	// kernel replication
 compute_loop:	for (int i=0; i < PE; i++) {
-#pragma HLS UNROLL
 			PE_kernel(local_in_a[i], local_in_b[i], local_in_c[i], local_out[i], v);
 		}
-
 }
 
-void buffer_store(u_data global_out, u32 local_out[PE][BUF_PER_PE]) {
-
-store_loop:	for(int i = 0; i < PE; i++)
-			for(int j = 0; j < BUF_PER_PE; j++) { // for each PE
-#pragma HLS pipeline //II = 2
-				u32 temp = local_out[i][j];
-				global_out[i*BUF_PER_PE] = temp;
-			}
+void buffer_store(u_data *global_out, u32 local_out[PE][BUF_PER_PE]) {
+store_loop:	for(int i = 0; i < PE; i++) {
+			memcpy(&global_out[i * BUF_PER_PE], local_out[i], BUF_PER_PE * sizeof(u32));
+		}
 }
-
 
 extern "C" {
 	void pagerank_kernel_0(
-			u_data *e_src, 		// edge souces
+			u_data *e_src, 		// edge sources
 			u_data *e_dst, 		// edge destinations
 			u_data *out_degree, 	// out_degrees
 			u_data *out_r,     	// output Result
@@ -154,20 +141,17 @@ extern "C" {
 
 
 		for (int i = 0; i < size/BUFFER_SIZE+1; i++) {
-			//double duffering
-			if(i % 2 ==0) {
-				buffer_load(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, e_src+i*BUF_PER_PE, e_dst+i*BUF_PER_PE, out_degree+i*BUF_PER_PE);
+			//double buffering
+			if(i % 2 == 0) {
+				buffer_load(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE], &out_degree[i*BUF_PER_PE]);
 				buffer_compute(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, output_buffer_b, v);
-				buffer_store(*out_r+i*BUF_PER_PE, output_buffer_a);
+				buffer_store(&out_r[i*BUF_PER_PE], output_buffer_a);
 			} else {
-				buffer_load(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, e_src+i*BUF_PER_PE, e_dst+i*BUF_PER_PE, out_degree+i*BUF_PER_PE);
+				buffer_load(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE], &out_degree[i*BUF_PER_PE]);
 				buffer_compute(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, output_buffer_a, v);
-				buffer_store(out_r+i*BUF_PER_PE, output_buffer_b);
-
+				buffer_store(&out_r[i*BUF_PER_PE], output_buffer_b);
 			}
 		}
-
-
 	}
 }
 
