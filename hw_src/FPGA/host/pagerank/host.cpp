@@ -200,25 +200,25 @@ delete[] fileBuf;
 
 
 /** Create Kernels */
-//OCL_CHECK(err, cl::Kernel kernel(program,"kernel_pagerank_0", &err));
+//OCL_CHECK(err, cl::Kernel kernel(program,"pagerank_kernel_0", &err));
 std::vector<cl::Kernel> krnls(num_cu);
-//	OCL_CHECK(err, krnls[i] = cl::Kernel(program, "kernel_pagerank_0", &err));
+//	OCL_CHECK(err, krnls[i] = cl::Kernel(program, "pagerank_kernel_0", &err));
 
-krnls[0] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_1}", &err);
-krnls[1] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_2}", &err);
-krnls[2] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_3}", &err);
-krnls[3] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_4}", &err);
-krnls[4] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_5}", &err);
-krnls[5] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_6}", &err);
-krnls[6] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_7}", &err);
-krnls[7] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_8}", &err);
-krnls[8] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_9}", &err);
-krnls[9] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_10}", &err);
-krnls[10] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_11}", &err);
-krnls[11] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_12}", &err);
-krnls[12] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_13}", &err);
-krnls[13] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_14}", &err);
-krnls[14] = cl::Kernel(program, "kernel_pagerank_0:{kernel_pagerank_0_15}", &err);
+krnls[0] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_1}", &err);
+krnls[1] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_2}", &err);
+krnls[2] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_3}", &err);
+krnls[3] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_4}", &err);
+krnls[4] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_5}", &err);
+krnls[5] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_6}", &err);
+krnls[6] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_7}", &err);
+krnls[7] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_8}", &err);
+krnls[8] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_9}", &err);
+krnls[9] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_10}", &err);
+krnls[10] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_11}", &err);
+krnls[11] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_12}", &err);
+krnls[12] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_13}", &err);
+krnls[13] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_14}", &err);
+krnls[14] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_15}", &err);
 
 
 std::vector<cl::Buffer> outDegree(num_cu);
@@ -311,7 +311,7 @@ for (int i = 0; i < num_cu; i++) {
 			err = q.enqueueMigrateMemObjects({output[i]},
 				CL_MIGRATE_MEM_OBJECT_HOST));
 }
-printf("[INFO] move from Global Memory to host: %f sec\n", get_time() - start_cp_out);
+//printf("[INFO] move from Global Memory to host: %f sec\n", get_time() - start_cp_out);
 /*
 // write the output result into a file 
 std::ofstream out ("out.txt");
