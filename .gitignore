@@ -22,6 +22,7 @@ build/
 *.jou
 hw_src/fpga/.ipcache
 hw_src/FPGA/tools/.Xil/
+hw_src/FPGA/.Xil/
 cmake-build-debug/
 # Compiled Java class files
 *.class

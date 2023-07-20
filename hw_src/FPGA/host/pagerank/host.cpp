@@ -101,7 +101,7 @@ printf("[%d][%d] , begin offset %ld , end offset %ld \n", i , j, begin_offset,en
 	 * the aligned buffers in the host RAM) 
 	 */
 	int p2=partitions*partitions;
-	int num_cu=partitions-1;
+	int num_cu=p2-1;
 	//	int* ffsize = new int [p2];
 	std::vector<int, aligned_allocator<int> > fsize(p2);
 	for(int i =0 ; i < partitions; i++){
@@ -283,7 +283,7 @@ for (int i = 0; i < num_cu; i++) {
 	OCL_CHECK(err, err = krnls[i].setArg(3, output[i]));	
 	OCL_CHECK(err, err = krnls[i].setArg(4, fsize[i]));	
 	OCL_CHECK(err, err = krnls[i].setArg(5, vertices));
-	OCL_CHECK(err, err = krnls[i].setArg(6, partitions));
+	//	OCL_CHECK(err, err = krnls[i].setArg(6, partitions));
 
 	/** copy data to the device global memory */
 	OCL_CHECK(err, err = q.enqueueMigrateMemObjects({edgeSrc[i]}, 0 ));
@@ -303,16 +303,16 @@ for (int i = 0; i < num_cu; i++) {
 OCL_CHECK(err, err = q.finish());
 printf("[INFO] Kernel(s) execution time: %f sec\n", get_time() - start_krnl);
 
+
+auto start_cp_out = get_time();
+for (int i = 0; i < num_cu; i++) {
+
+	OCL_CHECK(err,
+			err = q.enqueueMigrateMemObjects({output[i]},
+				CL_MIGRATE_MEM_OBJECT_HOST));
+}
+printf("[INFO] move from Global Memory to host: %f sec\n", get_time() - start_cp_out);
 /*
-   auto start_cp_out = get_time();
-   for (int i = 0; i < num_cu; i++) {
-
-   OCL_CHECK(err,
-   err = q.enqueueMigrateMemObjects({output[i]},
-   CL_MIGRATE_MEM_OBJECT_HOST));
-   }
-   printf("[INFO] move from Global Memory to host: %f sec\n", get_time() - start_cp_out);
-
 // write the output result into a file 
 std::ofstream out ("out.txt");
 if (out.is_open())
