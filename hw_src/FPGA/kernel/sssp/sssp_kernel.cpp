@@ -24,7 +24,7 @@ limitations under the License.
 #define DAMPING_FACTOR 	0.85
 //#define BUFFER_SIZE 	512
 #define DATA_WIDTH 	256
-#define PE 		4	
+#define PE 		8	
 #define BIGN	2^12
 #define BUF_PER_PE	32//BUFFER_SIZE/PE
 
@@ -69,35 +69,37 @@ write_distances:
 
 
 
-/*
-   void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u_data *global_in_a, u_data *global_in_b, u_data *global_in_c) {
-// burst read
-load_loop:	for(int i = 0; i < PE; i++){
-#pragma HLS unroll factor=PE
-memcpy(local_in_a[i], &global_in_a[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
-memcpy(local_in_b[i], &global_in_b[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
-//memcpy(local_in_c[i], &global_in_c[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
-}
-}
-*/
 
 void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u_data *global_in_a, u_data *global_in_b) {
+	// burst read
+load_loop:      for(int i = 0; i < PE; i++){
+#pragma HLS UNROLL
+			for(int j = 0; j < BUF_PER_PE; j++) { // for each PE
+				local_in_b[i][j] = global_in_b[i*BUF_PER_PE + j];
+				local_in_a[i][j] = global_in_a[i*BUF_PER_PE + j];
+			}
+		}
 
-	hls::stream<u_data> stream_in_a;
-	hls::stream<u_data> stream_in_b;
+}
+
+/*
+   void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u_data *global_in_a, u_data *global_in_b) {
+
+   hls::stream<u_data> stream_in_a;
+   hls::stream<u_data> stream_in_b;
 
 read_a_loop: for(int i = 0; i < PE * BUF_PER_PE; i++) {
 #pragma HLS pipeline II=4
-		     stream_in_a.write(global_in_a[i]);
-		     stream_in_b.write(global_in_b[i]);
-	     }
+stream_in_a.write(global_in_a[i]);
+stream_in_b.write(global_in_b[i]);
+}
 write_a_loop: for(int i = 0; i < PE * BUF_PER_PE; i++) {
 #pragma HLS pipeline II=4
-		      local_in_a[i / BUF_PER_PE][i % BUF_PER_PE] = stream_in_a.read();
-		      local_in_b[i / BUF_PER_PE][i % BUF_PER_PE] = stream_in_b.read();
-	      }
+local_in_a[i / BUF_PER_PE][i % BUF_PER_PE] = stream_in_a.read();
+local_in_b[i / BUF_PER_PE][i % BUF_PER_PE] = stream_in_b.read();
 }
-
+}
+*/
 void buffer_compute(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], int v) {
 	// kernel replication
 compute_loop:	for (int i=0; i < PE; i++) {
@@ -121,9 +123,9 @@ extern "C" {
 			int size,               // size of each edge block
 			int vertices		// number of vertices
 			) {
-#pragma HLS INTERFACE m_axi port = e_src offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port = e_dst offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = e_src offset = slave bundle=gmem //num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = e_dst offset = slave bundle=gmem //num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem //num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 		int v = vertices;
 		//create local buffers
 		u32 e_src_buffer_a[PE][BUF_PER_PE];   // Local memory to store edge source
