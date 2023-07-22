@@ -52,7 +52,7 @@ loop_initialization:	for(int j = 0; j < BUF_PER_PE; j++){
 
 
 kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
-#pragma HLS pipeline II=2
+#pragma HLS pipeline II=1
 				u32 src = local_in_a[j]; //edge src buffer
 				u32 dst = local_in_b[j]; //edge dst buffer
 				u32 deg = local_in_c[j]; //outdegree buffer
@@ -90,6 +90,7 @@ void buffer_compute(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 
 
 void buffer_store(u_data *global_out, u32 local_out[BUF_PER_PE]) {
 	for(int i = 0; i < BUF_PER_PE; i++) { // for each PE
+#pragma HLS pipeline
 		u32 temp = local_out[i];
 		global_out[i] = temp;
 	}
