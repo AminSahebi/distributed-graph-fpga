@@ -1,5 +1,6 @@
 # Distributed Large-scale Graph Processing on FPGAs #
 This repository contains all the code to reproduce the evaluation of the work published in Jornal of Big Data, 
+PLEASE NOTE that the repository is under the new algorithm development!
 
 *Sahebi, A., Barbone, M., Procaccini, M. et al. Distributed large-scale graph processing on FPGAs. J Big Data 10, 95 (2023). https://doi.org/10.1186/s40537-023-00756-x*
 
