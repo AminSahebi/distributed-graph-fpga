@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                sssp_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          4f8533b0-a2c5-8ea8-5746-a17f1bbc6ffa
+   UUID (xclbin):          2415fb7e-a60d-1091-c61c-21e4799f487e
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -39,7 +39,7 @@ Scalable Clocks
    Name:      DATA_CLK
    Index:     0
    Type:      DATA
-   Frequency: 240 MHz
+   Frequency: 258 MHz
 
    Name:      KERNEL_CLK
    Index:     1
@@ -64,7 +64,7 @@ System Clocks
    Type:           SCALABLE 
    Default Freq:   300 MHz
    Requested Freq: 300 MHz
-   Achieved Freq:  240 MHz
+   Achieved Freq:  258.3 MHz
 
    Name:           ss_ucs_aclk_kernel_01 
    Type:           SCALABLE 
