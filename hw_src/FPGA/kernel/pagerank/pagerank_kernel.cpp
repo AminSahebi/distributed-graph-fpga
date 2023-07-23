@@ -22,7 +22,7 @@ limitations under the License.
 #include <hls_stream.h>
 
 #define DAMPING_FACTOR 	0.85
-#define DATA_WIDTH 	32
+#define DATA_WIDTH 	64
 #define PE 		8	
 
 #define BUF_PER_PE	128
@@ -45,7 +45,7 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_in_c[], u32 local_o
 	float one_over_n = 1.0/(float)v;
 
 loop_initialization:	for(int j = 0; j < BUF_PER_PE; j++){
-#pragma HLS pipeline
+#pragma HLS pipeline II=1
 				prev_buffer[j] = one_over_n;
 				rank_buffer[j] = 0.0;
 			}
@@ -66,19 +66,19 @@ kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
 void buffer_load(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_in_c[BUF_PER_PE], u_data *global_in_a, u_data *global_in_b, u_data *global_in_c) {
 	// Load data from global_in_a into local_in_a
 	for (int i = 0; i < BUF_PER_PE; i++) {
-#pragma HLS pipeline
+#pragma HLS pipeline II=1
 		local_in_a[i] = global_in_a[i];
 	}
 
 	// Load data from global_in_b into local_in_b
 	for (int i = 0; i < BUF_PER_PE; i++) {
-#pragma HLS pipeline
+#pragma HLS pipeline II=1
 		local_in_b[i] = global_in_b[i];
 	}
 
 	// Load data from global_in_c into local_in_c
 	for (int i = 0; i < BUF_PER_PE; i++) {
-#pragma HLS pipeline
+#pragma HLS pipeline II=1
 		local_in_c[i] = global_in_c[i];
 	}
 }
@@ -93,7 +93,7 @@ void buffer_compute(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 
 
 void buffer_store(u_data *global_out, u32 local_out[BUF_PER_PE]) {
 	for(int i = 0; i < BUF_PER_PE; i++) { // for each PE
-#pragma HLS pipeline
+#pragma HLS pipeline II=1
 		u32 temp = local_out[i];
 		global_out[i] = temp;
 	}
@@ -109,10 +109,10 @@ extern "C" {
 			int size,               // size of each edge block
 			int vertices		// number of vertices
 			) {
-#pragma HLS INTERFACE m_axi port = e_src offset = slave bundle=gmem num_write_outstanding=32 max_write_burst_length=32 num_read_outstanding=32 max_read_burst_length=32
-#pragma HLS INTERFACE m_axi port = e_dst offset = slave bundle=gmem num_write_outstanding=32 max_write_burst_length=32 num_read_outstanding=32 max_read_burst_length=32
-#pragma HLS INTERFACE m_axi port = out_degree offset = slave bundle=gmem num_write_outstanding=32 max_write_burst_length=32 num_read_outstanding=32 max_read_burst_length=32
-#pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem num_write_outstanding=32 max_write_burst_length=32 num_read_outstanding=32 max_read_burst_length=32
+#pragma HLS INTERFACE m_axi port = e_src offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = e_dst offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = out_degree offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 		int v = vertices;
 		//create local buffers
 		u32 e_src_buffer_a[BUF_PER_PE];   // Local memory to store edge source
