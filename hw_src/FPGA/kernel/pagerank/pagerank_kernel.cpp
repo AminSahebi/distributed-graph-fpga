@@ -66,16 +66,19 @@ kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
 void buffer_load(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_in_c[BUF_PER_PE], u_data *global_in_a, u_data *global_in_b, u_data *global_in_c) {
 	// Load data from global_in_a into local_in_a
 	for (int i = 0; i < BUF_PER_PE; i++) {
+#pragma HLS pipeline
 		local_in_a[i] = global_in_a[i];
 	}
 
 	// Load data from global_in_b into local_in_b
 	for (int i = 0; i < BUF_PER_PE; i++) {
+#pragma HLS pipeline
 		local_in_b[i] = global_in_b[i];
 	}
 
 	// Load data from global_in_c into local_in_c
 	for (int i = 0; i < BUF_PER_PE; i++) {
+#pragma HLS pipeline
 		local_in_c[i] = global_in_c[i];
 	}
 }
