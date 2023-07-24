@@ -23,14 +23,19 @@ limitations under the License.
 
 #define DAMPING_FACTOR 	0.85
 #define DATA_WIDTH 	64
-#define PE 		8	
+#define PE		4	
+#define DATA_TYPE	32
+#define BUF_PER_PE	64
+#define NUM_ITERATIONS 2  // Define the number of iterations for PageRank
 
-#define BUF_PER_PE	128
+#define BUFFER_SIZE	2048
+#define VECTOR_SIZE	(DATA_WIDTH/DATA_TYPE)
 
 typedef ap_uint<DATA_WIDTH> u_data;
 
 typedef unsigned int u32;
-typedef unsigned int u16;
+//typedef unsigned int u16;
+
 
 void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_in_c[], u32 local_out[], int v) {
 
@@ -63,22 +68,19 @@ kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
 }
 
 
-void buffer_load(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_in_c[BUF_PER_PE], u_data *global_in_a, u_data *global_in_b, u_data *global_in_c) {
+void buffer_load(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_in_c[BUF_PER_PE], const int *global_in_a, const int *global_in_b, const int *global_in_c) {
 	// Load data from global_in_a into local_in_a
 	for (int i = 0; i < BUF_PER_PE; i++) {
-#pragma HLS pipeline II=1
 		local_in_a[i] = global_in_a[i];
 	}
 
 	// Load data from global_in_b into local_in_b
 	for (int i = 0; i < BUF_PER_PE; i++) {
-#pragma HLS pipeline II=1
 		local_in_b[i] = global_in_b[i];
 	}
 
 	// Load data from global_in_c into local_in_c
 	for (int i = 0; i < BUF_PER_PE; i++) {
-#pragma HLS pipeline II=1
 		local_in_c[i] = global_in_c[i];
 	}
 }
@@ -91,28 +93,39 @@ void buffer_compute(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 
 			local_in_c + pe_offset * BUF_PER_PE, local_out + pe_offset * BUF_PER_PE, v);
 }
 
-void buffer_store(u_data *global_out, u32 local_out[BUF_PER_PE]) {
+void buffer_store(float *global_out, u32 local_out[BUF_PER_PE]) {
 	for(int i = 0; i < BUF_PER_PE; i++) { // for each PE
-#pragma HLS pipeline II=1
 		u32 temp = local_out[i];
 		global_out[i] = temp;
 	}
 }
 
 
+
 extern "C" {
 	void pagerank_kernel_0(
-			u_data *e_src, 		// edge sources
-			u_data *e_dst, 		// edge destinations
-			u_data *out_degree, 	// out_degrees
-			u_data *out_r,     	// output Result
+			const int *e_src, 		// edge sources
+			const int *e_dst, 		// edge destinations
+			const int *out_degree,
+			float *out,     	// output Result
 			int size,               // size of each edge block
 			int vertices		// number of vertices
 			) {
-#pragma HLS INTERFACE m_axi port = e_src offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port = e_dst offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port = out_degree offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
+
+#pragma HLS INTERFACE m_axi port=e_src offset=slave bundle=gmem
+#pragma HLS INTERFACE m_axi port=e_dst offset=slave bundle=gmem
+#pragma HLS INTERFACE m_axi port=out_degree offset=slave bundle=gmem
+#pragma HLS INTERFACE m_axi port=out offset=slave bundle=gmem
+
+#pragma HLS INTERFACE s_axilite port=e_src bundle=control
+#pragma HLS INTERFACE s_axilite port=e_dst bundle=control
+#pragma HLS INTERFACE s_axilite port=out_degree bundle=control
+#pragma HLS INTERFACE s_axilite port=out bundle=control
+#pragma HLS INTERFACE s_axilite port=size bundle=control
+#pragma HLS INTERFACE s_axilite port=vertices bundle=control
+#pragma HLS INTERFACE s_axilite port=return bundle=control
+
+
 		int v = vertices;
 		//create local buffers
 		u32 e_src_buffer_a[BUF_PER_PE];   // Local memory to store edge source
@@ -154,20 +167,21 @@ extern "C" {
 
 		for (int i = 0; i < (size + BUF_PER_PE - 1) / BUF_PER_PE; i++) {
 
-		int pe_offset = i % PE;
+			int pe_offset = i % PE;
 
 			if (i % 2 == 0) {
 				buffer_load(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, &e_src[i * BUF_PER_PE], &e_dst[i * BUF_PER_PE], &out_degree[i * BUF_PER_PE]);
 				buffer_compute(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, output_buffer_b, v, pe_offset);
-				buffer_store(&out_r[i * BUF_PER_PE], output_buffer_a);
+				buffer_store(&out[i * BUF_PER_PE], output_buffer_a);
 			} else {
 				buffer_load(e_src_buffer_b, e_dst_buffer_b, out_deg_buffer_b, &e_src[i * BUF_PER_PE], &e_dst[i * BUF_PER_PE], &out_degree[i * BUF_PER_PE]);
 				buffer_compute(e_src_buffer_a, e_dst_buffer_a, out_deg_buffer_a, output_buffer_a, v, pe_offset);
-				buffer_store(&out_r[i * BUF_PER_PE], output_buffer_b);
+				buffer_store(&out[i * BUF_PER_PE], output_buffer_b);
 			}
 		}
 
 
 	}
 }
+
 
