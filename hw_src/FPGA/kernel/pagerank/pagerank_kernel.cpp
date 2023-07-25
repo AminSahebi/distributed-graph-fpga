@@ -22,10 +22,10 @@ limitations under the License.
 
 #define DAMPING_FACTOR 	0.85
 //#define BUFFER_SIZE 	512
-#define DATA_WIDTH 	512
-#define PE 		1
+#define DATA_WIDTH 	32
+#define PE 		2
 
-#define BUF_PER_PE	64//BUFFER_SIZE/PE
+#define BUF_PER_PE	128//BUFFER_SIZE/PE
 
 typedef ap_uint<DATA_WIDTH> u_data;
 //typedef ap_uint<64> u32;
@@ -67,7 +67,7 @@ kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
 void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u_data *global_in_a, u_data *global_in_b, u_data *global_in_c) {
 	// burst read
 load_loop:	for(int i = 0; i < PE; i++){
-#pragma HLS unroll factor=PE
+#pragma HLS unroll
 			memcpy(local_in_a[i], &global_in_a[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
 			memcpy(local_in_b[i], &global_in_b[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
 			memcpy(local_in_c[i], &global_in_c[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
@@ -77,14 +77,14 @@ load_loop:	for(int i = 0; i < PE; i++){
 void buffer_compute(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], int v) {
 	// kernel replication
 compute_loop:	for (int i=0; i < PE; i++) {
-#pragma HLS unroll factor=PE
+#pragma HLS unroll
 			PE_kernel(local_in_a[i], local_in_b[i], local_in_c[i], local_out[i], v);
 		}
 }
 
 void buffer_store(u_data *global_out, u32 local_out[PE][BUF_PER_PE]) {
 store_loop:	for(int i = 0; i < PE; i++) {
-#pragma HLS unroll factor=PE
+#pragma HLS unroll
 			memcpy(&global_out[i * BUF_PER_PE], local_out[i], BUF_PER_PE * sizeof(u32));
 		}
 }
