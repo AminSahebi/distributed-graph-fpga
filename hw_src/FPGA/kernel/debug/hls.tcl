@@ -1,7 +1,7 @@
 #!/usr/bin/env vitis_hls
 open_project -reset prj
-add_files sssp_kernel.cpp 
-set_top sssp_kernel_0
+add_files pagerank_kernel.cpp 
+set_top pagerank_kernel_0
 open_solution sol
 set_part {xcu250-figd2104-2L-e}
 create_clock -period 3.333 -name default
