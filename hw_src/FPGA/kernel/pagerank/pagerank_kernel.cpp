@@ -22,7 +22,7 @@ limitations under the License.
 
 #define DAMPING_FACTOR 	0.85
 //#define BUFFER_SIZE 	512
-#define DATA_WIDTH 	32
+#define DATA_WIDTH 	512
 #define PE 	2	
 
 #define BUF_PER_PE	64//BUFFER_SIZE/PE
