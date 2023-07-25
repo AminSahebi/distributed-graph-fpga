@@ -7,7 +7,6 @@
 #define DATA_WIDTH 	512
 #define PE 		128	
 
-
 #define BUF_PER_PE	BUFFER_SIZE/PE
 
 typedef ap_uint<DATA_WIDTH> u_data;
@@ -16,7 +15,12 @@ typedef unsigned int u32;
 typedef unsigned int u16;
 
 void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[]) {
+#pragma HLS array_partition complete variable=local_in_a
+#pragma HLS array_partition complete variable=local_in_b
+#pragma HLS array_partition complete variable=local_out
+
     u32 component_buffer[BUF_PER_PE]; // Local Memory to store component IDs
+#pragma HLS array_partition complete variable=component_buffer
 
     // Initialize component IDs
     for (int j = 0; j < BUF_PER_PE; j++) {
@@ -42,27 +46,24 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[]) {
     }
 }
 
-
-void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u_data *global_in_a, u_data *global_in_b) {
-    for (int i = 0; i < PE; i++) {
-#pragma HLS pipeline
-        memcpy(local_in_a[i], &global_in_a[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
-        memcpy(local_in_b[i], &global_in_b[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
-    }
+void buffer_load(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u_data *global_in_a, u_data *global_in_b, int offset) {
+    memcpy(local_in_a, &global_in_a[offset], BUF_PER_PE * sizeof(u32));
+    memcpy(local_in_b, &global_in_b[offset], BUF_PER_PE * sizeof(u32));
 }
 
 void buffer_compute(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE]) {
+#pragma HLS array_partition cyclic variable=local_in_a complete factor=PE
+#pragma HLS array_partition cyclic variable=local_in_b complete factor=PE
+#pragma HLS array_partition cyclic variable=local_out complete factor=PE
+
     for (int i = 0; i < PE; i++) {
 #pragma HLS UNROLL
         PE_kernel(local_in_a[i], local_in_b[i], local_out[i]);
     }
 }
 
-void buffer_store(u_data *global_out, u32 local_out[PE][BUF_PER_PE]) {
-    for (int i = 0; i < PE; i++) {
-#pragma HLS pipeline
-        memcpy(&global_out[i * BUF_PER_PE], local_out[i], BUF_PER_PE * sizeof(u32));
-    }
+void buffer_store(u_data *global_out, u32 local_out[BUF_PER_PE], int offset) {
+    memcpy(&global_out[offset], local_out, BUF_PER_PE * sizeof(u32));
 }
 
 extern "C" {
@@ -76,26 +77,23 @@ extern "C" {
 #pragma HLS INTERFACE m_axi port = e_dst offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 #pragma HLS INTERFACE m_axi port = out_component offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 
-        u32 e_src_buffer_a[PE][BUF_PER_PE];    // Local memory to store edge source
-        u32 e_src_buffer_b[PE][BUF_PER_PE];    // Local memory to store edge source
-        u32 e_dst_buffer_a[PE][BUF_PER_PE];    // Local memory to store edge dest
-        u32 e_dst_buffer_b[PE][BUF_PER_PE];    // Local memory to store edge dest
-        u32 output_buffer_a[PE][BUF_PER_PE];   // Local Memory to store result
-        u32 output_buffer_b[PE][BUF_PER_PE];   // Local Memory to store result
-        u32 local_in_a[PE][BUF_PER_PE];        // Local temp for kernel computation
-        u32 local_in_b[PE][BUF_PER_PE];        // Local temp for kernel computation
-        u32 local_out[PE][BUF_PER_PE];         // Local temp for kernel output
+        u32 e_src_buffer_a[BUF_PER_PE];    // Local memory to store edge source
+        u32 e_src_buffer_b[BUF_PER_PE];    // Local memory to store edge source
+        u32 e_dst_buffer_a[BUF_PER_PE];    // Local memory to store edge dest
+        u32 e_dst_buffer_b[BUF_PER_PE];    // Local memory to store edge dest
+        u32 output_buffer_a[BUF_PER_PE];   // Local Memory to store result
+        u32 output_buffer_b[BUF_PER_PE];   // Local Memory to store result
 
         for (int i = 0; i < size / BUFFER_SIZE + 1; i++) {
             // Double buffering
             if (i % 2 == 0) {
                 buffer_load(e_src_buffer_a, e_dst_buffer_a, e_src + i * BUF_PER_PE, e_dst + i * BUF_PER_PE);
                 buffer_compute(e_src_buffer_b, e_dst_buffer_b, output_buffer_b);
-                buffer_store(out_component + i * BUF_PER_PE, output_buffer_a);
+                buffer_store(out_component + i * BUF_PER_PE, output_buffer_a, i * BUF_PER_PE);
             } else {
                 buffer_load(e_src_buffer_b, e_dst_buffer_b, e_src + i * BUF_PER_PE, e_dst + i * BUF_PER_PE);
                 buffer_compute(e_src_buffer_a, e_dst_buffer_a, output_buffer_a);
-                buffer_store(out_component + i * BUF_PER_PE, output_buffer_b);
+                buffer_store(out_component + i * BUF_PER_PE, output_buffer_b, i * BUF_PER_PE);
             }
         }
     }

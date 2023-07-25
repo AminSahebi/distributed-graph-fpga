@@ -1,0 +1,173 @@
+<ENTRY>
+{
+ "thisFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/wcc/wcc_kernel_0.xo.compile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Mon Jul 24 13:27:02 2023",
+ "timestampMillis": "1690201622235",
+ "buildStep": {
+  "cmdId": "1f906d67-9a58-43cf-af3a-a5f3370c9f20",
+  "name": "v++",
+  "logFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/wcc_kernel_0/wcc_kernel_0.steps.log",
+  "commandLine": "/opt/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -s -t hw --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 -I/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel --hls.jobs 8 --vivado.synth.jobs 8 --vivado.impl.jobs 8 -c -k wcc_kernel_0 -o /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/wcc/wcc_kernel_0.xo /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/wcc/wcc_kernel.cpp ",
+  "args": [
+   "-s",
+   "-t",
+   "hw",
+   "--platform",
+   "xilinx_u250_gen3x16_xdma_4_1_202210_1",
+   "-I/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel",
+   "--hls.jobs",
+   "8",
+   "--vivado.synth.jobs",
+   "8",
+   "--vivado.impl.jobs",
+   "8",
+   "-c",
+   "-k",
+   "wcc_kernel_0",
+   "-o",
+   "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/wcc/wcc_kernel_0.xo",
+   "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/wcc/wcc_kernel.cpp"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/amin/distributed-graph-fpga/hw_src/FPGA"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Mon Jul 24 13:27:02 2023",
+ "timestampMillis": "1690201622235",
+ "status": {
+  "cmdId": "1f906d67-9a58-43cf-af3a-a5f3370c9f20",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Mon Jul 24 13:27:04 2023",
+ "timestampMillis": "1690201624902",
+ "buildSummary": {
+  "hardwarePlatform": "xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm",
+  "hardwareDsa": "",
+  "platformDirectory": "/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1",
+  "runtime": "OpenCL",
+  "systemConfig": "Linux",
+  "flow": "BF_COMPILE",
+  "target": "TT_HW",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "wcc_kernel_0",
+     "file": "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/wcc/wcc_kernel_0.xo",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/wcc/wcc_kernel.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "Vitis V++ Compiler Release 2022.2. SW Build 3671529 on 2022-10-13-17:52:11"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Mon Jul 24 13:27:04 2023",
+ "timestampMillis": "1690201624904",
+ "buildStep": {
+  "cmdId": "0d0ade47-c724-4268-b7b6-f14e36549d46",
+  "name": "vitis_hls",
+  "logFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/wcc_kernel_0/wcc_kernel_0/vitis_hls.log",
+  "commandLine": "vitis_hls -f /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/wcc_kernel_0/wcc_kernel_0/wcc_kernel_0.tcl -messageDb vitis_hls.pb",
+  "args": [
+   "vitis_hls",
+   "-f",
+   "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/wcc_kernel_0/wcc_kernel_0/wcc_kernel_0.tcl",
+   "-messageDb",
+   "vitis_hls.pb"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/amin/distributed-graph-fpga/hw_src/FPGA"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Mon Jul 24 13:27:04 2023",
+ "timestampMillis": "1690201624904",
+ "status": {
+  "cmdId": "0d0ade47-c724-4268-b7b6-f14e36549d46",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Mon Jul 24 13:27:10 2023",
+ "timestampMillis": "1690201630154",
+ "status": {
+  "cmdId": "0d0ade47-c724-4268-b7b6-f14e36549d46",
+  "state": "CS_FAILED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Mon Jul 24 13:27:10 2023",
+ "timestampMillis": "1690201630156",
+ "status": {
+  "cmdId": "1f906d67-9a58-43cf-af3a-a5f3370c9f20",
+  "state": "CS_FAILED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jul 24 13:27:10 2023",
+ "timestampMillis": "1690201630212",
+ "report": {
+  "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/wcc_kernel_0/v++_compile_wcc_kernel_0_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jul 24 13:27:10 2023",
+ "timestampMillis": "1690201630212",
+ "report": {
+  "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/v++_compile_wcc_kernel_0_guidance.pb3",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>

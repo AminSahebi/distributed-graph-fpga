@@ -27,6 +27,7 @@ LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -lpthread -lrt
 pr_app := pagerank
 spmv_app := spmv
 sssp_app := sssp
+wcc_app := wcc
 
 # kernel targets
 PR_HW := pagerank_kernel_0
@@ -72,6 +73,26 @@ $(SSSP_XCLBIN): $(sssp_hw_srcdir)/$(SSSP_XOS)
 	mkdir -p $(sssp_hw_bindir)
 	$(VPP) $(VPP_COMMON_OPTS) -l -o $(sssp_hw_bindir)/$@ $+ $(SSSP_CONN) 
 
+
+WCC_HW := wcc_kernel_0
+WCC_XCLBIN := wcc_kernel_0.xclbin
+# kernel rules
+# wcc
+WCC_XOS := wcc_kernel_0.xo
+WCC_XCLBIN := wcc_kernel_0.xclbin
+WCC_CONN := --config $(CURRENT_DIR)/kernel/wcc/connectivity_wcc.cfg #--kernel_frequency=350
+wcc_hw_srcdir:= $(CURRENT_DIR)/kernel/wcc
+wcc_hw_bindir:= $(CURRENT_DIR)/kernel/wcc/hardware
+wcc_hw_src:= $(wildcard ${wcc_hw_srcdir}/wcc_kernel.cpp)
+
+wcc_hw: $(WCC_XCLBIN)
+
+$(wcc_hw_srcdir)/$(WCC_XOS): $(wcc_hw_src)
+	$(VPP) $(VPP_COMMON_OPTS) -c -k $(WCC_HW) -o $@ $+
+
+$(WCC_XCLBIN): $(wcc_hw_srcdir)/$(WCC_XOS)
+	mkdir -p $(wcc_hw_bindir)
+	$(VPP) $(VPP_COMMON_OPTS) -l -o $(wcc_hw_bindir)/$@ $+ $(WCC_CONN) 
 
 
 
@@ -120,6 +141,22 @@ $(sssp_app): $(sssp_srcdir)/sssp.o
 	        mkdir -p $(sssp_bindir)
 		g++ $(CFLAGS) -o $(sssp_bindir)/$@ $? $(LFLAGS)
 $(sssp_srcdir)/sssp.o: $(sssp_src)
+	       	g++ -c -o $@ $?
+
+
+#
+# wcc
+wcc_srcdir:= $(CURRENT_DIR)/host/wcc/
+wcc_bindir:= $(CURRENT_DIR)/host/wcc/bin
+wcc_src:= $(wildcard $(CURRENT_DIR)/host/wcc/*.cpp)
+
+.DEFAULT_GOAL := build
+build: $(wcc_app)
+
+$(wcc_app): $(wcc_srcdir)/wcc.o
+	        mkdir -p $(wcc_bindir)
+		g++ $(CFLAGS) -o $(wcc_bindir)/$@ $? $(LFLAGS)
+$(wcc_srcdir)/wcc.o: $(wcc_src)
 	       	g++ -c -o $@ $?
 
 
