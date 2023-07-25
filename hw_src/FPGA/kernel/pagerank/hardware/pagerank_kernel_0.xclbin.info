@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                pagerank_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          a9ccc0e0-6d3e-0ef1-fb12-55607f16e4c1
+   UUID (xclbin):          9098d0bb-9234-fa8b-c5df-ba975d819d64
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -141,7 +141,7 @@ Kernel: pagerank_kernel_0
 
 Definition
 ----------
-   Signature: pagerank_kernel_0 (void* e_src, void* e_dst, void* out_degree, void* out, unsigned int size, unsigned int vertices)
+   Signature: pagerank_kernel_0 (void* e_src, void* e_dst, void* out_degree, void* out_r, unsigned int size, unsigned int vertices)
 
 Ports
 -----
@@ -176,7 +176,7 @@ Instance:        pagerank_kernel_0_1
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -210,7 +210,7 @@ Instance:        pagerank_kernel_0_2
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -244,7 +244,7 @@ Instance:        pagerank_kernel_0_3
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -278,7 +278,7 @@ Instance:        pagerank_kernel_0_4
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -312,7 +312,7 @@ Instance:        pagerank_kernel_0_5
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -346,7 +346,7 @@ Instance:        pagerank_kernel_0_6
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -380,7 +380,7 @@ Instance:        pagerank_kernel_0_7
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -414,7 +414,7 @@ Instance:        pagerank_kernel_0_8
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -448,7 +448,7 @@ Instance:        pagerank_kernel_0_9
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -482,7 +482,7 @@ Instance:        pagerank_kernel_0_10
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -516,7 +516,7 @@ Instance:        pagerank_kernel_0_11
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -550,7 +550,7 @@ Instance:        pagerank_kernel_0_12
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -584,7 +584,7 @@ Instance:        pagerank_kernel_0_13
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -618,7 +618,7 @@ Instance:        pagerank_kernel_0_14
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -652,7 +652,7 @@ Instance:        pagerank_kernel_0_15
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out
+   Argument:          out_r
    Register Offset:   0x34
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
