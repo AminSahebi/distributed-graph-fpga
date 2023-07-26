@@ -32,6 +32,7 @@ typedef ap_uint<DATA_WIDTH> u_data;
 typedef unsigned int u32;
 
 void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_in_c[], u32 local_out[], int v) {
+#pragma HLS inline
 	u32 prev_buffer[BUF_PER_PE]; // Local Memory to store result
 #pragma HLS ARRAY_PARTITION variable=prev_buffer dim=0
 	u32 rank_buffer[BUF_PER_PE]; // Local Memory to store result
@@ -53,14 +54,18 @@ kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
 #pragma HLS pipeline //II=1
 #pragma HLS LOOP_FLATTEN
 				u32 src = local_in_a[j]; //edge src buffer
-				u32 dst = local_in_b[j]; //edge dst buffer
+				//u32 dst = local_in_b[j]; //edge dst buffer
 				u32 deg = local_in_c[j]; //outdegree buffer
 				u32 temp = prev_buffer[src]/deg;
-				rank_buffer[dst] = temp;
-				local_out[j] = rank_buffer[dst];
+				rank_buffer[j] = adding_constant + DAMPING_FACTOR*temp;
+				prev_buffer[j] = rank_buffer[j];
 			}
 
-
+write_ranks:
+			for (int j = 0; j < BUF_PER_PE; j++) {
+#pragma HLS pipeline
+				local_out[j] = prev_buffer[j];
+			}
 }
 
 
@@ -70,7 +75,7 @@ void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE],
 load_loop:	for(int i = 0; i < PE; i++){
 #pragma HLS unroll 
 			memcpy(local_in_a[i], &global_in_a[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
-			memcpy(local_in_b[i], &global_in_b[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
+			//memcpy(local_in_b[i], &global_in_b[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
 			memcpy(local_in_c[i], &global_in_c[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
 		}
 }
