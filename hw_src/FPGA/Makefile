@@ -28,6 +28,7 @@ pr_app := pagerank
 spmv_app := spmv
 sssp_app := sssp
 wcc_app := wcc
+bfs_app := bfs
 
 # kernel targets
 PR_HW := pagerank_kernel_0
@@ -95,6 +96,25 @@ $(WCC_XCLBIN): $(wcc_hw_srcdir)/$(WCC_XOS)
 	$(VPP) $(VPP_COMMON_OPTS) -l -o $(wcc_hw_bindir)/$@ $+ $(WCC_CONN) 
 
 
+BFS_HW := bfs_kernel_0
+BFS_XCLBIN := bfs_kernel_0.xclbin
+# kernel rules
+# bfs
+BFS_XOS := bfs_kernel_0.xo
+BFS_XCLBIN := bfs_kernel_0.xclbin
+BFS_CONN := --config $(CURRENT_DIR)/kernel/bfs/connectivity_bfs.cfg #--kernel_frequency=350
+bfs_hw_srcdir:= $(CURRENT_DIR)/kernel/bfs
+bfs_hw_bindir:= $(CURRENT_DIR)/kernel/bfs/hardware
+bfs_hw_src:= $(wildcard ${bfs_hw_srcdir}/bfs_kernel.cpp)
+
+bfs_hw: $(BFS_XCLBIN)
+
+$(bfs_hw_srcdir)/$(BFS_XOS): $(bfs_hw_src)
+	$(VPP) $(VPP_COMMON_OPTS) -c -k $(BFS_HW) -o $@ $+
+
+$(BFS_XCLBIN): $(bfs_hw_srcdir)/$(BFS_XOS)
+	mkdir -p $(bfs_hw_bindir)
+	$(VPP) $(VPP_COMMON_OPTS) -l -o $(bfs_hw_bindir)/$@ $+ $(BFS_CONN) 
 
 # host rules
 #
@@ -160,13 +180,29 @@ $(wcc_srcdir)/wcc.o: $(wcc_src)
 	       	g++ -c -o $@ $?
 
 
+
+#
+# bfs
+bfs_srcdir:= $(CURRENT_DIR)/host/bfs/
+bfs_bindir:= $(CURRENT_DIR)/host/bfs/bin
+bfs_src:= $(wildcard $(CURRENT_DIR)/host/bfs/*.cpp)
+
+.DEFAULT_GOAL := build
+build: $(bfs_app)
+
+$(bfs_app): $(bfs_srcdir)/bfs.o
+	        mkdir -p $(bfs_bindir)
+		g++ $(CFLAGS) -o $(bfs_bindir)/$@ $? $(LFLAGS)
+$(bfs_srcdir)/bfs.o: $(bfs_src)
+	       	g++ -c -o $@ $?
+
+
 run: $(XCLBIN) $(HOST_EXE) $(EMCONFIG_FILE)
 ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
 	XCL_EMULATION_MODE=${TARGET} ./$(HOST_EXE) $(EXE_OPT)
 else
 	./$(HOST_EXE) $(EXE_OPT)
 endif
-
 
 # primary build targets
 .PHONY: pagerank spmv all clean pagerank_hw
