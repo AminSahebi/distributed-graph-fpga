@@ -32,6 +32,7 @@ typedef ap_uint<DATA_WIDTH> u_data;
 typedef unsigned int u32;
 
 void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
+#pragma HLS inline
 	u32 distance_buffer[BUF_PER_PE]; // Local memory to store distances
 #pragma HLS ARRAY_PARTITION variable=distance_buffer dim=0
 
@@ -44,15 +45,15 @@ init_distances:
 
 	// Perform SSSP computation
 sssp_computation:
-	for (int k = 0; k < v - 1; k++) {
-		for (int j = 0; j < BUF_PER_PE; j++) {
+	for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-			u32 src = local_in_a[j]; // Edge source buffer
-			u32 dst = local_in_b[j]; // Edge destination buffer
+#pragma HLS LOOP_FLATTEN
 
-			if (distance_buffer[src] != BIGN && distance_buffer[src] + 1 < distance_buffer[dst]) {
-				distance_buffer[dst] = distance_buffer[src] + 1;
-			}
+		u32 src = local_in_a[j]; // Edge source buffer
+		u32 dst = local_in_b[j]; // Edge destination buffer
+
+		if (distance_buffer[src] != BIGN && distance_buffer[src] + 1 < distance_buffer[dst]) {
+			distance_buffer[dst] = distance_buffer[src] + 1;
 		}
 	}
 
@@ -132,16 +133,16 @@ extern "C" {
 
 
 start_loop:		for (int i = 0; i < size/BUF_PER_PE+1; i++) {
-			//double buffering
-//			if(i % 2 == 0) {
+				//double buffering
+				//			if(i % 2 == 0) {
 				buffer_load(e_src_buffer_a, e_dst_buffer_a, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE]);
 				buffer_compute(e_src_buffer_b, e_dst_buffer_b, output_buffer_b, v);
 				buffer_store(&out_r[i*BUF_PER_PE], output_buffer_a);
-//			} else {
-//				buffer_load(e_src_buffer_b, e_dst_buffer_b, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE]);
-//				buffer_compute(e_src_buffer_a, e_dst_buffer_a, output_buffer_a, v);
-//				buffer_store(&out_r[i*BUF_PER_PE], output_buffer_b);
-//			}
-		}
+				//			} else {
+				//				buffer_load(e_src_buffer_b, e_dst_buffer_b, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE]);
+				//				buffer_compute(e_src_buffer_a, e_dst_buffer_a, output_buffer_a, v);
+				//				buffer_store(&out_r[i*BUF_PER_PE], output_buffer_b);
+				//			}
+			}
 	}
 }
