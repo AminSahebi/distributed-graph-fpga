@@ -38,7 +38,7 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
         bool frontier_empty = true;
         for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-#pragma HLS LOOP_FLATTEN
+//#pragma HLS LOOP_FLATTEN
             if (frontier_buffer[j]) {
                 frontier_empty = false;
                 u32 src = local_in_a[j]; // Edge source buffer
@@ -60,7 +60,7 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
         // Copy the next frontier to the current frontier
         for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-#pragma HLS LOOP_FLATTEN
+//#pragma HLS LOOP_FLATTEN
             frontier_buffer[j] = next_frontier_buffer[j];
             next_frontier_buffer[j] = 0;
         }
@@ -127,7 +127,7 @@ extern "C" {
 
 
 start_loop:		for (int i = 0; i < size/BUF_PER_PE+1; i++) {
-#pragma HLS LOOP_FLATTEN
+//#pragma HLS LOOP_FLATTEN
 				buffer_load(local_in_a, local_in_b, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE]);
 				buffer_compute(local_in_a, local_in_b, local_out, v);
 				buffer_store(&out_r[i*BUF_PER_PE], local_out);
