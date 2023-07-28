@@ -31,61 +31,54 @@ typedef ap_uint<DATA_WIDTH> u_data;
 
 typedef unsigned int u32;
 
-void PE_kernel(u32 local_in_a[], u32 local_in_c[], u32 local_out[], int v) {
+void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
 #pragma HLS inline
-	u32 prev_buffer[BUF_PER_PE]; // Local Memory to store result
-#pragma HLS ARRAY_PARTITION variable=prev_buffer dim=0
 	u32 rank_buffer[BUF_PER_PE]; // Local Memory to store result
 #pragma HLS ARRAY_PARTITION variable=rank_buffer dim=0
-	// start init grid algorithm and
-	// init "rank" and "prev" memories.
 
 	float adding_constant = (1 - DAMPING_FACTOR) * 1/(float)v;
 	float one_over_n = 1.0/(float)v;
 
 loop_initialization:	for(int j = 0; j < BUF_PER_PE; j++){
 #pragma HLS pipeline
-				prev_buffer[j] = one_over_n;
 				rank_buffer[j] = 0.0;
 			}
 
 
 kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
-#pragma HLS LOOP_FLATTEN
-#pragma HLS dependence variable=rank_buffer type=intra false
+//#pragma HLS LOOP_FLATTEN
 #pragma HLS pipeline //II=1
 
 				u32 src = local_in_a[j]; //edge src buffer
 				//u32 dst = local_in_b[j]; //edge dst buffer
-				u32 deg = local_in_c[j]; //outdegree buffer
+				u32 deg = local_in_b[j]; //outdegree buffer
 				u32 temp = src/deg;
 				rank_buffer[j] = adding_constant + DAMPING_FACTOR*temp;
-				prev_buffer[j] = rank_buffer[j];
 			}
 
 write_ranks:
 			for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-				local_out[j] = prev_buffer[j];
+				local_out[j] = rank_buffer[j];
 			}
 }
 
 
 
-void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u_data *global_in_a, u_data *global_in_c) {
+void buffer_load(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_b[PE][BUF_PER_PE], u_data *global_in_a, u_data *global_in_b) {
 	// burst read
 load_loop:	for(int i = 0; i < PE; i++){
 #pragma HLS unroll 
 			memcpy(local_in_a[i], &global_in_a[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
-			memcpy(local_in_c[i], &global_in_c[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
+			memcpy(local_in_b[i], &global_in_b[i * BUF_PER_PE], BUF_PER_PE * sizeof(u32));
 		}
 }
 
-void buffer_compute(u32 local_in_a[PE][BUF_PER_PE], u32 local_in_c[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], int v) {
+void buffer_compute(u32 local_in_a[PE][BUF_PER_PE],u32 local_in_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], int v) {
 	// kernel replication
 compute_loop:	for (int i=0; i < PE; i++) {
 #pragma HLS unroll 
-			PE_kernel(local_in_a[i], local_in_c[i], local_out[i], v);
+			PE_kernel(local_in_a[i], local_in_b[i], local_out[i], v);
 		}
 }
 
@@ -109,23 +102,6 @@ extern "C" {
 #pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 		int v = vertices;
 		//create local buffers
-		u32 e_src_buffer_a[PE][BUF_PER_PE];   // Local memory to store edge source
-#pragma HLS ARRAY_PARTITION variable=e_src_buffer_a dim=1 complete
-
-		u32 e_src_buffer_b[PE][BUF_PER_PE];   // Local memory to store edge source
-#pragma HLS ARRAY_PARTITION variable=e_src_buffer_b dim=1 complete
-
-		u32 out_deg_buffer_a[PE][BUF_PER_PE]; // Local Memory to store out degree
-#pragma HLS ARRAY_PARTITION variable=out_deg_buffer_a dim=1 complete
-
-		u32 out_deg_buffer_b[PE][BUF_PER_PE]; // Local Memory to store out degree
-#pragma HLS ARRAY_PARTITION variable=out_deg_buffer_b dim=1 complete
-
-		u32 output_buffer_a[PE][BUF_PER_PE]; // Local Memory to store result
-#pragma HLS ARRAY_PARTITION variable=output_buffer_a dim=1 complete
-
-		u32 output_buffer_b[PE][BUF_PER_PE]; // Local Memory to store result
-#pragma HLS ARRAY_PARTITION variable=output_buffer_b dim=1 complete
 
 		u32 local_out[PE][BUF_PER_PE]; // Local temp for kernel output
 #pragma HLS ARRAY_PARTITION variable=local_out dim=1 complete
@@ -138,16 +114,9 @@ extern "C" {
 
 
 start_loop:		for (int i = 0; i < size/BUF_PER_PE+1; i++) {
-				//double buffering
-				//			if(i % 2 == 0) {
-				buffer_load(e_src_buffer_a, out_deg_buffer_a, &e_src[i*BUF_PER_PE], &out_degree[i*BUF_PER_PE]);
-				buffer_compute(e_src_buffer_b, out_deg_buffer_b, output_buffer_b, v);
-				buffer_store(&out_r[i*BUF_PER_PE], output_buffer_a);
-				//			} else {
-				//				buffer_load(e_src_buffer_b, e_dst_buffer_b, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE]);
-				//				buffer_compute(e_src_buffer_a, e_dst_buffer_a, output_buffer_a, v);
-				//				buffer_store(&out_r[i*BUF_PER_PE], output_buffer_b);
-				//			}
+				buffer_load(local_in_a, local_in_b, &e_src[i*BUF_PER_PE], &out_degree[i*BUF_PER_PE]);
+				buffer_compute(local_in_a, local_in_b, local_out, v);
+				buffer_store(&out_r[i*BUF_PER_PE], local_out);
 			}
 	}
 }
