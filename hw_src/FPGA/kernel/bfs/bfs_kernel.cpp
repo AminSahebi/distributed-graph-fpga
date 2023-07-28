@@ -38,7 +38,7 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
         bool frontier_empty = true;
         for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-#pragma HLS LOOP_FLATTEN
+//#pragma HLS LOOP_FLATTEN
             if (frontier_buffer[j]) {
                 frontier_empty = false;
                 u32 src = local_in_a[j]; // Edge source buffer
@@ -60,7 +60,7 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
         // Copy the next frontier to the current frontier
         for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
-#pragma HLS LOOP_FLATTEN
+//#pragma HLS LOOP_FLATTEN
             frontier_buffer[j] = next_frontier_buffer[j];
             next_frontier_buffer[j] = 0;
         }
@@ -115,23 +115,6 @@ extern "C" {
 #pragma HLS INTERFACE m_axi port = out_r offset = slave bundle=gmem num_write_outstanding=64 max_write_burst_length=64 num_read_outstanding=64 max_read_burst_length=64
 		int v = vertices;
 		//create local buffers
-		u32 e_src_buffer_a[PE][BUF_PER_PE];   // Local memory to store edge source
-#pragma HLS ARRAY_PARTITION variable=e_src_buffer_a dim=1 complete
-
-		u32 e_src_buffer_b[PE][BUF_PER_PE];   // Local memory to store edge source
-#pragma HLS ARRAY_PARTITION variable=e_src_buffer_b dim=1 complete
-
-		u32 e_dst_buffer_a[PE][BUF_PER_PE];   // Local memory to store edge dest
-#pragma HLS ARRAY_PARTITION variable=e_dst_buffer_a dim=1 complete
-
-		u32 e_dst_buffer_b[PE][BUF_PER_PE];   // Local memory to store edge dest
-#pragma HLS ARRAY_PARTITION variable=e_dst_buffer_b dim=1 complete
-
-		u32 output_buffer_a[PE][BUF_PER_PE]; // Local Memory to store result
-#pragma HLS ARRAY_PARTITION variable=output_buffer_a dim=1 complete
-
-		u32 output_buffer_b[PE][BUF_PER_PE]; // Local Memory to store result
-#pragma HLS ARRAY_PARTITION variable=output_buffer_b dim=1 complete
 
 		u32 local_out[PE][BUF_PER_PE]; // Local temp for kernel output
 #pragma HLS ARRAY_PARTITION variable=local_out dim=1 complete
@@ -142,21 +125,12 @@ extern "C" {
 		u32 local_in_b[PE][BUF_PER_PE]; // Local temp for kernel computation
 #pragma HLS ARRAY_PARTITION variable=local_in_b dim=1 complete
 
-		u32 local_in_c[PE][BUF_PER_PE]; // Local temp for kernel computation
-#pragma HLS ARRAY_PARTITION variable=local_in_c dim=1 complete
-
 
 start_loop:		for (int i = 0; i < size/BUF_PER_PE+1; i++) {
-				//double buffering
-				//			if(i % 2 == 0) {
-				buffer_load(e_src_buffer_a, e_dst_buffer_a, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE]);
-				buffer_compute(e_src_buffer_b, e_dst_buffer_b, output_buffer_b, v);
-				buffer_store(&out_r[i*BUF_PER_PE], output_buffer_a);
-				//			} else {
-				//				buffer_load(e_src_buffer_b, e_dst_buffer_b, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE]);
-				//				buffer_compute(e_src_buffer_a, e_dst_buffer_a, output_buffer_a, v);
-				//				buffer_store(&out_r[i*BUF_PER_PE], output_buffer_b);
-				//			}
+//#pragma HLS LOOP_FLATTEN
+				buffer_load(local_in_a, local_in_b, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE]);
+				buffer_compute(local_in_a, local_in_b, local_out, v);
+				buffer_store(&out_r[i*BUF_PER_PE], local_out);
 			}
 	}
 }
