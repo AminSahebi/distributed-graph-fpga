@@ -6,7 +6,7 @@
 #define BUFFER_SIZE 	2048
 #define DATA_WIDTH 	512
 #define PE 		128	
-
+#define MAX_VERTEX	60000000
 #define BUF_PER_PE	BUFFER_SIZE/PE
 
 typedef ap_uint<DATA_WIDTH> u_data;
@@ -19,7 +19,7 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[]) {
 #pragma HLS array_partition complete variable=local_in_b
 #pragma HLS array_partition complete variable=local_out
 
-    u32 component_buffer[BUF_PER_PE]; // Local Memory to store component IDs
+    u32 component_buffer[MAX_VERTEX]; // Local Memory to store component IDs
 #pragma HLS array_partition complete variable=component_buffer
 
     // Initialize component IDs

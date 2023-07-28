@@ -23,6 +23,7 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
 #pragma HLS ARRAY_PARTITION variable=next_frontier_buffer dim=0
 
     bool visited_buffer[BUF_PER_PE]; // Local memory to store visited flags
+#pragma HLS ARRAY_PARTITION variable=visited_buffer dim=0
 
     // Initialize frontier, next frontier, and visited flags
     for (int j = 0; j < BUF_PER_PE; j++) {
@@ -37,7 +38,7 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
     while (true) {
         bool frontier_empty = true;
         for (int j = 0; j < BUF_PER_PE; j++) {
-#pragma HLS pipeline
+#pragma HLS pipeline II=2
 //#pragma HLS LOOP_FLATTEN
             if (frontier_buffer[j]) {
                 frontier_empty = false;
@@ -59,8 +60,9 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
 
         // Copy the next frontier to the current frontier
         for (int j = 0; j < BUF_PER_PE; j++) {
-#pragma HLS pipeline
+//#pragma HLS pipeline
 //#pragma HLS LOOP_FLATTEN
+#pragma HLS unroll
             frontier_buffer[j] = next_frontier_buffer[j];
             next_frontier_buffer[j] = 0;
         }
@@ -70,7 +72,8 @@ void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
 
     // Write the computed levels to the output buffer
     for (int j = 0; j < BUF_PER_PE; j++) {
-#pragma HLS pipeline
+//#pragma HLS pipeline
+#pragma HLS unroll
         local_out[j] = level * visited_buffer[j]; // Write the level only if the vertex was visited
     }
 }
@@ -127,7 +130,7 @@ extern "C" {
 
 
 start_loop:		for (int i = 0; i < size/BUF_PER_PE+1; i++) {
-//#pragma HLS LOOP_FLATTEN
+#pragma HLS unroll
 				buffer_load(local_in_a, local_in_b, &e_src[i*BUF_PER_PE], &e_dst[i*BUF_PER_PE]);
 				buffer_compute(local_in_a, local_in_b, local_out, v);
 				buffer_store(&out_r[i*BUF_PER_PE], local_out);
