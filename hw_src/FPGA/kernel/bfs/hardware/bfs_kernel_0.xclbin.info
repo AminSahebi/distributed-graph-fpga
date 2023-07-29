@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                bfs_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          249329cf-986f-ad3d-a3a9-33a62fb2e1e6
+   UUID (xclbin):          0cc602c1-b0ec-7b8b-0a55-33d8e2d3cd2c
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
