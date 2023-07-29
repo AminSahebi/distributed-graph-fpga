@@ -24,43 +24,73 @@ limitations under the License.
 #define DATA_WIDTH 		32
 #define PE 			2
 #define BIGN			65536 // 2^12
-#define BUF_PER_PE		64 // BUFFER_SIZE/PE
+#define BUF_PER_PE		128 // BUFFER_SIZE/PE
 #define CHUNK_SIZE 		16
+#define UNROLL_FACTOR 4
 
 typedef ap_uint<DATA_WIDTH> u_data;
 
 typedef unsigned int u32;
 
 void PE_kernel(u32 local_in_a[], u32 local_in_b[], u32 local_out[], int v) {
-#pragma HLS inline
+//#pragma HLS inline
 	u32 rank_buffer[BUF_PER_PE]; // Local Memory to store result
 #pragma HLS ARRAY_PARTITION variable=rank_buffer dim=0
 
-	float adding_constant = (1 - DAMPING_FACTOR) * 1/(float)v;
-	float one_over_n = 1.0/(float)v;
+	u32 src_buffer[BUF_PER_PE];
+#pragma HLS ARRAY_PARTITION variable=src_buffer dim=0
+	u32 dst_buffer[BUF_PER_PE];
+#pragma HLS ARRAY_PARTITION variable=dst_buffer dim=0
+
+read_buffer:	for(int j = 0; j < BUF_PER_PE; j++){
+#pragma HLS pipeline II=1
+			//#pragma HLS LOOP_FLATTEN
+			//#pragma HLS unroll
+			src_buffer[j] = local_in_a[j];
+			dst_buffer[j] = local_in_b[j];
+		}
+
+		float adding_constant = (1 - DAMPING_FACTOR) * 1/(float)v;
+		float one_over_n = 1.0/(float)v;
 
 loop_initialization:	for(int j = 0; j < BUF_PER_PE; j++){
-#pragma HLS pipeline
+#pragma HLS pipeline II=1
 				rank_buffer[j] = 0.0;
 			}
 
-
+			/*
 kernel_loop:		for(int j = 0; j < BUF_PER_PE; j++){
-//#pragma HLS LOOP_FLATTEN
-#pragma HLS pipeline //II=1
+#pragma HLS LOOP_FLATTEN off
+#pragma HLS pipeline II=1
+u32 src = src_buffer[j]; //edge src buffer
+u32 deg = dst_buffer[j]; //outdegree buffer
+u32 temp = src/deg;
+u32 rank = adding_constant + DAMPING_FACTOR*temp;
+rank_buffer[j] = rank;
+}
 
-				u32 src = local_in_a[j]; //edge src buffer
-				//u32 dst = local_in_b[j]; //edge dst buffer
-				u32 deg = local_in_b[j]; //outdegree buffer
-				u32 temp = src/deg;
-				rank_buffer[j] = adding_constant + DAMPING_FACTOR*temp;
-			}
+*/
+kernel_loop: for (int j = 0; j < BUF_PER_PE; j += 2) {
+#pragma HLS pipeline II=1
+		     u32 src1 = src_buffer[j]; //edge src buffer
+		     u32 deg1 = dst_buffer[j]; //outdegree buffer
+		     u32 temp1 = src1 / deg1;
+		     u32 rank1 = adding_constant + DAMPING_FACTOR * temp1;
+		     rank_buffer[j] = rank1;
 
+		     u32 src2 = src_buffer[j + 1]; //edge src buffer
+		     u32 deg2 = dst_buffer[j + 1]; //outdegree buffer
+		     u32 temp2 = src2 / deg2;
+		     u32 rank2 = adding_constant + DAMPING_FACTOR * temp2;
+		     rank_buffer[j + 1] = rank2;
+	     }
 write_ranks:
-			for (int j = 0; j < BUF_PER_PE; j++) {
-#pragma HLS pipeline
-				local_out[j] = rank_buffer[j];
-			}
+for (int j = 0; j < BUF_PER_PE; j++) {
+#pragma HLS pipeline II=1
+	//#pragma HLS pipeline
+	local_out[j] = rank_buffer[j];
+}
+
 }
 
 
@@ -77,7 +107,7 @@ load_loop:	for(int i = 0; i < PE; i++){
 void buffer_compute(u32 local_in_a[PE][BUF_PER_PE],u32 local_in_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], int v) {
 	// kernel replication
 compute_loop:	for (int i=0; i < PE; i++) {
-#pragma HLS unroll 
+#pragma HLS unroll
 			PE_kernel(local_in_a[i], local_in_b[i], local_out[i], v);
 		}
 }
