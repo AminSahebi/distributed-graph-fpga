@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                pagerank_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          ab11c2c8-097f-10db-8be8-6413a5b7a61d
+   UUID (xclbin):          847ccd9e-663d-a895-e9ff-d596be23d03d
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -141,19 +141,19 @@ Kernel: pagerank_kernel_0
 
 Definition
 ----------
-   Signature: pagerank_kernel_0 (void* e_src, void* out_degree, void* out_r, unsigned int size, unsigned int vertices)
+   Signature: pagerank_kernel_0 (void* e_src, void* e_dst, void* out_degree, void* out_r, unsigned int size, unsigned int vertices)
 
 Ports
 -----
    Port:          M_AXI_GMEM
    Mode:          master
    Range (bytes): 0xFFFFFFFF
-   Data Width:    512 bits
+   Data Width:    32 bits
    Port Type:     addressable
 
    Port:          S_AXI_CONTROL
    Mode:          slave
-   Range (bytes): 0x44
+   Range (bytes): 0x50
    Data Width:    32 bits
    Port Type:     addressable
 
@@ -166,23 +166,28 @@ Instance:        pagerank_kernel_0_1
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -195,23 +200,28 @@ Instance:        pagerank_kernel_0_2
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -224,23 +234,28 @@ Instance:        pagerank_kernel_0_3
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -253,23 +268,28 @@ Instance:        pagerank_kernel_0_4
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -282,23 +302,28 @@ Instance:        pagerank_kernel_0_5
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -311,23 +336,28 @@ Instance:        pagerank_kernel_0_6
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -340,23 +370,28 @@ Instance:        pagerank_kernel_0_7
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -369,23 +404,28 @@ Instance:        pagerank_kernel_0_8
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -398,23 +438,28 @@ Instance:        pagerank_kernel_0_9
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -427,23 +472,28 @@ Instance:        pagerank_kernel_0_10
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -456,23 +506,28 @@ Instance:        pagerank_kernel_0_11
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -485,23 +540,28 @@ Instance:        pagerank_kernel_0_12
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -514,23 +574,28 @@ Instance:        pagerank_kernel_0_13
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -543,23 +608,28 @@ Instance:        pagerank_kernel_0_14
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -572,23 +642,28 @@ Instance:        pagerank_kernel_0_15
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_r
+   Argument:          out_degree
    Register Offset:   0x28
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          size
+   Argument:          out_r
    Register Offset:   0x34
+   Port:              M_AXI_GMEM
+   Memory:            HOST[0] (MEM_DRAM)
+
+   Argument:          size
+   Register Offset:   0x40
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
    Argument:          vertices
-   Register Offset:   0x3C
+   Register Offset:   0x48
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 ==============================================================================
