@@ -38,7 +38,7 @@ PR_XCLBIN := pagerank_kernel_0.xclbin
 # pagerank
 PR_XOS := pagerank_kernel_0.xo
 PR_XCLBIN := pagerank_kernel_0.xclbin
-PR_CONN := --config $(CURRENT_DIR)/kernel/pagerank/connectivity_pagerank.cfg #--kernel_frequency=350
+PR_CONN := --config $(CURRENT_DIR)/kernel/pagerank/connectivity_pagerank.cfg --kernel_frequency=250
 pr_hw_srcdir:= $(CURRENT_DIR)/kernel/pagerank/
 pr_hw_bindir:= $(CURRENT_DIR)/kernel/pagerank/hardware
 pr_hw_src:= $(wildcard $(CURRENT_DIR)/kernel/pagerank/pagerank_kernel.cpp)
