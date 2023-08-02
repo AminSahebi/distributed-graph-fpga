@@ -11,7 +11,11 @@ xclbin Information
    Kernels:                pagerank_kernel_0
    Signature:              
    Content:                Bitstream
+<<<<<<< HEAD
+   UUID (xclbin):          54cf555e-6b07-bfe4-bd23-8fbb9c411d49
+=======
    UUID (xclbin):          94ebcb8e-db4e-e5d4-7669-e095e4f45951
+>>>>>>> 5d29c888ffce30d53346564e16c4c193287fdf10
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -39,7 +43,11 @@ Scalable Clocks
    Name:      DATA_CLK
    Index:     0
    Type:      DATA
+<<<<<<< HEAD
+   Frequency: 263 MHz
+=======
    Frequency: 245 MHz
+>>>>>>> 5d29c888ffce30d53346564e16c4c193287fdf10
 
    Name:      KERNEL_CLK
    Index:     1
@@ -63,8 +71,13 @@ System Clocks
    Name:           ss_ucs_aclk_kernel_00 
    Type:           SCALABLE 
    Default Freq:   300 MHz
+<<<<<<< HEAD
+   Requested Freq: 300 MHz
+   Achieved Freq:  263.6 MHz
+=======
    Requested Freq: 250 MHz
    Achieved Freq:  245.2 MHz
+>>>>>>> 5d29c888ffce30d53346564e16c4c193287fdf10
 
    Name:           ss_ucs_aclk_kernel_01 
    Type:           SCALABLE 
