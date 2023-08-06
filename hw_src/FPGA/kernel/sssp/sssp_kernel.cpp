@@ -237,9 +237,9 @@ loop_store_inner: for (int j = 0; j < BUF_PER_PE; j++) {
 
 extern "C" {
     void sssp_kernel_0(u32* e_src, u32* out_degree, u32* out_r, int size, int vertices, int source_vertex) {
-#pragma HLS INTERFACE m_axi port=e_src offset=slave bundle=gmem num_write_outstanding=1 max_write_burst_length=1 num_read_outstanding=1 max_read_burst_length=1
-#pragma HLS INTERFACE m_axi port=out_degree offset=slave bundle=gmem num_write_outstanding=1 max_write_burst_length=1 num_read_outstanding=1 max_read_burst_length=1
-#pragma HLS INTERFACE m_axi port=out_r offset=slave bundle=gmem num_write_outstanding=1 max_write_burst_length=1 num_read_outstanding=1 max_read_burst_length=1
+#pragma HLS INTERFACE m_axi port=e_src offset=slave bundle=gmem num_write_outstanding=128 max_write_burst_length=64 num_read_outstanding=128 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port=out_degree offset=slave bundle=gmem num_write_outstanding=128 max_write_burst_length=64 num_read_outstanding=128 max_read_burst_length=64
+#pragma HLS INTERFACE m_axi port=out_r offset=slave bundle=gmem num_write_outstanding=128 max_write_burst_length=64 num_read_outstanding=128 max_read_burst_length=64
 
         int v = vertices;
 
