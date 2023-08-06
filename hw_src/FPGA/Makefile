@@ -60,7 +60,7 @@ SSSP_XCLBIN := sssp_kernel_0.xclbin
 # sssp
 SSSP_XOS := sssp_kernel_0.xo
 SSSP_XCLBIN := sssp_kernel_0.xclbin
-SSSP_CONN := --config $(CURRENT_DIR)/kernel/sssp/connectivity_sssp.cfg #--kernel_frequency=350
+SSSP_CONN := --config $(CURRENT_DIR)/kernel/sssp/connectivity_sssp.cfg --kernel_frequency=200
 sssp_hw_srcdir:= $(CURRENT_DIR)/kernel/sssp
 sssp_hw_bindir:= $(CURRENT_DIR)/kernel/sssp/hardware
 sssp_hw_src:= $(wildcard ${sssp_hw_srcdir}/sssp_kernel.cpp)
