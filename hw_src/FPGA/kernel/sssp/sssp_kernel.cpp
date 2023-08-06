@@ -3,7 +3,7 @@
 #include <hls_stream.h>
 
 #define DATA_WIDTH 512
-#define PE 4
+#define PE 1
 #define BUF_PER_PE 64
 #define CACHE_SIZE 32
 
@@ -132,13 +132,6 @@ void SSSP_kernel(u32 local_in_a[CACHE_SIZE], u32 local_in_b[CACHE_SIZE], u32 loc
         distance_buffer[j] = (u32)-1;
     }
 
-    // Set the distance of the source vertex to 0
-    if (source_vertex < CACHE_SIZE) {
-        distance_buffer[source_vertex] = 0;
-    }
-
-    for (int iter = 0; iter < v - 1; iter++) {
-#pragma HLS unroll//LOOP_FLATTEN
         for (int j = 0; j < CACHE_SIZE; j += 2) {
             u32 src1 = local_in_a[j];
             u32 dst1 = local_in_b[j];
@@ -154,7 +147,6 @@ void SSSP_kernel(u32 local_in_a[CACHE_SIZE], u32 local_in_b[CACHE_SIZE], u32 loc
                 distance_buffer[dst2] = distance_buffer[src2] + cost2;
             }
         }
-    }
 
     for (int j = 0; j < CACHE_SIZE; j++) {
         local_out[j] = distance_buffer[j];
@@ -204,18 +196,8 @@ void buffer_compute(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b
                 end_idx = BUF_PER_PE;
             }
 
-            // Copy data from BRAM to distance_buffer before calling SSSP_kernel
-            for (int k = 0; k < CACHE_SIZE; k++) {
-#pragma HLS pipeline
-                distance_buffer[k] = local_out[pe_idx][start_idx + k];
-            }
-
             SSSP_kernel(&local_in_a[pe_idx][start_idx], &local_in_b[pe_idx][start_idx], distance_buffer, v, source_vertex);
 
-            // Copy data from distance_buffer to BRAM after calling SSSP_kernel
-            for (int k = 0; k < CACHE_SIZE; k++) {
-                local_out[pe_idx][start_idx + k] = distance_buffer[k];
-            }
         }
     }
 }
