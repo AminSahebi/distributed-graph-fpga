@@ -40,6 +40,7 @@ int main(int argc, char** argv) {
 	}
 
 	int vertices = atoi(argv[3]);
+	int vertices1 = 10;//atoi(argv[3]);
 	int p = atoi(argv[4]);
 
 	Graph graph(path);
@@ -99,21 +100,21 @@ int main(int argc, char** argv) {
 	/** Create Kernels */
 	std::vector<cl::Kernel> krnls(num_cu);
 
-	krnls[0] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_1}", &err);
-	krnls[1] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_2}", &err);
-	krnls[2] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_3}", &err);
-	krnls[3] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_4}", &err);
-	krnls[4] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_5}", &err);
-	krnls[5] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_6}", &err);
-	krnls[6] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_7}", &err);
-	krnls[7] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_8}", &err);
-	krnls[8] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_9}", &err);
-	krnls[9] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_10}", &err);
-	krnls[10] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_11}", &err);
-	krnls[11] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_12}", &err);
-	krnls[12] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_13}", &err);
-	krnls[13] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_14}", &err);
-	krnls[14] = cl::Kernel(program, "pagerank_kernel_0:{pagerank_kernel_0_15}", &err);
+	krnls[0] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_1}", &err);
+	krnls[1] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_2}", &err);
+	krnls[2] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_3}", &err);
+	krnls[3] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_4}", &err);
+	krnls[4] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_5}", &err);
+	krnls[5] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_6}", &err);
+	krnls[6] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_7}", &err);
+	krnls[7] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_8}", &err);
+	krnls[8] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_9}", &err);
+	krnls[9] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_10}", &err);
+	krnls[10] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_11}", &err);
+	krnls[11] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_12}", &err);
+	krnls[12] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_13}", &err);
+	krnls[13] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_14}", &err);
+	krnls[14] = cl::Kernel(program, "wcc_kernel_0:{wcc_kernel_0_15}", &err);
 
 	std::vector<cl::Buffer> outDegree(num_cu);
 	std::vector<cl::Buffer> edgeSrc(num_cu);
@@ -218,7 +219,7 @@ int main(int argc, char** argv) {
 
 			OCL_CHECK(err, err = krnls[i].setArg(2, output[i]));
 			OCL_CHECK(err, err = krnls[i].setArg(3, fsize[i]));
-			OCL_CHECK(err, err = krnls[i].setArg(4, vertices));
+			OCL_CHECK(err, err = krnls[i].setArg(4, vertices1));
 			// OCL_CHECK(err, err = krnls[i].setArg(6, partitions));
 
 			/** copy data to the device global memory */
@@ -253,5 +254,9 @@ int main(int argc, char** argv) {
 	printf("finish\n");
 
 	// Clean up
+	//    for (int i = 0; i < num_cu; i++) {
+	//      delete[] krnls[i];
+	// }
+
 	return 0;
 }
