@@ -4,8 +4,8 @@
 
 #define DAMPING_FACTOR 0.85
 #define DATA_WIDTH 32
-#define PE 4
-#define BUF_PER_PE 64
+#define PE 8
+#define BUF_PER_PE 32
 
 typedef ap_uint<DATA_WIDTH> u_data;
 
@@ -52,7 +52,7 @@ void fetch_cache_block(CacheBlock* cache_L1, u_data* global_data, int addr) {
 
     // Unroll the inner loop to reduce loop overhead
 loop_cache_block:    for (int i = 0; i < BUF_PER_PE; i++) {
-#pragma HLS LOOP_FLATTEN
+#pragma HLS unroll
         // Load data into cache directly without using an intermediate variable
         cache_L1->entries[i].data = global_data[block_start_addr + i];
         cache_L1->entries[i].valid = true;
@@ -62,7 +62,7 @@ loop_cache_block:    for (int i = 0; i < BUF_PER_PE; i++) {
 
 void buffer_load(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u_data* global_data_a, u_data* global_data_b) {
 loop_load_outer:    for (int i = 0; i < PE; i++) {
-#pragma HLS LOOP_FLATTEN 
+#pragma HLS unroll 
 loop_load_inner:    for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline II=1
             int addr_a = i * BUF_PER_PE + j;
@@ -123,7 +123,7 @@ void PE_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local
 
 void buffer_compute(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], int v) {
 loop_compute_outer:	for (int i = 0; i < PE; i++) {
-#pragma HLS unroll
+#pragma HLS LOOP_FLATTEN
 		u32 local_in_a[BUF_PER_PE];
 #pragma HLS ARRAY_PARTITION variable=local_in_a complete
 		u32 local_in_b[BUF_PER_PE];
