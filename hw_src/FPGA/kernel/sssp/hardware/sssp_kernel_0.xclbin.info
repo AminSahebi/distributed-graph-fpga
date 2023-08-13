@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                sssp_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          803a5b2f-aba0-fcee-2cba-746a93734e86
+   UUID (xclbin):          0138a527-647c-afff-a6c0-d67b0852f162
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -141,14 +141,14 @@ Kernel: sssp_kernel_0
 
 Definition
 ----------
-   Signature: sssp_kernel_0 (void* e_src, void* out_degree, void* out_r, unsigned int size, unsigned int vertices, unsigned int source_vertex)
+   Signature: sssp_kernel_0 (void* e_src, void* out_degree, void* out_r, unsigned int size, unsigned int vertices, unsigned int src_vertex)
 
 Ports
 -----
    Port:          M_AXI_GMEM
    Mode:          master
    Range (bytes): 0xFFFFFFFF
-   Data Width:    32 bits
+   Data Width:    512 bits
    Port Type:     addressable
 
    Port:          S_AXI_CONTROL
@@ -186,7 +186,7 @@ Instance:        sssp_kernel_0_1
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -220,7 +220,7 @@ Instance:        sssp_kernel_0_2
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -254,7 +254,7 @@ Instance:        sssp_kernel_0_3
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -288,7 +288,7 @@ Instance:        sssp_kernel_0_4
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -322,7 +322,7 @@ Instance:        sssp_kernel_0_5
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -356,7 +356,7 @@ Instance:        sssp_kernel_0_6
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -390,7 +390,7 @@ Instance:        sssp_kernel_0_7
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -424,7 +424,7 @@ Instance:        sssp_kernel_0_8
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -458,7 +458,7 @@ Instance:        sssp_kernel_0_9
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -492,7 +492,7 @@ Instance:        sssp_kernel_0_10
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -526,7 +526,7 @@ Instance:        sssp_kernel_0_11
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -560,7 +560,7 @@ Instance:        sssp_kernel_0_12
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -594,7 +594,7 @@ Instance:        sssp_kernel_0_13
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -628,7 +628,7 @@ Instance:        sssp_kernel_0_14
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -662,7 +662,7 @@ Instance:        sssp_kernel_0_15
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          source_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
