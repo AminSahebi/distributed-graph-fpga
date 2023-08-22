@@ -4,7 +4,7 @@
 
 #define INF 0xFFFFFFFF
 #define DATA_WIDTH 32
-#define PE 1
+#define PE 4
 #define BUF_PER_PE 64
 
 typedef ap_uint<DATA_WIDTH> u_data;
@@ -62,7 +62,7 @@ loop_cache_block:	for (int i = 0; i < BUF_PER_PE; i++) {
 
 void buffer_load(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u_data* global_data_a, u_data* global_data_b) {
 loop_load_outer:	for (int i = 0; i < PE; i++) {
-#pragma HLS LOOP_FLATTEN 
+#pragma HLS unroll//LOOP_FLATTEN 
 loop_load_inner:	for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline II=1
 			int addr_a = i * BUF_PER_PE + j;
@@ -110,7 +110,7 @@ void SSSP_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 loc
 
 void buffer_compute(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], u32 src_vertex) {
 loop_compute_outer:	for (int i = 0; i < PE; i++) {
-#pragma HLS unroll
+#pragma HLS LOOP_FLATTEN//unroll
 		u32 local_in_a[BUF_PER_PE];
 #pragma HLS ARRAY_PARTITION variable=local_in_a complete
 		u32 local_in_b[BUF_PER_PE];
