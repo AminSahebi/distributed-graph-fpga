@@ -4,7 +4,7 @@
 
 #define INF 0xFFFFFFFF
 #define DATA_WIDTH 32
-#define PE 4
+#define PE 1
 #define BUF_PER_PE 64
 
 typedef ap_uint<DATA_WIDTH> u_data;
