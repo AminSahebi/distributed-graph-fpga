@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                sssp_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          faeb757c-7747-d53c-a087-ec3bf10c1874
+   UUID (xclbin):          ca221a80-4d24-a184-df5e-ca6c6c8cf65e
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -141,7 +141,7 @@ Kernel: sssp_kernel_0
 
 Definition
 ----------
-   Signature: sssp_kernel_0 (void* e_src, void* out_degree, void* out_r, unsigned int size, unsigned int vertices, unsigned int src_vertex)
+   Signature: sssp_kernel_0 (void* e_src, void* e_dst, void* out_r, unsigned int size, unsigned int vertices, unsigned int src_vertex)
 
 Ports
 -----
@@ -166,7 +166,7 @@ Instance:        sssp_kernel_0_1
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -200,7 +200,7 @@ Instance:        sssp_kernel_0_2
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -234,7 +234,7 @@ Instance:        sssp_kernel_0_3
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -268,7 +268,7 @@ Instance:        sssp_kernel_0_4
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -302,7 +302,7 @@ Instance:        sssp_kernel_0_5
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -336,7 +336,7 @@ Instance:        sssp_kernel_0_6
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -370,7 +370,7 @@ Instance:        sssp_kernel_0_7
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -404,7 +404,7 @@ Instance:        sssp_kernel_0_8
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -438,7 +438,7 @@ Instance:        sssp_kernel_0_9
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -472,7 +472,7 @@ Instance:        sssp_kernel_0_10
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -506,7 +506,7 @@ Instance:        sssp_kernel_0_11
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -540,7 +540,7 @@ Instance:        sssp_kernel_0_12
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -574,7 +574,7 @@ Instance:        sssp_kernel_0_13
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -608,7 +608,7 @@ Instance:        sssp_kernel_0_14
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -642,7 +642,7 @@ Instance:        sssp_kernel_0_15
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
