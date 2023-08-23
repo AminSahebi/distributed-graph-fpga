@@ -78,7 +78,7 @@ loop_load_inner:	for (int j = 0; j < BUF_PER_PE; j++) {
 			}
 			}
 }
-
+/*
 void SSSP_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_out[BUF_PER_PE], u32 src_vertex) {
 	CacheBlock cache_L1[BUF_PER_PE];
 #pragma HLS ARRAY_PARTITION variable=cache_L1 complete
@@ -120,8 +120,55 @@ void SSSP_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 loc
 		local_out[j] = dist_buffer[j];
 	}
 }
+*/
 
-void buffer_compute(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], u32 src_vertex) {
+bool custom_cas(int* ptr, int expected, int desired) {
+    // Simplified CAS implementation
+    if (*ptr == expected) {
+        *ptr = desired;
+        return true;
+    }
+    return false;
+}
+
+void SSSP_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_out[BUF_PER_PE], int active_vertex) {
+//    int active_vertices = v; // Initialize the number of active vertices
+    int iteration = 0; // Initialize the iteration counter
+
+    int depth[BUF_PER_PE]; // Local memory to store depths
+
+    // Initialize depth array
+    for (int j = 0; j < BUF_PER_PE; j++) {
+        depth[j] = (local_in_a[j] == 0) ? 0 : INF; // Initialize depths
+    }
+
+    // Main loop
+    while (active_vertex != 0) {
+
+        active_vertex = 0; // Reset the active_vertices count
+
+        // Loop over the edges and update depths
+        for (int j = 0; j < BUF_PER_PE; j++) {
+            int target = local_in_b[j];
+            int r = depth[target];
+            int n = depth[local_in_a[j]] + 1; // Assuming e.weight is always 1
+            if (n < r) {
+                if (custom_cas(&depth[target], r, n)) {
+                    active_vertex++; // Increment active_vertices count
+                }
+            }
+        }
+    }
+
+    // Write computed depths to local_out
+    for (int j = 0; j < BUF_PER_PE; j++) {
+        local_out[j] = depth[j];
+    }
+}
+
+
+
+void buffer_compute(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], u32 active_vertex) {
 loop_compute_outer:	for (int i = 0; i < PE; i++) {
 #pragma HLS LOOP_FLATTEN//unroll
 				u32 local_in_a[BUF_PER_PE];
@@ -135,7 +182,7 @@ loop_compute_inner:	for (int j = 0; j < BUF_PER_PE; j++) {
 				local_in_b[j] = cache_L1_b[i][j].entries[j].data;
 			}
 
-			SSSP_kernel(local_in_a, local_in_b, local_out[i], src_vertex);
+			SSSP_kernel(local_in_a, local_in_b, local_out[i], active_vertex);
 			}
 }
 
@@ -151,7 +198,7 @@ loop_store_inner:	for (int j = 0; j < BUF_PER_PE; j++) {
 }
 
 extern "C" {
-	void sssp_kernel_0(u_data* e_src, u_data* e_dst, u_data* out_r, int size, int vertices, u32 src_vertex) {
+	void sssp_kernel_0(u_data* e_src, u_data* e_dst, u_data* out_r, int size, int vertices, u32 active_vertex) {
 		CacheBlock cache_L1_a[PE][BUF_PER_PE];
 #pragma HLS ARRAY_PARTITION variable=cache_L1_a complete
 		CacheBlock cache_L1_b[PE][BUF_PER_PE];
@@ -162,7 +209,7 @@ extern "C" {
 
 loop_start:		for (int i = 0; i < size / BUF_PER_PE + 1; i++) {
 				buffer_load(cache_L1_a, cache_L1_b, &e_src[i * BUF_PER_PE], &e_dst[i * BUF_PER_PE]);
-				buffer_compute(cache_L1_a, cache_L1_b, local_out, src_vertex);
+				buffer_compute(cache_L1_a, cache_L1_b, local_out, active_vertex);
 				buffer_store(&out_r[i * BUF_PER_PE], local_out);
 			}
 	}

@@ -9,10 +9,10 @@
 <ENTRY>
 {
  "type": "ET_CmdStep",
- "dateTimestamp": "Tue Aug 22 15:31:27 2023",
- "timestampMillis": "1692714687843",
+ "dateTimestamp": "Wed Aug 23 09:20:12 2023",
+ "timestampMillis": "1692778812473",
  "buildStep": {
-  "cmdId": "6a7cbbd7-30c4-48b4-91af-e62eb6bc0bf3",
+  "cmdId": "3df72376-93dc-4fb7-ae5a-f5f1e35a8559",
   "name": "v++",
   "logFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/link.steps.log",
   "commandLine": "/opt/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -s -t hw --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 -I/home/amin/distributed-graph-fpga/hw_src/FPGA/kernel --hls.jobs 8 --vivado.synth.jobs 8 --vivado.impl.jobs 8 -l -o /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/hardware/sssp_kernel_0.xclbin /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_kernel_0.xo --config /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/connectivity_sssp.cfg --kernel_frequency=200 ",
@@ -50,10 +50,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:31:27 2023",
- "timestampMillis": "1692714687844",
+ "dateTimestamp": "Wed Aug 23 09:20:12 2023",
+ "timestampMillis": "1692778812473",
  "status": {
-  "cmdId": "6a7cbbd7-30c4-48b4-91af-e62eb6bc0bf3",
+  "cmdId": "3df72376-93dc-4fb7-ae5a-f5f1e35a8559",
   "state": "CS_RUNNING"
  }
 }
@@ -61,8 +61,8 @@
 <ENTRY>
 {
  "type": "ET_FlowMetaData",
- "dateTimestamp": "Tue Aug 22 15:31:30 2023",
- "timestampMillis": "1692714690442",
+ "dateTimestamp": "Wed Aug 23 09:20:14 2023",
+ "timestampMillis": "1692778814968",
  "buildSummary": {
   "hardwarePlatform": "xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm",
   "hardwareDsa": "",
@@ -123,10 +123,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 15:31:30 2023",
- "timestampMillis": "1692714690705",
+ "dateTimestamp": "Wed Aug 23 09:20:15 2023",
+ "timestampMillis": "1692778815156",
  "buildStep": {
-  "cmdId": "a354c3ae-761d-472f-a25a-448ea7a82320",
+  "cmdId": "60e8680c-b805-40e4-ab0b-cc7a8d1af222",
   "name": "system_link",
   "logFile": "",
   "commandLine": "system_link --xo /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/sssp_kernel_0.xo -keep --config /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm --target hw --output_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int --temp_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/sys_link",
@@ -158,10 +158,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:31:30 2023",
- "timestampMillis": "1692714690706",
+ "dateTimestamp": "Wed Aug 23 09:20:15 2023",
+ "timestampMillis": "1692778815157",
  "status": {
-  "cmdId": "a354c3ae-761d-472f-a25a-448ea7a82320",
+  "cmdId": "60e8680c-b805-40e4-ab0b-cc7a8d1af222",
   "state": "CS_RUNNING"
  }
 }
@@ -169,10 +169,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:31:49 2023",
- "timestampMillis": "1692714709725",
+ "dateTimestamp": "Wed Aug 23 09:20:34 2023",
+ "timestampMillis": "1692778834107",
  "status": {
-  "cmdId": "a354c3ae-761d-472f-a25a-448ea7a82320",
+  "cmdId": "60e8680c-b805-40e4-ab0b-cc7a8d1af222",
   "state": "CS_PASSED"
  }
 }
@@ -180,10 +180,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 15:31:49 2023",
- "timestampMillis": "1692714709729",
+ "dateTimestamp": "Wed Aug 23 09:20:34 2023",
+ "timestampMillis": "1692778834113",
  "buildStep": {
-  "cmdId": "eed7ff8a-ae8f-4269-9734-4dc897258d8a",
+  "cmdId": "d8219575-f728-4bd4-8087-cacde21bc423",
   "name": "cf2sw",
   "logFile": "",
   "commandLine": "cf2sw -sdsl /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/sdsl.dat -rtd /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/cf2sw.rtd -nofilter /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/cf2sw_full.rtd -xclbin /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/xclbin_orig.xml -o /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/xclbin_orig.1.xml",
@@ -207,10 +207,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:31:49 2023",
- "timestampMillis": "1692714709729",
+ "dateTimestamp": "Wed Aug 23 09:20:34 2023",
+ "timestampMillis": "1692778834113",
  "status": {
-  "cmdId": "eed7ff8a-ae8f-4269-9734-4dc897258d8a",
+  "cmdId": "d8219575-f728-4bd4-8087-cacde21bc423",
   "state": "CS_RUNNING"
  }
 }
@@ -218,10 +218,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:31:58 2023",
- "timestampMillis": "1692714718183",
+ "dateTimestamp": "Wed Aug 23 09:20:42 2023",
+ "timestampMillis": "1692778842823",
  "status": {
-  "cmdId": "eed7ff8a-ae8f-4269-9734-4dc897258d8a",
+  "cmdId": "d8219575-f728-4bd4-8087-cacde21bc423",
   "state": "CS_PASSED"
  }
 }
@@ -229,10 +229,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 15:31:58 2023",
- "timestampMillis": "1692714718187",
+ "dateTimestamp": "Wed Aug 23 09:20:42 2023",
+ "timestampMillis": "1692778842827",
  "buildStep": {
-  "cmdId": "5d4d55d3-66ba-443d-8406-3a2fce4184de",
+  "cmdId": "bceac013-789e-4936-88b8-f8da24380719",
   "name": "rtd2_system_diagram",
   "logFile": "",
   "commandLine": "rtd2SystemDiagram",
@@ -245,10 +245,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:31:58 2023",
- "timestampMillis": "1692714718187",
+ "dateTimestamp": "Wed Aug 23 09:20:42 2023",
+ "timestampMillis": "1692778842827",
  "status": {
-  "cmdId": "5d4d55d3-66ba-443d-8406-3a2fce4184de",
+  "cmdId": "bceac013-789e-4936-88b8-f8da24380719",
   "state": "CS_RUNNING"
  }
 }
@@ -256,8 +256,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 15:31:58 2023",
- "timestampMillis": "1692714718418",
+ "dateTimestamp": "Wed Aug 23 09:20:43 2023",
+ "timestampMillis": "1692778843047",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/systemDiagramModel.json",
   "name": "",
@@ -270,10 +270,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:31:58 2023",
- "timestampMillis": "1692714718419",
+ "dateTimestamp": "Wed Aug 23 09:20:43 2023",
+ "timestampMillis": "1692778843048",
  "status": {
-  "cmdId": "5d4d55d3-66ba-443d-8406-3a2fce4184de",
+  "cmdId": "bceac013-789e-4936-88b8-f8da24380719",
   "state": "CS_PASSED"
  }
 }
@@ -281,10 +281,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 15:31:58 2023",
- "timestampMillis": "1692714718421",
+ "dateTimestamp": "Wed Aug 23 09:20:43 2023",
+ "timestampMillis": "1692778843050",
  "buildStep": {
-  "cmdId": "8d9e5558-84fe-4c44-ba21-b783dffc172a",
+  "cmdId": "9d0d9312-3d2b-4a98-b4b1-150857310f49",
   "name": "vpl",
   "logFile": "",
   "commandLine": "vpl -t hw -f xilinx_u250_gen3x16_xdma_4_1_202210_1 -s --kernel_frequency 200 --remote_ip_cache /home/amin/distributed-graph-fpga/hw_src/FPGA/.ipcache --output_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int --log_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/logs/link --report_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link --config /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/vplConfig.ini -k /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link --no-info --iprepo /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/xo/ip_repo/xilinx_com_hls_sssp_kernel_0_1_0 --messageDb /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/run_link/vpl.pb /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/dr.bd.tcl",
@@ -332,10 +332,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:31:58 2023",
- "timestampMillis": "1692714718421",
+ "dateTimestamp": "Wed Aug 23 09:20:43 2023",
+ "timestampMillis": "1692778843050",
  "status": {
-  "cmdId": "8d9e5558-84fe-4c44-ba21-b783dffc172a",
+  "cmdId": "9d0d9312-3d2b-4a98-b4b1-150857310f49",
   "state": "CS_RUNNING"
  }
 }
@@ -343,10 +343,10 @@
 <ENTRY>
 {
  "type": "ET_CmdStep",
- "dateTimestamp": "Tue Aug 22 15:31:59 2023",
- "timestampMillis": "1692714719744",
+ "dateTimestamp": "Wed Aug 23 09:20:44 2023",
+ "timestampMillis": "1692778844378",
  "buildStep": {
-  "cmdId": "1f61caf1-be96-4617-ab2c-5d998165ee37",
+  "cmdId": "b53e652c-9503-4406-a01b-e7e23a4fdecd",
   "name": "vpl",
   "logFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/link.steps.log",
   "commandLine": "/opt/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/vpl -t hw -f xilinx_u250_gen3x16_xdma_4_1_202210_1 -s --kernel_frequency 200 --remote_ip_cache /home/amin/distributed-graph-fpga/hw_src/FPGA/.ipcache --output_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int --log_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/logs/link --report_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link --config /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/vplConfig.ini -k /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link --no-info --iprepo /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/xo/ip_repo/xilinx_com_hls_sssp_kernel_0_1_0 --messageDb /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/run_link/vpl.pb /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/dr.bd.tcl ",
@@ -359,10 +359,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:31:59 2023",
- "timestampMillis": "1692714719744",
+ "dateTimestamp": "Wed Aug 23 09:20:44 2023",
+ "timestampMillis": "1692778844378",
  "status": {
-  "cmdId": "1f61caf1-be96-4617-ab2c-5d998165ee37",
+  "cmdId": "b53e652c-9503-4406-a01b-e7e23a4fdecd",
   "state": "CS_RUNNING"
  }
 }
@@ -370,8 +370,8 @@
 <ENTRY>
 {
  "type": "ET_VivadoProject",
- "dateTimestamp": "Tue Aug 22 15:32:02 2023",
- "timestampMillis": "1692714722523",
+ "dateTimestamp": "Wed Aug 23 09:20:47 2023",
+ "timestampMillis": "1692778847110",
  "vivadoProject": {
   "openDir": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/vivado/vpl",
   "openScript": "openprj.tcl",
@@ -382,10 +382,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 15:32:02 2023",
- "timestampMillis": "1692714722524",
+ "dateTimestamp": "Wed Aug 23 09:20:47 2023",
+ "timestampMillis": "1692778847112",
  "buildStep": {
-  "cmdId": "1a1e300a-cf49-49eb-a832-6a79ad27acd9",
+  "cmdId": "ab32242d-2da9-4b1e-abdb-b0f941f434f3",
   "name": "vivado",
   "logFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/vivado/vpl/vivado.log",
   "commandLine": "vivado -log vivado.log -applog -m64 -messageDb vivado.pb -mode batch -source vpl.tcl -notrace",
@@ -410,10 +410,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:32:02 2023",
- "timestampMillis": "1692714722525",
+ "dateTimestamp": "Wed Aug 23 09:20:47 2023",
+ "timestampMillis": "1692778847112",
  "status": {
-  "cmdId": "1a1e300a-cf49-49eb-a832-6a79ad27acd9",
+  "cmdId": "ab32242d-2da9-4b1e-abdb-b0f941f434f3",
   "state": "CS_RUNNING"
  }
 }
@@ -421,8 +421,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 15:32:53 2023",
- "timestampMillis": "1692714773076",
+ "dateTimestamp": "Wed Aug 23 09:21:44 2023",
+ "timestampMillis": "1692778904514",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/automation_summary_update_bd.txt",
   "name": "",
@@ -435,10 +435,10 @@
 <ENTRY>
 {
  "type": "ET_CmdStep",
- "dateTimestamp": "Tue Aug 22 15:48:44 2023",
- "timestampMillis": "1692715724482",
+ "dateTimestamp": "Wed Aug 23 09:38:49 2023",
+ "timestampMillis": "1692779929913",
  "buildStep": {
-  "cmdId": "d1b0e6ef-6377-4275-8bad-4688cda9dc32",
+  "cmdId": "f02dfab6-7095-4df0-ab4e-62ccc49c151a",
   "name": "vivado.impl",
   "logFile": "",
   "commandLine": "",
@@ -451,10 +451,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:48:44 2023",
- "timestampMillis": "1692715724483",
+ "dateTimestamp": "Wed Aug 23 09:38:49 2023",
+ "timestampMillis": "1692779929914",
  "status": {
-  "cmdId": "d1b0e6ef-6377-4275-8bad-4688cda9dc32",
+  "cmdId": "f02dfab6-7095-4df0-ab4e-62ccc49c151a",
   "state": "CS_RUNNING"
  }
 }
@@ -462,10 +462,10 @@
 <ENTRY>
 {
  "type": "ET_CmdStep",
- "dateTimestamp": "Tue Aug 22 15:48:44 2023",
- "timestampMillis": "1692715724484",
+ "dateTimestamp": "Wed Aug 23 09:38:49 2023",
+ "timestampMillis": "1692779929915",
  "buildStep": {
-  "cmdId": "39fc8c0c-a94c-4808-9883-187beafad1f4",
+  "cmdId": "cf9f7b43-7e26-4d75-a146-cefc750dd2b8",
   "name": "vivado.impl.impl_1",
   "logFile": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/vivado/vpl/prj/prj.runs/impl_1/runme.log",
   "commandLine": "",
@@ -478,10 +478,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 15:48:44 2023",
- "timestampMillis": "1692715724484",
+ "dateTimestamp": "Wed Aug 23 09:38:49 2023",
+ "timestampMillis": "1692779929915",
  "status": {
-  "cmdId": "39fc8c0c-a94c-4808-9883-187beafad1f4",
+  "cmdId": "cf9f7b43-7e26-4d75-a146-cefc750dd2b8",
   "state": "CS_RUNNING"
  }
 }
@@ -489,8 +489,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 18:47:38 2023",
- "timestampMillis": "1692726458478",
+ "dateTimestamp": "Wed Aug 23 12:14:57 2023",
+ "timestampMillis": "1692789297883",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/vivado/vpl/prj/prj.runs/impl_1/system_diagram.json",
   "name": "",
@@ -503,8 +503,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 18:51:09 2023",
- "timestampMillis": "1692726669177",
+ "dateTimestamp": "Wed Aug 23 12:18:16 2023",
+ "timestampMillis": "1692789496461",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/kernel_service.json",
   "name": "",
@@ -517,8 +517,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 18:51:09 2023",
- "timestampMillis": "1692726669179",
+ "dateTimestamp": "Wed Aug 23 12:18:16 2023",
+ "timestampMillis": "1692789496463",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/kernel_service.pb",
   "name": "",
@@ -531,8 +531,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 18:55:51 2023",
- "timestampMillis": "1692726951388",
+ "dateTimestamp": "Wed Aug 23 12:22:39 2023",
+ "timestampMillis": "1692789759456",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/vivado/vpl/prj/prj.runs/impl_1/dr_timing_summary.rpt",
   "name": "",
@@ -545,10 +545,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690565",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530057",
  "status": {
-  "cmdId": "1a1e300a-cf49-49eb-a832-6a79ad27acd9",
+  "cmdId": "ab32242d-2da9-4b1e-abdb-b0f941f434f3",
   "state": "CS_PASSED"
  }
 }
@@ -556,8 +556,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690609",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530103",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_kernel_util_synthed.rpt",
   "name": "",
@@ -570,8 +570,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690610",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530104",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_full_util_synthed.rpt",
   "name": "",
@@ -584,8 +584,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690611",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530104",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_kernel_util_routed.rpt",
   "name": "",
@@ -598,8 +598,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690611",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530105",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_kernel_util_routed.xutil",
   "name": "",
@@ -612,8 +612,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690612",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530105",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_slr_util_placed.rpt",
   "name": "",
@@ -626,8 +626,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690612",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530106",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_kernel_util_placed.rpt",
   "name": "",
@@ -640,8 +640,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690612",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530106",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_kernel_util_synthed.xutil",
   "name": "",
@@ -654,8 +654,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690613",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530106",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_slr_util_placed.pb",
   "name": "",
@@ -668,8 +668,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690613",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530107",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_full_util_routed.rpt",
   "name": "",
@@ -682,8 +682,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690614",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530107",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_slr_util_routed.rpt",
   "name": "",
@@ -696,8 +696,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690614",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530108",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_kernel_util_placed.xutil",
   "name": "",
@@ -710,8 +710,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690614",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530108",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_full_util_synthed.pb",
   "name": "",
@@ -724,8 +724,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690615",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530108",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_full_util_routed.pb",
   "name": "",
@@ -738,8 +738,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690615",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530109",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_slr_util_routed.pb",
   "name": "",
@@ -752,8 +752,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690617",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530110",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/syn/ulp_memory_subsystem_0_synth_1_ulp_memory_subsystem_0_utilization_synth.rpt",
   "name": "",
@@ -766,8 +766,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690617",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530111",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/syn/ulp_sssp_kernel_0_11_0_synth_1_ulp_sssp_kernel_0_11_0_utilization_synth.rpt",
   "name": "sssp_kernel_0",
@@ -780,8 +780,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690618",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530111",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/syn/ulp_sssp_kernel_0_12_0_synth_1_ulp_sssp_kernel_0_12_0_utilization_synth.rpt",
   "name": "sssp_kernel_0",
@@ -794,8 +794,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690619",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530112",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/syn/ulp_sssp_kernel_0_7_0_synth_1_ulp_sssp_kernel_0_7_0_utilization_synth.rpt",
   "name": "sssp_kernel_0",
@@ -808,8 +808,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690619",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530112",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/syn/ulp_sssp_kernel_0_1_0_synth_1_ulp_sssp_kernel_0_1_0_utilization_synth.rpt",
   "name": "sssp_kernel_0",
@@ -822,8 +822,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690620",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530112",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/syn/bd_b35e_interconnect_SLR1_M01_AXI_MEM00_0_synth_1_bd_b35e_interconnect_SLR1_M01_AXI_MEM00_0_utilization_synth.rpt",
   "name": "",
@@ -836,8 +836,22 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690620",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530113",
+ "report": {
+  "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/syn/bd_b35e_interconnect_SLR3_M01_AXI_MEM00_0_synth_1_bd_b35e_interconnect_SLR3_M01_AXI_MEM00_0_utilization_synth.rpt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "GLOBAL_REPORT_UTILIZATION",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530113",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/syn/bd_b35e_interconnect_M01_AXI_MEM00_0_synth_1_bd_b35e_interconnect_M01_AXI_MEM00_0_utilization_synth.rpt",
   "name": "",
@@ -850,66 +864,66 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690621",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530114",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_system_diagram.json",
   "name": "",
   "fileType": "JSON",
   "reportType": "SYSTEM_DIAGRAM_PLUS",
-  "cmdId": "39fc8c0c-a94c-4808-9883-187beafad1f4"
+  "cmdId": "cf9f7b43-7e26-4d75-a146-cefc750dd2b8"
  }
 }
 </ENTRY>
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690639",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530132",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpt",
   "name": "",
   "fileType": "TEXT",
   "reportType": "GLOBAL_REPORT_TIMING_SUMMARY",
-  "cmdId": "39fc8c0c-a94c-4808-9883-187beafad1f4"
+  "cmdId": "cf9f7b43-7e26-4d75-a146-cefc750dd2b8"
  }
 }
 </ENTRY>
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690652",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530144",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpx",
   "name": "",
   "fileType": "BINARY_PROTOBUF",
   "reportType": "GLOBAL_REPORT_TIMING_SUMMARY",
-  "cmdId": "39fc8c0c-a94c-4808-9883-187beafad1f4"
+  "cmdId": "cf9f7b43-7e26-4d75-a146-cefc750dd2b8"
  }
 }
 </ENTRY>
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690653",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530145",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/imp/impl_1_hw_bb_locked_timing_summary_routed.rpv",
   "name": "",
   "fileType": "BINARY_PROTOBUF",
   "reportType": "GLOBAL_REPORT_TIMING_SUMMARY_CONCISE",
-  "cmdId": "39fc8c0c-a94c-4808-9883-187beafad1f4"
+  "cmdId": "cf9f7b43-7e26-4d75-a146-cefc750dd2b8"
  }
 }
 </ENTRY>
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690678",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530172",
  "status": {
-  "cmdId": "1f61caf1-be96-4617-ab2c-5d998165ee37",
+  "cmdId": "b53e652c-9503-4406-a01b-e7e23a4fdecd",
   "state": "CS_PASSED"
  }
 }
@@ -917,10 +931,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690693",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530187",
  "status": {
-  "cmdId": "8d9e5558-84fe-4c44-ba21-b783dffc172a",
+  "cmdId": "9d0d9312-3d2b-4a98-b4b1-150857310f49",
   "state": "CS_PASSED"
  }
 }
@@ -928,10 +942,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690697",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530190",
  "buildStep": {
-  "cmdId": "ab79b143-1fb1-416b-a66c-8f7edcc821e5",
+  "cmdId": "0cbfcbb0-3b54-4e25-b2e2-cb5d7d14e839",
   "name": "rtdgen",
   "logFile": "",
   "commandLine": "rtdgen",
@@ -944,10 +958,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690697",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530190",
  "status": {
-  "cmdId": "ab79b143-1fb1-416b-a66c-8f7edcc821e5",
+  "cmdId": "0cbfcbb0-3b54-4e25-b2e2-cb5d7d14e839",
   "state": "CS_RUNNING"
  }
 }
@@ -955,8 +969,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690703",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530195",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/sssp_kernel_0_xml.rtd",
   "name": "",
@@ -969,10 +983,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690704",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530197",
  "buildStep": {
-  "cmdId": "a5bbe69c-aff4-4b05-a3c9-910e8d171b14",
+  "cmdId": "3ac7d690-4f27-4437-aed6-16540ac99382",
   "name": "cf2sw",
   "logFile": "",
   "commandLine": "cf2sw -a /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/address_map.xml -sdsl /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/sdsl.dat -xclbin /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/xclbin_orig.xml -rtd /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/sssp_kernel_0.rtd -o /home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/sssp_kernel_0.xml",
@@ -996,10 +1010,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:50 2023",
- "timestampMillis": "1692728690705",
+ "dateTimestamp": "Wed Aug 23 12:52:10 2023",
+ "timestampMillis": "1692791530198",
  "status": {
-  "cmdId": "a5bbe69c-aff4-4b05-a3c9-910e8d171b14",
+  "cmdId": "3ac7d690-4f27-4437-aed6-16540ac99382",
   "state": "CS_RUNNING"
  }
 }
@@ -1007,10 +1021,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698608",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538272",
  "status": {
-  "cmdId": "a5bbe69c-aff4-4b05-a3c9-910e8d171b14",
+  "cmdId": "3ac7d690-4f27-4437-aed6-16540ac99382",
   "state": "CS_PASSED"
  }
 }
@@ -1018,10 +1032,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698610",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538275",
  "buildStep": {
-  "cmdId": "f058cae5-0af4-47e3-9f4c-6903733c7d4e",
+  "cmdId": "0afecd5a-f868-4200-bb6d-1666a4b2d23b",
   "name": "rtdgen",
   "logFile": "",
   "commandLine": "writeSystemDiagram",
@@ -1037,10 +1051,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698611",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538276",
  "status": {
-  "cmdId": "f058cae5-0af4-47e3-9f4c-6903733c7d4e",
+  "cmdId": "0afecd5a-f868-4200-bb6d-1666a4b2d23b",
   "state": "CS_RUNNING"
  }
 }
@@ -1048,8 +1062,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698622",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538288",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/systemDiagramModelSlrBaseAddress.json",
   "name": "",
@@ -1062,10 +1076,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698623",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538289",
  "status": {
-  "cmdId": "f058cae5-0af4-47e3-9f4c-6903733c7d4e",
+  "cmdId": "0afecd5a-f868-4200-bb6d-1666a4b2d23b",
   "state": "CS_PASSED"
  }
 }
@@ -1073,10 +1087,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698623",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538289",
  "buildStep": {
-  "cmdId": "a62c1597-771a-49db-801a-7611ee01d946",
+  "cmdId": "3ddfc3f7-e657-4393-a60e-4f2ef6deebe2",
   "name": "rtdgen",
   "logFile": "",
   "commandLine": "writeAutomationSummary",
@@ -1091,10 +1105,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698623",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538289",
  "status": {
-  "cmdId": "a62c1597-771a-49db-801a-7611ee01d946",
+  "cmdId": "3ddfc3f7-e657-4393-a60e-4f2ef6deebe2",
   "state": "CS_RUNNING"
  }
 }
@@ -1102,8 +1116,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698626",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538292",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/automation_summary.txt",
   "name": "",
@@ -1116,10 +1130,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698626",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538292",
  "status": {
-  "cmdId": "a62c1597-771a-49db-801a-7611ee01d946",
+  "cmdId": "3ddfc3f7-e657-4393-a60e-4f2ef6deebe2",
   "state": "CS_PASSED"
  }
 }
@@ -1127,10 +1141,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698627",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538293",
  "status": {
-  "cmdId": "ab79b143-1fb1-416b-a66c-8f7edcc821e5",
+  "cmdId": "0cbfcbb0-3b54-4e25-b2e2-cb5d7d14e839",
   "state": "CS_PASSED"
  }
 }
@@ -1138,10 +1152,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698630",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538295",
  "buildStep": {
-  "cmdId": "d42252f3-9c93-4f82-ae1b-fd402a0ed949",
+  "cmdId": "13575e50-14b5-4327-ab79-d097a32967a4",
   "name": "xclbinutil",
   "logFile": "",
   "commandLine": "xclbinutil --add-section BITSTREAM:RAW:/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/partial.bit --force --target hw --key-value SYS:dfx_enable:true --add-section :JSON:/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/sssp_kernel_0.rtd --append-section :JSON:/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/appendSection.rtd --add-section CLOCK_FREQ_TOPOLOGY:JSON:/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/sssp_kernel_0_xml.rtd --add-section BUILD_METADATA:JSON:/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/sssp_kernel_0_build.rtd --add-section EMBEDDED_METADATA:RAW:/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/sssp_kernel_0.xml --add-section SYSTEM_METADATA:RAW:/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/link/int/systemDiagramModelSlrBaseAddress.json --key-value SYS:PlatformVBNV:xilinx_u250_gen3x16_xdma_4_1_202210_1 --output /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/hardware/sssp_kernel_0.xclbin",
@@ -1178,10 +1192,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698631",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538295",
  "status": {
-  "cmdId": "d42252f3-9c93-4f82-ae1b-fd402a0ed949",
+  "cmdId": "13575e50-14b5-4327-ab79-d097a32967a4",
   "state": "CS_RUNNING"
  }
 }
@@ -1189,10 +1203,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698931",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538589",
  "status": {
-  "cmdId": "d42252f3-9c93-4f82-ae1b-fd402a0ed949",
+  "cmdId": "13575e50-14b5-4327-ab79-d097a32967a4",
   "state": "CS_PASSED"
  }
 }
@@ -1200,10 +1214,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698934",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538593",
  "buildStep": {
-  "cmdId": "7e4f50e2-d02e-4b82-a372-30cc8fb2a79d",
+  "cmdId": "338c6a89-4256-497a-b8bc-529eef57b49f",
   "name": "xclbinutilinfo",
   "logFile": "",
   "commandLine": "xclbinutil --quiet --force --info /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/hardware/sssp_kernel_0.xclbin.info --input /home/amin/distributed-graph-fpga/hw_src/FPGA/kernel/sssp/hardware/sssp_kernel_0.xclbin",
@@ -1223,10 +1237,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:58 2023",
- "timestampMillis": "1692728698935",
+ "dateTimestamp": "Wed Aug 23 12:52:18 2023",
+ "timestampMillis": "1692791538593",
  "status": {
-  "cmdId": "7e4f50e2-d02e-4b82-a372-30cc8fb2a79d",
+  "cmdId": "338c6a89-4256-497a-b8bc-529eef57b49f",
   "state": "CS_RUNNING"
  }
 }
@@ -1234,10 +1248,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:59 2023",
- "timestampMillis": "1692728699613",
+ "dateTimestamp": "Wed Aug 23 12:52:19 2023",
+ "timestampMillis": "1692791539246",
  "status": {
-  "cmdId": "7e4f50e2-d02e-4b82-a372-30cc8fb2a79d",
+  "cmdId": "338c6a89-4256-497a-b8bc-529eef57b49f",
   "state": "CS_PASSED"
  }
 }
@@ -1245,10 +1259,10 @@
 <ENTRY>
 {
  "type": "ET_SubCmdStep",
- "dateTimestamp": "Tue Aug 22 19:24:59 2023",
- "timestampMillis": "1692728699616",
+ "dateTimestamp": "Wed Aug 23 12:52:19 2023",
+ "timestampMillis": "1692791539249",
  "buildStep": {
-  "cmdId": "da8b9c8a-f896-45b3-a493-1fb1d57fe241",
+  "cmdId": "32aeeb36-306e-4e5d-9f14-7ec0da3c6059",
   "name": "generate_sc_driver",
   "logFile": "",
   "commandLine": "",
@@ -1261,10 +1275,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:59 2023",
- "timestampMillis": "1692728699616",
+ "dateTimestamp": "Wed Aug 23 12:52:19 2023",
+ "timestampMillis": "1692791539249",
  "status": {
-  "cmdId": "da8b9c8a-f896-45b3-a493-1fb1d57fe241",
+  "cmdId": "32aeeb36-306e-4e5d-9f14-7ec0da3c6059",
   "state": "CS_RUNNING"
  }
 }
@@ -1272,10 +1286,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:59 2023",
- "timestampMillis": "1692728699617",
+ "dateTimestamp": "Wed Aug 23 12:52:19 2023",
+ "timestampMillis": "1692791539250",
  "status": {
-  "cmdId": "da8b9c8a-f896-45b3-a493-1fb1d57fe241",
+  "cmdId": "32aeeb36-306e-4e5d-9f14-7ec0da3c6059",
   "state": "CS_PASSED"
  }
 }
@@ -1283,8 +1297,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:59 2023",
- "timestampMillis": "1692728699793",
+ "dateTimestamp": "Wed Aug 23 12:52:19 2023",
+ "timestampMillis": "1692791539353",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/system_estimate_sssp_kernel_0.xtxt",
   "name": "",
@@ -1297,8 +1311,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:59 2023",
- "timestampMillis": "1692728699798",
+ "dateTimestamp": "Wed Aug 23 12:52:19 2023",
+ "timestampMillis": "1692791539359",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/logs/optraceViewer.html",
   "name": "",
@@ -1311,10 +1325,10 @@
 <ENTRY>
 {
  "type": "ET_Status",
- "dateTimestamp": "Tue Aug 22 19:24:59 2023",
- "timestampMillis": "1692728699799",
+ "dateTimestamp": "Wed Aug 23 12:52:19 2023",
+ "timestampMillis": "1692791539359",
  "status": {
-  "cmdId": "6a7cbbd7-30c4-48b4-91af-e62eb6bc0bf3",
+  "cmdId": "3df72376-93dc-4fb7-ae5a-f5f1e35a8559",
   "state": "CS_PASSED"
  }
 }
@@ -1322,8 +1336,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:59 2023",
- "timestampMillis": "1692728699878",
+ "dateTimestamp": "Wed Aug 23 12:52:19 2023",
+ "timestampMillis": "1692791539432",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/reports/link/v++_link_sssp_kernel_0_guidance.html",
   "name": "",
@@ -1336,8 +1350,8 @@
 <ENTRY>
 {
  "type": "ET_Report",
- "dateTimestamp": "Tue Aug 22 19:24:59 2023",
- "timestampMillis": "1692728699879",
+ "dateTimestamp": "Wed Aug 23 12:52:19 2023",
+ "timestampMillis": "1692791539433",
  "report": {
   "path": "/home/amin/distributed-graph-fpga/hw_src/FPGA/_x/v++_link_sssp_kernel_0_guidance.pb3",
   "name": "",
