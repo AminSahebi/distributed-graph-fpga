@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                sssp_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          7235f95a-b74d-f86c-d6ab-d897c240648e
+   UUID (xclbin):          55daf255-1672-bb6c-08f4-3e2e3071ae4e
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -39,7 +39,7 @@ Scalable Clocks
    Name:      DATA_CLK
    Index:     0
    Type:      DATA
-   Frequency: 200 MHz
+   Frequency: 199 MHz
 
    Name:      KERNEL_CLK
    Index:     1
@@ -64,7 +64,7 @@ System Clocks
    Type:           SCALABLE 
    Default Freq:   300 MHz
    Requested Freq: 200 MHz
-   Achieved Freq:  200 MHz
+   Achieved Freq:  199.7 MHz
 
    Name:           ss_ucs_aclk_kernel_01 
    Type:           SCALABLE 
@@ -141,7 +141,7 @@ Kernel: sssp_kernel_0
 
 Definition
 ----------
-   Signature: sssp_kernel_0 (void* e_src, void* e_dst, void* out_r, unsigned int size, unsigned int vertices, unsigned int active_vertex)
+   Signature: sssp_kernel_0 (void* e_src, void* e_dst, void* out_r, unsigned int size, unsigned int vertices, unsigned int src_vertex)
 
 Ports
 -----
@@ -186,7 +186,7 @@ Instance:        sssp_kernel_0_1
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -220,7 +220,7 @@ Instance:        sssp_kernel_0_2
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -254,7 +254,7 @@ Instance:        sssp_kernel_0_3
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -288,7 +288,7 @@ Instance:        sssp_kernel_0_4
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -322,7 +322,7 @@ Instance:        sssp_kernel_0_5
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -356,7 +356,7 @@ Instance:        sssp_kernel_0_6
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -390,7 +390,7 @@ Instance:        sssp_kernel_0_7
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -424,7 +424,7 @@ Instance:        sssp_kernel_0_8
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -458,7 +458,7 @@ Instance:        sssp_kernel_0_9
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -492,7 +492,7 @@ Instance:        sssp_kernel_0_10
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -526,7 +526,7 @@ Instance:        sssp_kernel_0_11
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -560,7 +560,7 @@ Instance:        sssp_kernel_0_12
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -594,7 +594,7 @@ Instance:        sssp_kernel_0_13
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -628,7 +628,7 @@ Instance:        sssp_kernel_0_14
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
@@ -662,7 +662,7 @@ Instance:        sssp_kernel_0_15
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          active_vertex
+   Argument:          src_vertex
    Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
