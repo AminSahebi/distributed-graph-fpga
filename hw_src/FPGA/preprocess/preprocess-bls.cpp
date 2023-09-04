@@ -25,7 +25,7 @@ limitations under the License.
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <cmath>
+
 #include <algorithm>
 #include <string>
 #include <thread>
@@ -52,14 +52,7 @@ struct pair {
 
 VertexId *mapper = NULL;
 
-
-int get_partition_id_with_hash(VertexId vertex, int partitions) {
-	return vertex % partitions;
-}
-//
-
-
-void renumber(std::string filename, std::string output, VertexId num_vertices, int edge_type, int partitions) {
+void renumber(std::string filename, std::string output, VertexId num_vertices, int edge_type) {
     std::vector<struct pair> vertices(num_vertices);
     for (VertexId i = 0; i < num_vertices; ++i) {
         vertices[i].id = i;
@@ -111,6 +104,9 @@ void renumber(std::string filename, std::string output, VertexId num_vertices, i
                         // Skip dangling edges (self-loops)
                         continue;
                     }
+		     if (vertices[source].out_degree < 1 || vertices[target].out_degree < 1) {
+            		continue;
+        		}
                     write_add(&vertices[target].in_degree, (uint32_t)1);
                     write_add(&vertices[source].out_degree, (uint32_t)1);
                 }
@@ -118,8 +114,7 @@ void renumber(std::string filename, std::string output, VertexId num_vertices, i
             }
         });
     }
-
-    int fin = open(filename.c_str(), O_RDONLY);
+  int fin = open(filename.c_str(), O_RDONLY);
     if (fin == -1)
         printf("%s\n", strerror(errno));
     assert(fin != -1);
@@ -162,62 +157,66 @@ void renumber(std::string filename, std::string output, VertexId num_vertices, i
     for (VertexId i = 0; i < num_vertices; ++i) {
         mapper[vertices[i].id] = i;
     }
-	if (file_exists(output))
-		remove_directory(output);
-	create_directory(output);
+        if (file_exists(output))
+                remove_directory(output);
+        create_directory(output);
 
-	uint32_t *degrees = new uint32_t[num_vertices];
+        uint32_t *degrees = new uint32_t[num_vertices];
 #pragma omp parallel for num_threads(parallelism)
-	for (VertexId i = 0; i < num_vertices; ++i) {
-		degrees[i] = vertices[i].in_degree;
-		//printf("degree %d\n", degrees[i]);
-	}
+        for (VertexId i = 0; i < num_vertices; ++i) {
+                degrees[i] = vertices[i].in_degree;
+                //printf("degree %d\n", degrees[i]);
+        }
 
-	int fout_in_deg = open((output + "/indegrees").c_str(),
-			O_WRONLY | O_APPEND | O_CREAT, 0644);
-	write(fout_in_deg, degrees, num_vertices * sizeof(uint32_t));
-	close(fout_in_deg);
+        int fout_in_deg = open((output + "/indegrees").c_str(),
+                        O_WRONLY | O_APPEND | O_CREAT, 0644);
+        write(fout_in_deg, degrees, num_vertices * sizeof(uint32_t));
+        close(fout_in_deg);
 
 #pragma omp parallel for num_threads(parallelism)
-	for (VertexId i = 0; i < num_vertices; ++i) {
-		degrees[i] = vertices[i].out_degree;
-	}
-	for (VertexId i = 0; i < num_vertices; ++i) {
-		//printf("degrees [%d] %f \n",i,(float)vertices[i].out_degree);
-	}
+        for (VertexId i = 0; i < num_vertices; ++i) {
+                degrees[i] = vertices[i].out_degree;
+        }
+        for (VertexId i = 0; i < num_vertices; ++i) {
+                //printf("degrees [%d] %f \n",i,(float)vertices[i].out_degree);
+        }
 
-	int fout_out_deg = open((output + "/outdegrees").c_str(),
-			O_RDWR | O_APPEND | O_CREAT, 0644);
-	write(fout_out_deg, degrees, num_vertices * sizeof(uint32_t));
-	close(fout_out_deg);
+        int fout_out_deg = open((output + "/outdegrees").c_str(),
+                        O_RDWR | O_APPEND | O_CREAT, 0644);
 
-	delete[] degrees;
+     write(fout_out_deg, degrees, num_vertices * sizeof(uint32_t));
+        close(fout_out_deg);
 
-	int fout_mapper =
-		open((output + "/otn").c_str(), O_WRONLY | O_APPEND | O_CREAT, 0644);
-	write(fout_mapper, mapper, num_vertices * sizeof(VertexId));
-	close(fout_mapper);
+        delete[] degrees;
 
-	VertexId *rev_mapper = new VertexId[num_vertices];
+        int fout_mapper =
+                open((output + "/otn").c_str(), O_WRONLY | O_APPEND | O_CREAT, 0644);
+        write(fout_mapper, mapper, num_vertices * sizeof(VertexId));
+        close(fout_mapper);
+
+        VertexId *rev_mapper = new VertexId[num_vertices];
 #pragma omp parallel for num_threads(parallelism)
-	for (VertexId i = 0; i < num_vertices; ++i) {
-		rev_mapper[mapper[i]] = i;
-	}
+        for (VertexId i = 0; i < num_vertices; ++i) {
+                rev_mapper[mapper[i]] = i;
+        }
 
-	fout_mapper =
-		open((output + "/nto").c_str(), O_WRONLY | O_APPEND | O_CREAT, 0644);
-	write(fout_mapper, rev_mapper, num_vertices * sizeof(VertexId));
-	close(fout_mapper);
+        fout_mapper =
+                open((output + "/nto").c_str(), O_WRONLY | O_APPEND | O_CREAT, 0644);
+        write(fout_mapper, rev_mapper, num_vertices * sizeof(VertexId));
+        close(fout_mapper);
 
-	delete[] rev_mapper;
+        delete[] rev_mapper;
 
-	printf("mapping done\n");
+        printf("mapping done\n");
 
-	for (int i = 0; i < parallelism * 2; i++)
-		delete[] buffers[i];
-	delete[] buffers;
-	delete[] occupied;
+        for (int i = 0; i < parallelism * 2; i++)
+                delete[] buffers[i];
+        delete[] buffers;
+        delete[] occupied;
 }
+
+
+
 
 void generate_edge_grid(std::string input, std::string output,
 		VertexId vertices, int partitions, int edge_type,
@@ -313,9 +312,8 @@ void generate_edge_grid(std::string input, std::string output,
 				target = advanced
 					? mapper[*(VertexId *)(buffer + pos + sizeof(VertexId))]
 					: *(VertexId *)(buffer + pos + sizeof(VertexId));
-				int i = get_partition_id_with_hash(source, partitions);//applying hash function
-				int j = get_partition_id_with_hash(target, partitions);
-
+				int i = get_partition_id(vertices, partitions, source);
+				int j = get_partition_id(vertices, partitions, target);
 				if (i <= j)
 					++local_propagation;
 				if (!advanced) {
@@ -336,10 +334,8 @@ void generate_edge_grid(std::string input, std::string output,
 					target = advanced
 						? mapper[*(VertexId *)(buffer + pos + sizeof(VertexId))]
 						: *(VertexId *)(buffer + pos + sizeof(VertexId));
-
-					int i = get_partition_id_with_hash(source, partitions);
-					int j = get_partition_id_with_hash(target, partitions);
-
+					int i = get_partition_id(vertices, partitions, source);
+					int j = get_partition_id(vertices, partitions, target);
 					*(VertexId *)(local_buffer + local_grid_cursor[i * partitions + j]) =
 						source;
 					*(VertexId *)(local_buffer + local_grid_cursor[i * partitions + j] +
@@ -558,7 +554,7 @@ int main(int argc, char **argv) {
 
 	if (mode == 0) {
 		printf("mode = advanced\n");
-		renumber(input, output, vertices, edge_type, partitions);
+		renumber(input, output, vertices, edge_type);
 	} else {
 		printf("mode = naive\n");
 		printf("comment: choose advanced mode for higher cross-iteration "
