@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                wcc_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          69bdf216-5129-3d23-6caa-8ecd7a0001e2
+   UUID (xclbin):          140bcf44-c559-b8db-36b0-1007facf9efd
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -39,7 +39,7 @@ Scalable Clocks
    Name:      DATA_CLK
    Index:     0
    Type:      DATA
-   Frequency: 120 MHz
+   Frequency: 300 MHz
 
    Name:      KERNEL_CLK
    Index:     1
@@ -64,7 +64,7 @@ System Clocks
    Type:           SCALABLE 
    Default Freq:   300 MHz
    Requested Freq: 300 MHz
-   Achieved Freq:  120.4 MHz
+   Achieved Freq:  300 MHz
 
    Name:           ss_ucs_aclk_kernel_01 
    Type:           SCALABLE 
@@ -141,19 +141,19 @@ Kernel: wcc_kernel_0
 
 Definition
 ----------
-   Signature: wcc_kernel_0 (void* e_src, void* out_degree, void* out_r, unsigned int size, unsigned int vertices)
+   Signature: wcc_kernel_0 (void* e_src, void* e_dst, void* out_r, unsigned int size, unsigned int vertices, unsigned int src_vertex)
 
 Ports
 -----
    Port:          M_AXI_GMEM
    Mode:          master
    Range (bytes): 0xFFFFFFFF
-   Data Width:    32 bits
+   Data Width:    512 bits
    Port Type:     addressable
 
    Port:          S_AXI_CONTROL
    Mode:          slave
-   Range (bytes): 0x44
+   Range (bytes): 0x4C
    Data Width:    32 bits
    Port Type:     addressable
 
@@ -166,7 +166,7 @@ Instance:        wcc_kernel_0_1
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -183,6 +183,11 @@ Instance:        wcc_kernel_0_1
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -195,7 +200,7 @@ Instance:        wcc_kernel_0_2
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -212,6 +217,11 @@ Instance:        wcc_kernel_0_2
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -224,7 +234,7 @@ Instance:        wcc_kernel_0_3
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -241,6 +251,11 @@ Instance:        wcc_kernel_0_3
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -253,7 +268,7 @@ Instance:        wcc_kernel_0_4
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -270,6 +285,11 @@ Instance:        wcc_kernel_0_4
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -282,7 +302,7 @@ Instance:        wcc_kernel_0_5
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -299,6 +319,11 @@ Instance:        wcc_kernel_0_5
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -311,7 +336,7 @@ Instance:        wcc_kernel_0_6
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -328,6 +353,11 @@ Instance:        wcc_kernel_0_6
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -340,7 +370,7 @@ Instance:        wcc_kernel_0_7
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -357,6 +387,11 @@ Instance:        wcc_kernel_0_7
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -369,7 +404,7 @@ Instance:        wcc_kernel_0_8
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -386,6 +421,11 @@ Instance:        wcc_kernel_0_8
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -398,7 +438,7 @@ Instance:        wcc_kernel_0_9
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -415,6 +455,11 @@ Instance:        wcc_kernel_0_9
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -427,7 +472,7 @@ Instance:        wcc_kernel_0_10
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -444,6 +489,11 @@ Instance:        wcc_kernel_0_10
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -456,7 +506,7 @@ Instance:        wcc_kernel_0_11
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -473,6 +523,11 @@ Instance:        wcc_kernel_0_11
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -485,7 +540,7 @@ Instance:        wcc_kernel_0_12
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -502,6 +557,11 @@ Instance:        wcc_kernel_0_12
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -514,7 +574,7 @@ Instance:        wcc_kernel_0_13
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -531,6 +591,11 @@ Instance:        wcc_kernel_0_13
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -543,7 +608,7 @@ Instance:        wcc_kernel_0_14
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -560,6 +625,11 @@ Instance:        wcc_kernel_0_14
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -572,7 +642,7 @@ Instance:        wcc_kernel_0_15
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
 
-   Argument:          out_degree
+   Argument:          e_dst
    Register Offset:   0x1C
    Port:              M_AXI_GMEM
    Memory:            HOST[0] (MEM_DRAM)
@@ -589,6 +659,11 @@ Instance:        wcc_kernel_0_15
 
    Argument:          vertices
    Register Offset:   0x3C
+   Port:              S_AXI_CONTROL
+   Memory:            <not applicable>
+
+   Argument:          src_vertex
+   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 ==============================================================================

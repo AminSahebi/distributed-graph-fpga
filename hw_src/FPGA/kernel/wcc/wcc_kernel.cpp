@@ -2,12 +2,12 @@
 #include <stdint.h>
 #include <hls_stream.h>
 
-#define DATA_WIDTH 512
+#define INF 0xFFFFFFFF
+#define DATA_WIDTH 32
 #define PE 1
 #define BUF_PER_PE 64
-#define CACHE_SIZE 32
 
-#define BRAM_DEPTH CACHE_SIZE * BUF_PER_PE
+typedef ap_uint<DATA_WIDTH> u_data;
 
 typedef unsigned int u32;
 
@@ -18,221 +18,105 @@ struct CacheEntry {
 };
 
 struct CacheBlock {
-    CacheEntry entries[CACHE_SIZE];
+    CacheEntry entries[BUF_PER_PE];
 };
 
 void update_lru(CacheBlock cache[BUF_PER_PE], int index) {
     CacheBlock temp = cache[index];
-    loop_lru: for (int i = index; i > 0; i--) {
+    for (int i = index; i > 0; i--) {
 #pragma HLS pipeline II=1
         cache[i] = cache[i - 1];
     }
     cache[0] = temp;
 }
 
-void fetch_cache_block(CacheBlock* cache_L1, u32* global_data, int addr) {
-    int block_index = addr / CACHE_SIZE;
-    int block_start_addr = block_index * CACHE_SIZE;
+u32 read_from_cache(CacheBlock* cache, int addr) {
+    int block_index = addr / BUF_PER_PE;
+    int block_offset = addr % BUF_PER_PE;
 
-    // Burst read data into cache buffer
-    for (int i = 0; i < CACHE_SIZE; i++) {
-#pragma HLS pipeline II=1
-        u32 data = global_data[block_start_addr + i];
-        cache_L1->entries[i].data = data;
+    u32 data = cache[block_index].entries[block_offset].data;
+    update_lru(cache, block_index);
+
+    return data;
+}
+
+void fetch_cache_block(CacheBlock* cache_L1, u_data* global_data, int addr) {
+    int block_index = addr / BUF_PER_PE;
+    int block_start_addr = block_index * BUF_PER_PE;
+
+    // Unroll the inner loop to reduce loop overhead
+    for (int i = 0; i < BUF_PER_PE; i++) {
+#pragma HLS unroll
+        // Load data into cache directly without using an intermediate variable
+        cache_L1->entries[i].data = global_data[block_start_addr + i];
         cache_L1->entries[i].valid = true;
         cache_L1->entries[i].dirty = false;
     }
 }
 
-void buffer_load(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u32* global_data_a, u32* global_data_b) {
-    // Cache Labeling
-    int num_cache_blocks = BUF_PER_PE / CACHE_SIZE;
-
-    // Cache Buffer for e_src and out_degree arrays
-    u32 cache_buffer_a[CACHE_SIZE * num_cache_blocks];
-    u32 cache_buffer_b[CACHE_SIZE * num_cache_blocks];
-
-    // Cache Label Array to keep track of cached blocks
-    bool cache_label_a[num_cache_blocks];
-    bool cache_label_b[num_cache_blocks];
-
-    // Initialize cache labels to false
-    for (int i = 0; i < num_cache_blocks; i++) {
-        cache_label_a[i] = false;
-        cache_label_b[i] = false;
-    }
-
-    loop_load_outer: for (int i = 0; i < PE; i++) {
-#pragma HLS unroll//LOOP_FLATTEN
-        loop_load_inner: for (int chunk_idx = 0; chunk_idx < BUF_PER_PE / CACHE_SIZE; chunk_idx++) {
-//pipeline II=1
-            // Calculate the base address for the current cache block
-            int base_addr_a = i * BUF_PER_PE + chunk_idx * CACHE_SIZE;
-            int base_addr_b = i * BUF_PER_PE + chunk_idx * CACHE_SIZE;
-
-            // Load the current cache block from global memory to cache_buffer_a
-            if (!cache_label_a[chunk_idx]) {
-                fetch_cache_block(&cache_L1_a[i][chunk_idx * CACHE_SIZE], &global_data_a[base_addr_a], base_addr_a);
-                for (int k = 0; k < CACHE_SIZE; k++) {
+void buffer_load_compute_store(CacheBlock* cache_L1_a, CacheBlock* cache_L1_b, u_data* global_data_a, u_data* global_data_b,
+                               u32 local_out[BUF_PER_PE], int active_vertex, int start_addr) {
+    for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline II=1
-                    cache_buffer_a[chunk_idx * CACHE_SIZE + k] = cache_L1_a[i][chunk_idx * CACHE_SIZE].entries[k].data;
-                }
-                cache_label_a[chunk_idx] = true;
-            }
+        int addr_a = start_addr + j;
+        int addr_b = start_addr + j;
+        bool load_a = !cache_L1_a->entries[j].valid || cache_L1_a->entries[j].dirty;
+        bool load_b = !cache_L1_b->entries[j].valid || cache_L1_b->entries[j].dirty;
 
-            // Use data from cache_buffer_a
-            for (int k = 0; k < CACHE_SIZE; k++) {
-#pragma HLS pipeline II=1
-                int addr_a = base_addr_a + k;
-                cache_L1_a[i][addr_a % BUF_PER_PE].entries[addr_a % CACHE_SIZE].data = cache_buffer_a[chunk_idx * CACHE_SIZE + k];
-                cache_L1_a[i][addr_a % BUF_PER_PE].entries[addr_a % CACHE_SIZE].valid = true;
-                cache_L1_a[i][addr_a % BUF_PER_PE].entries[addr_a % CACHE_SIZE].dirty = false;
-            }
-
-            // Load the current cache block from global memory to cache_buffer_b
-            if (!cache_label_b[chunk_idx]) {
-                fetch_cache_block(&cache_L1_b[i][chunk_idx * CACHE_SIZE], &global_data_b[base_addr_b], base_addr_b);
-                for (int k = 0; k < CACHE_SIZE; k++) {
-#pragma HLS pipeline II=1
-                    cache_buffer_b[chunk_idx * CACHE_SIZE + k] = cache_L1_b[i][chunk_idx * CACHE_SIZE].entries[k].data;
-                }
-                cache_label_b[chunk_idx] = true;
-            }
-
-            // Use data from cache_buffer_b
-            for (int k = 0; k < CACHE_SIZE; k++) {
-#pragma HLS pipeline II=1
-                int addr_b = base_addr_b + k;
-                cache_L1_b[i][addr_b % BUF_PER_PE].entries[addr_b % CACHE_SIZE].data = cache_buffer_b[chunk_idx * CACHE_SIZE + k];
-                cache_L1_b[i][addr_b % BUF_PER_PE].entries[addr_b % CACHE_SIZE].valid = true;
-                cache_L1_b[i][addr_b % BUF_PER_PE].entries[addr_b % CACHE_SIZE].dirty = false;
-            }
+        if (load_a) {
+            fetch_cache_block(cache_L1_a, global_data_a, addr_a);
+            cache_L1_a->entries[j].dirty = false;
         }
+
+        if (load_b) {
+            fetch_cache_block(cache_L1_b, global_data_b, addr_b);
+            cache_L1_b->entries[j].dirty = false;
+        }
+
+        // WCC_kernel operates on a single element at a time, so the loop here is fine
+        u32 local_in_a = cache_L1_a->entries[j].data;
+        u32 local_in_b = cache_L1_b->entries[j].data;
+        int component_a = (local_in_a == active_vertex) ? addr_a : -1;
+        int component_b = (local_in_b == active_vertex) ? addr_b : -1;
+
+        // Determine the minimum component
+        int min_component = component_a;
+        if (component_b != -1 && (min_component == -1 || component_b < min_component)) {
+            min_component = component_b;
+        }
+
+        local_out[j] = min_component;
     }
 }
 
-void WCC_kernel(u32 local_in_a[CACHE_SIZE], u32 local_in_b[CACHE_SIZE], u32 local_out[CACHE_SIZE], int v) {
-#pragma HLS inline
-    CacheBlock cache_L1[CACHE_SIZE];
-#pragma HLS ARRAY_PARTITION variable=cache_L1 complete dim=0
-
-    for (int j = 0; j < CACHE_SIZE; j++) {
+void buffer_store(u_data* global_out, u32 local_out[BUF_PER_PE]) {
+    for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline II=1
-        cache_L1[j].entries[j].valid = false;
-        cache_L1[j].entries[j].dirty = false;
+        global_out[j] = local_out[j];
     }
-
-    u32 component_buffer[CACHE_SIZE];
-#pragma HLS bind_storage variable=component_buffer type=RAM_1WNR impl=bram
-#pragma HLS ARRAY_PARTITION variable=component_buffer complete dim=0
-
-    for (int j = 0; j < CACHE_SIZE; j++) {
-        // Initialize component_buffer with node IDs
-        component_buffer[j] = local_in_a[j];
-    }
-
-    // Perform WCC computation for the current group
-    for (int iter = 0; iter < v; iter++) {
-        for (int j = 0; j < CACHE_SIZE; j += 2) {
-            u32 src1 = local_in_a[j];
-            u32 dst1 = local_in_b[j];
-            if (component_buffer[src1] < component_buffer[dst1]) {
-                component_buffer[dst1] = component_buffer[src1];
-            }
-
-            u32 src2 = local_in_a[j + 1];
-            u32 dst2 = local_in_b[j + 1];
-            if (component_buffer[src2] < component_buffer[dst2]) {
-                component_buffer[dst2] = component_buffer[src2];
-            }
-        }
-    }
-
-    for (int j = 0; j < CACHE_SIZE; j++) {
-        local_out[j] = component_buffer[j];
-    }
-}
-
-void buffer_compute(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], int v) {
-    u32 local_in_a[PE][BUF_PER_PE];
-#pragma HLS ARRAY_PARTITION variable=local_in_a complete dim=1
-    u32 local_in_b[PE][BUF_PER_PE];
-#pragma HLS ARRAY_PARTITION variable=local_in_b complete dim=1
-    // Use BRAM for component_buffer
-    u32 component_buffer[BRAM_DEPTH];
-#pragma HLS bind_storage variable=component_buffer type=RAM_1WNR impl=bram
-
-//#pragma HLS ARRAY_PARTITION variable=component_buffer complete dim=0
-
-    // Load data from cache_L2 into local_in_a and local_in_b for the current group
-    for (int i = 0; i < PE; i++) {
-#pragma HLS LOOP_FLATTEN
-        for (int chunk_idx = 0; chunk_idx < BUF_PER_PE / CACHE_SIZE; chunk_idx++) {
-            int base_idx = chunk_idx * CACHE_SIZE;
-
-            // Load a chunk of data from cache_L1_a and cache_L1_b to local_in_a and local_in_b
-            for (int k = 0; k < CACHE_SIZE; k++) {
-#pragma HLS unroll
-                int idx = base_idx + k;
-                if (idx < BUF_PER_PE) {
-                    local_in_a[i][idx] = cache_L1_a[i][chunk_idx].entries[k].data;
-                    local_in_b[i][idx] = cache_L1_b[i][chunk_idx].entries[k].data;
-                }
-            }
-        }
-    }
-
-    // Perform computation for the current group using WCC_kernel
-    for (int pe_idx = 0; pe_idx < PE; pe_idx++) {
-#pragma HLS unroll//LOOP_FLATTEN
-        for (int chunk_idx = 0; chunk_idx < BUF_PER_PE / CACHE_SIZE; chunk_idx++) {
-            int start_idx = chunk_idx * CACHE_SIZE;
-            int end_idx = start_idx + CACHE_SIZE;
-
-            // Adjust end_idx to avoid out-of-bounds access
-            if (end_idx > BUF_PER_PE) {
-                end_idx = BUF_PER_PE;
-            }
-
-            WCC_kernel(&local_in_a[pe_idx][start_idx], &local_in_b[pe_idx][start_idx], local_out[pe_idx], v);
-        }
-    }
-}
-
-void buffer_store(u32* global_out, u32 local_out[PE][BUF_PER_PE]) {
-loop_store_outer: for (int i = 0; i < PE; i++) {
-#pragma HLS unroll
-loop_store_inner: for (int j = 0; j < BUF_PER_PE; j++) {
-#pragma HLS pipeline II=1
-        int addr = i * BUF_PER_PE + j;
-        u32 temp = local_out[i][j];
-        global_out[addr] = temp;
-    }
-}
 }
 
 extern "C" {
-    void wcc_kernel_0(u32* e_src, u32* out_degree, u32* out_r, int size, int vertices) {
-#pragma HLS INTERFACE m_axi port=e_src offset=slave bundle=gmem num_write_outstanding=128 max_write_burst_length=64 num_read_outstanding=128 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port=out_degree offset=slave bundle=gmem num_write_outstanding=128 max_write_burst_length=64 num_read_outstanding=128 max_read_burst_length=64
-#pragma HLS INTERFACE m_axi port=out_r offset=slave bundle=gmem num_write_outstanding=128 max_write_burst_length=64 num_read_outstanding=128 max_read_burst_length=64
+    void wcc_kernel_0(u_data* e_src, u_data* e_dst, u_data* out_r, int size, int vertices, u32 src_vertex) {
+        CacheBlock cache_L1_a[PE];
+        CacheBlock cache_L1_b[PE];
+        u32 local_out[PE][BUF_PER_PE];
 
         int v = vertices;
+        int active_vertex = src_vertex;
+        for (int i = 0; i < size / (PE * BUF_PER_PE); i++) {
+            int start_addr = i * PE * BUF_PER_PE;
 
-        CacheBlock cache_L1_a[PE][BUF_PER_PE];
-#pragma HLS ARRAY_PARTITION variable=cache_L1_a complete dim=1
-        CacheBlock cache_L1_b[PE][BUF_PER_PE];
-#pragma HLS ARRAY_PARTITION variable=cache_L1_b complete dim=1
+            for (int pe = 0; pe < PE; pe++) {
+#pragma HLS UNROLL 
+                buffer_load_compute_store(&cache_L1_a[pe], &cache_L1_b[pe], &e_src[start_addr + pe * BUF_PER_PE],
+                                           &e_dst[start_addr + pe * BUF_PER_PE], local_out[pe], active_vertex, start_addr);
+            }
 
-        u32 local_out[PE][BUF_PER_PE];
-#pragma HLS ARRAY_PARTITION variable=local_out complete dim=1
-
-        // Make sure 'size' is a multiple of BUF_PER_PE for proper loop iterations
-
-loop_start: for (int i = 0; i < (size / BUF_PER_PE) + 1; i++) {
-            buffer_load(cache_L1_a, cache_L1_b, &e_src[i], &out_degree[i]);
-            buffer_compute(cache_L1_a, cache_L1_b, local_out, v);
-            buffer_store(&out_r[i], local_out);
+            for (int pe = 0; pe < PE; pe++) {
+#pragma HLS PIPELINE II=1 
+                buffer_store(&out_r[start_addr + pe * BUF_PER_PE], local_out[pe]);
+            }
         }
     }
 }
