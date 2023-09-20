@@ -1,11 +1,12 @@
 #include <ap_int.h>
 #include <stdint.h>
 #include <hls_stream.h>
+#include <stdbool.h>
 
 #define INF 0xFFFFFFFF
 #define DATA_WIDTH 32
-#define PE 1
-#define BUF_PER_PE 64
+#define PE 4 // Number of PEs
+#define BUF_PER_PE 64 // buffer size 
 
 typedef ap_uint<DATA_WIDTH> u_data;
 
@@ -54,50 +55,53 @@ void fetch_cache_block(CacheBlock* cache_L1, u_data* global_data, int addr) {
     }
 }
 
-void buffer_load_compute_store(CacheBlock* cache_L1_a, CacheBlock* cache_L1_b, u_data* global_data_a, u_data* global_data_b,
-                               u32 local_out[BUF_PER_PE], int active_vertex, int start_addr) {
-    for (int j = 0; j < BUF_PER_PE; j++) {
+void sssp_kernel(CacheBlock* cache_L1_a, CacheBlock* cache_L1_b, u_data* global_data_a, u_data* global_data_b,
+                 u_data* out_r, int size, int vertices, u32 src_vertex, int pe_id) {
+    // Divide the workload among PEs
+    int elements_per_pe = size / PE;
+    int start_index = pe_id * elements_per_pe;
+    int end_index = (pe_id == (PE - 1)) ? size : start_index + elements_per_pe;
+
+    // Initialize distances with INF
+    u32 distances[BUF_PER_PE];
+    for (int i = 0; i < BUF_PER_PE; i++) {
+        distances[i] = INF;
+    }
+
+    distances[src_vertex] = 0;
+
+    for (int i = 0; i < vertices; i++) {
+        for (int j = start_index; j < end_index; j++) {
 #pragma HLS pipeline II=1
-        int addr_a = start_addr + j;
-        int addr_b = start_addr + j;
-        bool load_a = !cache_L1_a->entries[j].valid || cache_L1_a->entries[j].dirty;
-        bool load_b = !cache_L1_b->entries[j].valid || cache_L1_b->entries[j].dirty;
+            int addr_a = j;
+            int addr_b = j;
+            bool load_a = !cache_L1_a->entries[addr_a].valid || cache_L1_a->entries[addr_a].dirty;
+            bool load_b = !cache_L1_b->entries[addr_b].valid || cache_L1_b->entries[addr_b].dirty;
 
-        if (load_a) {
-            fetch_cache_block(cache_L1_a, global_data_a, addr_a);
-            cache_L1_a->entries[j].dirty = false;
-        }
+            if (load_a) {
+                fetch_cache_block(cache_L1_a, global_data_a, addr_a);
+                cache_L1_a->entries[addr_a].dirty = false;
+            }
 
-        if (load_b) {
-            fetch_cache_block(cache_L1_b, global_data_b, addr_b);
-            cache_L1_b->entries[j].dirty = false;
-        }
+            if (load_b) {
+                fetch_cache_block(cache_L1_b, global_data_b, addr_b);
+                cache_L1_b->entries[addr_b].dirty = false;
+            }
 
-        // SSSP_kernel operates on a single element at a time, so the loop here is fine
-        u32 local_in_a = cache_L1_a->entries[j].data;
-        u32 local_in_b = cache_L1_b->entries[j].data;
-        int depth = (local_in_a == active_vertex) ? 0 : INF;
+            u32 local_in_a = cache_L1_a->entries[addr_a].data;
+            u32 local_in_b = cache_L1_b->entries[addr_b].data;
+            u32 new_distance = distances[local_in_a] + 1;
 
-        while (true) {
-#pragma HLS LOOP_FLATTEN
-            int target = local_in_b;
-            int r = depth;
-            int n = depth + 1;
-            if (n < r) {
-                depth = n;
-            } else {
-                break;
+            if (new_distance < distances[local_in_b]) {
+                distances[local_in_b] = new_distance;
             }
         }
-
-        local_out[j] = depth;
     }
-}
 
-void buffer_store(u_data* global_out, u32 local_out[BUF_PER_PE]) {
-    for (int j = 0; j < BUF_PER_PE; j++) {
+    // Store the computed distances back to global memory
+    for (int j = start_index; j < end_index; j++) {
 #pragma HLS pipeline II=1
-        global_out[j] = local_out[j];
+        out_r[j] = distances[j];
     }
 }
 
@@ -105,24 +109,10 @@ extern "C" {
     void sssp_kernel_0(u_data* e_src, u_data* e_dst, u_data* out_r, int size, int vertices, u32 src_vertex) {
         CacheBlock cache_L1_a[PE];
         CacheBlock cache_L1_b[PE];
-        u32 local_out[PE][BUF_PER_PE];
 
-        int v = vertices;
-        int active_vertex = src_vertex;
-        for (int i = 0; i < size / (PE * BUF_PER_PE); i++) {
-            int start_addr = i * PE * BUF_PER_PE;
-
-            for (int pe = 0; pe < PE; pe++) {
-#pragma HLS UNROLL 
-                buffer_load_compute_store(&cache_L1_a[pe], &cache_L1_b[pe], &e_src[start_addr + pe * BUF_PER_PE],
-                                           &e_dst[start_addr + pe * BUF_PER_PE], local_out[pe], active_vertex, start_addr);
-            }
-
-            for (int pe = 0; pe < PE; pe++) {
-#pragma HLS PIPELINE II=1 
-                buffer_store(&out_r[start_addr + pe * BUF_PER_PE], local_out[pe]);
-            }
+        for (int pe_id = 0; pe_id < PE; pe_id++) {
+#pragma HLS UNROLL
+            sssp_kernel(cache_L1_a, cache_L1_b, e_src, e_dst, out_r, size, vertices, src_vertex, pe_id);
         }
     }
 }
-

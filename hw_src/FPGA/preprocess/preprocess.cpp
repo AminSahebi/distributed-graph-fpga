@@ -60,108 +60,108 @@ int get_partition_id_with_hash(VertexId vertex, int partitions) {
 
 
 void renumber(std::string filename, std::string output, VertexId num_vertices, int edge_type, int partitions) {
-    std::vector<struct pair> vertices(num_vertices);
-    for (VertexId i = 0; i < num_vertices; ++i) {
-        vertices[i].id = i;
-        vertices[i].in_degree = 0;
-        vertices[i].out_degree = 0;
-    }
+	std::vector<struct pair> vertices(num_vertices);
+	for (VertexId i = 0; i < num_vertices; ++i) {
+		vertices[i].id = i;
+		vertices[i].in_degree = 0;
+		vertices[i].out_degree = 0;
+	}
 
-    int parallelism = std::thread::hardware_concurrency();
+	int parallelism = std::thread::hardware_concurrency();
 
-    int edge_unit;
-    EdgeId edges;
-    switch (edge_type) {
-        case 0:
-            edge_unit = sizeof(VertexId) * 2;
-            edges = file_size(filename) / edge_unit;
-            break;
-        case 1:
-            edge_unit = sizeof(VertexId) * 2 + sizeof(Weight);
-            edges = file_size(filename) / edge_unit;
-            break;
-        default:
-            fprintf(stderr, "edge type (%d) is not supported.\n", edge_type);
-            exit(-1);
-    }
+	int edge_unit;
+	EdgeId edges;
+	switch (edge_type) {
+		case 0:
+			edge_unit = sizeof(VertexId) * 2;
+			edges = file_size(filename) / edge_unit;
+			break;
+		case 1:
+			edge_unit = sizeof(VertexId) * 2 + sizeof(Weight);
+			edges = file_size(filename) / edge_unit;
+			break;
+		default:
+			fprintf(stderr, "edge type (%d) is not supported.\n", edge_type);
+			exit(-1);
+	}
 
-    char **buffers = new char *[parallelism * 2];
-    bool *occupied = new bool[parallelism * 2];
-    for (int i = 0; i < parallelism * 2; i++) {
-        buffers[i] = (char *)memalign(PAGESIZE, IOSIZE);
-        occupied[i] = false;
-    }
+	char **buffers = new char *[parallelism * 2];
+	bool *occupied = new bool[parallelism * 2];
+	for (int i = 0; i < parallelism * 2; i++) {
+		buffers[i] = (char *)memalign(PAGESIZE, IOSIZE);
+		occupied[i] = false;
+	}
 
-    Queue<std::tuple<int, long>> tasks(parallelism);
-    std::vector<std::thread> threads;
-    for (int ti = 0; ti < parallelism; ti++) {
-        threads.emplace_back([&]() {
-            VertexId source, target;
-            while (true) {
-                int cursor;
-                long bytes;
-                std::tie(cursor, bytes) = tasks.pop();
-                if (cursor == -1)
-                    break;
-                char *buffer = buffers[cursor];
-                for (long pos = 0; pos < bytes; pos += edge_unit) {
-                    source = *(VertexId *)(buffer + pos);
-                    target = *(VertexId *)(buffer + pos + sizeof(VertexId));
-                    if (source == target) {
-                        // Skip dangling edges (self-loops)
-                        continue;
-                    }
-                    write_add(&vertices[target].in_degree, (uint32_t)1);
-                    write_add(&vertices[source].out_degree, (uint32_t)1);
-                }
-                occupied[cursor] = false;
-            }
-        });
-    }
+	Queue<std::tuple<int, long>> tasks(parallelism);
+	std::vector<std::thread> threads;
+	for (int ti = 0; ti < parallelism; ti++) {
+		threads.emplace_back([&]() {
+				VertexId source, target;
+				while (true) {
+				int cursor;
+				long bytes;
+				std::tie(cursor, bytes) = tasks.pop();
+				if (cursor == -1)
+				break;
+				char *buffer = buffers[cursor];
+				for (long pos = 0; pos < bytes; pos += edge_unit) {
+				source = *(VertexId *)(buffer + pos);
+				target = *(VertexId *)(buffer + pos + sizeof(VertexId));
+				if (source == target) {
+				// Skip dangling edges (self-loops)
+				continue;
+				}
+				write_add(&vertices[target].in_degree, (uint32_t)1);
+				write_add(&vertices[source].out_degree, (uint32_t)1);
+				}
+				occupied[cursor] = false;
+				}
+		});
+	}
 
-    int fin = open(filename.c_str(), O_RDONLY);
-    if (fin == -1)
-        printf("%s\n", strerror(errno));
-    assert(fin != -1);
-    int cursor = 0;
-    long total_bytes = file_size(filename);
-    uint64_t read_bytes = 0;
-    while (true) {
-        long bytes = read(fin, buffers[cursor], IOSIZE);
-        assert(bytes != -1);
-        if (bytes == 0)
-            break;
-        occupied[cursor] = true;
-        tasks.push(std::make_tuple(cursor, bytes));
-        read_bytes += bytes;
-        printf("progress: %.2f%%\r", 100. * read_bytes / total_bytes);
-        fflush(stdout);
-        while (occupied[cursor]) {
-            cursor = (cursor + 1) % (parallelism * 2);
-        }
-    }
-    close(fin);
-    assert(read_bytes == edges * edge_unit);
+	int fin = open(filename.c_str(), O_RDONLY);
+	if (fin == -1)
+		printf("%s\n", strerror(errno));
+	assert(fin != -1);
+	int cursor = 0;
+	long total_bytes = file_size(filename);
+	uint64_t read_bytes = 0;
+	while (true) {
+		long bytes = read(fin, buffers[cursor], IOSIZE);
+		assert(bytes != -1);
+		if (bytes == 0)
+			break;
+		occupied[cursor] = true;
+		tasks.push(std::make_tuple(cursor, bytes));
+		read_bytes += bytes;
+		printf("progress: %.2f%%\r", 100. * read_bytes / total_bytes);
+		fflush(stdout);
+		while (occupied[cursor]) {
+			cursor = (cursor + 1) % (parallelism * 2);
+		}
+	}
+	close(fin);
+	assert(read_bytes == edges * edge_unit);
 
-    for (int ti = 0; ti < parallelism; ti++) {
-        tasks.push(std::make_tuple(-1, 0));
-    }
+	for (int ti = 0; ti < parallelism; ti++) {
+		tasks.push(std::make_tuple(-1, 0));
+	}
 
-    for (int ti = 0; ti < parallelism; ti++) {
-        threads[ti].join();
-    }
-    threads.clear();
-    printf("\n");
-    printf("renumbering done\n");
-    std::sort(vertices.begin(), vertices.end(),[&](struct pair left, struct pair right) {
-        return (((left.out_degree * 1.0) / (left.in_degree)) < ((right.out_degree * 1.0) / (right.in_degree)));
-    });
+	for (int ti = 0; ti < parallelism; ti++) {
+		threads[ti].join();
+	}
+	threads.clear();
+	printf("\n");
+	printf("renumbering done\n");
+	std::sort(vertices.begin(), vertices.end(),[&](struct pair left, struct pair right) {
+			return (((left.out_degree * 1.0) / (left.in_degree)) < ((right.out_degree * 1.0) / (right.in_degree)));
+			});
 
-    mapper = new VertexId[num_vertices];
+	mapper = new VertexId[num_vertices];
 #pragma omp parallel for num_threads(parallelism)
-    for (VertexId i = 0; i < num_vertices; ++i) {
-        mapper[vertices[i].id] = i;
-    }
+	for (VertexId i = 0; i < num_vertices; ++i) {
+		mapper[vertices[i].id] = i;
+	}
 	if (file_exists(output))
 		remove_directory(output);
 	create_directory(output);
@@ -384,7 +384,7 @@ void generate_edge_grid(std::string input, std::string output,
 	int cursor = 0;
 	long total_bytes = file_size(input);
 	long read_bytes = 0;
-		double start_time = get_time();
+	double start_time = get_time();
 
 	while (true) {
 		long bytes = read(fin, buffers[cursor], IOSIZE);
@@ -403,6 +403,7 @@ void generate_edge_grid(std::string input, std::string output,
 	close(fin);
 	assert(read_bytes == edges * edge_unit);
 
+	printf("it takes %.2f seconds to generate edge blocks\n", get_time() - start_time);
 	for (int ti = 0; ti < parallelism; ti++) {
 		tasks.push(std::make_tuple(-1, 0));
 	}
@@ -424,7 +425,6 @@ void generate_edge_grid(std::string input, std::string output,
 			close(fout[i][j]);
 		}
 	}
-	printf("it takes %.2f seconds to generate edge blocks\n", get_time() - start_time);
 
 	printf("edge blocks generated\n");
 
@@ -514,6 +514,7 @@ void generate_edge_grid(std::string input, std::string output,
 	fprintf(fmeta, "%d %d %ld %d %d", edge_type, vertices, edges, partitions,
 			advanced ? 1 : 0);
 	fclose(fmeta);
+
 }
 
 int main(int argc, char **argv) {
