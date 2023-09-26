@@ -52,7 +52,7 @@ void fetch_cache_block(CacheBlock* cache_L1, u_data* global_data, int addr) {
 
 	// Unroll the inner loop to reduce loop overhead
 loop_cache_block:	for (int i = 0; i < BUF_PER_PE; i++) {
-#pragma HLS LOOP_FLATTEN
+#pragma HLS pipeline II=1//LOOP_FLATTEN
 				// Load data into cache directly without using an intermediate variable
 				cache_L1->entries[i].data = global_data[block_start_addr + i];
 				cache_L1->entries[i].valid = true;
@@ -62,108 +62,110 @@ loop_cache_block:	for (int i = 0; i < BUF_PER_PE; i++) {
 
 
 void buffer_load(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u_data* global_data_a, u_data* global_data_b, int pe_id) {
-    for (int j = 0; j < BUF_PER_PE; j++) {
-        int addr_a = pe_id * BUF_PER_PE + j;
-        int addr_b = pe_id * BUF_PER_PE + j;
+	for (int j = 0; j < BUF_PER_PE; j++) {
+#pragma HLS UNROLL//pipeline II=1
+		int addr_a = pe_id * BUF_PER_PE + j;
+		int addr_b = pe_id * BUF_PER_PE + j;
 
-        if (!cache_L1_a[pe_id][j].entries[j].valid || cache_L1_a[pe_id][j].entries[j].dirty) {
-            fetch_cache_block(&cache_L1_a[pe_id][j], global_data_a, addr_a);
-            cache_L1_a[pe_id][j].entries[j].dirty = false;
-        }
+		if (!cache_L1_a[pe_id][j].entries[j].valid || cache_L1_a[pe_id][j].entries[j].dirty) {
+			fetch_cache_block(&cache_L1_a[pe_id][j], global_data_a, addr_a);
+			cache_L1_a[pe_id][j].entries[j].dirty = false;
+		}
 
-        if (!cache_L1_b[pe_id][j].entries[j].valid || cache_L1_b[pe_id][j].entries[j].dirty) {
-            fetch_cache_block(&cache_L1_b[pe_id][j], global_data_b, addr_b);
-            cache_L1_b[pe_id][j].entries[j].dirty = false;
-        }
-    }
+		if (!cache_L1_b[pe_id][j].entries[j].valid || cache_L1_b[pe_id][j].entries[j].dirty) {
+			fetch_cache_block(&cache_L1_b[pe_id][j], global_data_b, addr_b);
+			cache_L1_b[pe_id][j].entries[j].dirty = false;
+		}
+	}
 }
 
 /*
-void SSSP_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_out[BUF_PER_PE], u32 src_vertex) {
-	CacheBlock cache_L1[BUF_PER_PE];
+   void SSSP_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_out[BUF_PER_PE], u32 src_vertex) {
+   CacheBlock cache_L1[BUF_PER_PE];
 #pragma HLS ARRAY_PARTITION variable=cache_L1 complete
 
-	for (int j = 0; j < BUF_PER_PE; j++) {
+for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline II=1
-		cache_L1[j].entries[j].valid = false;
-		cache_L1[j].entries[j].dirty = false;
-	}
+cache_L1[j].entries[j].valid = false;
+cache_L1[j].entries[j].dirty = false;
+}
 
-	u32 dist_buffer[BUF_PER_PE];
+u32 dist_buffer[BUF_PER_PE];
 #pragma HLS ARRAY_PARTITION variable=dist_buffer complete
 
-	for (int j = 0; j < BUF_PER_PE; j++) {
+for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline II=1
-		dist_buffer[j] = INF;
-	}
+dist_buffer[j] = INF;
+}
 
-	for (int j = 0; j < BUF_PER_PE; j++) {
+for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline II=1
-		dist_buffer[j] = (local_in_a[j] == src_vertex) ? 0 : INF;
-	}
+dist_buffer[j] = (local_in_a[j] == src_vertex) ? 0 : INF;
+}
 
-	for (int j = 0; j < BUF_PER_PE; j++) {
+for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline
 #pragma HLS LOOP_FLATTEN
 
-		u32 src = local_in_a[j]; // Edge source buffer
-		u32 dst = local_in_b[j]; // Edge destination buffer
+u32 src = local_in_a[j]; // Edge source buffer
+u32 dst = local_in_b[j]; // Edge destination buffer
 
-		if (dist_buffer[src] != INF && dist_buffer[src] + 1 < dist_buffer[dst]) {
-			dist_buffer[dst] = dist_buffer[src] + 1;
-		}
-	}
+if (dist_buffer[src] != INF && dist_buffer[src] + 1 < dist_buffer[dst]) {
+dist_buffer[dst] = dist_buffer[src] + 1;
+}
+}
 
 
-	for (int j = 0; j < BUF_PER_PE; j++) {
+for (int j = 0; j < BUF_PER_PE; j++) {
 #pragma HLS pipeline II=1
-		local_out[j] = dist_buffer[j];
-	}
+local_out[j] = dist_buffer[j];
+}
 }
 */
 
 bool custom_cas(int* ptr, int expected, int desired) {
-    // Simplified CAS implementation
-    if (*ptr == expected) {
-        *ptr = desired;
-        return true;
-    }
-    return false;
+	// Simplified CAS implementation
+	if (*ptr == expected) {
+		*ptr = desired;
+		return true;
+	}
+	return false;
 }
 
 void SSSP_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_out[BUF_PER_PE], int active_vertex) {
-//    int active_vertices = v; // Initialize the number of active vertices
-    int iteration = 0; // Initialize the iteration counter
+	//    int active_vertices = v; // Initialize the number of active vertices
+	int iteration = 0; // Initialize the iteration counter
 
-    int depth[BUF_PER_PE]; // Local memory to store depths
+	int depth[BUF_PER_PE]; // Local memory to store depths
 
-    // Initialize depth array
-    for (int j = 0; j < BUF_PER_PE; j++) {
-        depth[j] = (local_in_a[j] == 0) ? 0 : INF; // Initialize depths
-    }
+	// Initialize depth array
+	for (int j = 0; j < BUF_PER_PE; j++) {
+		depth[j] = (local_in_a[j] == 0) ? 0 : INF; // Initialize depths
+	}
 
-    // Main loop
-    while (active_vertex != 0) {
+	// Main loop
+	while (active_vertex != 0) {
 
-        active_vertex = 0; // Reset the active_vertices count
+		active_vertex = 0; // Reset the active_vertices count
 
-        // Loop over the edges and update depths
-        for (int j = 0; j < BUF_PER_PE; j++) {
-            int target = local_in_b[j];
-            int r = depth[target];
-            int n = depth[local_in_a[j]] + 1; // Assuming e.weight is always 1
-            if (n < r) {
-                if (custom_cas(&depth[target], r, n)) {
-                    active_vertex++; // Increment active_vertices count
-                }
-            }
-        }
-    }
+		// Loop over the edges and update depths
+		for (int j = 0; j < BUF_PER_PE; j++) {
+#pragma HLS pipeline II=1
+			int target = local_in_b[j];
+			int r = depth[target];
+			int n = depth[local_in_a[j]] + 1; // Assuming e.weight is always 1
+			if (n < r) {
+				if (custom_cas(&depth[target], r, n)) {
+					active_vertex++; // Increment active_vertices count
+				}
+			}
+		}
+	}
 
-    // Write computed depths to local_out
-    for (int j = 0; j < BUF_PER_PE; j++) {
-        local_out[j] = depth[j];
-    }
+	// Write computed depths to local_out
+	for (int j = 0; j < BUF_PER_PE; j++) {
+		local_out[j] = depth[j];
+	}
 }
 
 
@@ -198,20 +200,20 @@ loop_store_inner:	for (int j = 0; j < BUF_PER_PE; j++) {
 }
 
 void sssp_kernel_0(u_data* e_src, u_data* e_dst, u_data* out_r, int size, int vertices, u32 active_vertex) {
-    CacheBlock cache_L1_a[PE][BUF_PER_PE];
-    CacheBlock cache_L1_b[PE][BUF_PER_PE];
-    u32 local_out[PE][BUF_PER_PE];
+	CacheBlock cache_L1_a[PE][BUF_PER_PE];
+//#pragma HLS ARRAY_PARTITION variable=cache_L1_a complete dim=1
+	CacheBlock cache_L1_b[PE][BUF_PER_PE];
+//#pragma HLS ARRAY_PARTITION variable=cache_L1_b complete dim=1
+	u32 local_out[PE][BUF_PER_PE];
+//#pragma HLS ARRAY_PARTITION variable=local_out complete dim=1
 
-#pragma HLS loop_tripcount min=1 max=PE
-    for (int i = 0; i < size / (BUF_PER_PE * PE) + 1; i++) {
-#pragma HLS unroll factor=4
-       for (int pe_id = 0; pe_id < PE; pe_id++) {
-            buffer_load(cache_L1_a, cache_L1_b, &e_src[i * BUF_PER_PE * PE], &e_dst[i * BUF_PER_PE * PE], pe_id);
-            buffer_compute(cache_L1_a, cache_L1_b, local_out, active_vertex);
-        }
-
-        for (int pe_id = 0; pe_id < PE; pe_id++) {
-            buffer_store(&out_r[i * BUF_PER_PE * PE], local_out);
-        }
-    }
+	for (int i = 0; i < size / (BUF_PER_PE * PE) + 1; i++) {
+//#pragma HLS loop_tripcount min=1 max=PE
+		for (int pe_id = 0; pe_id < PE; pe_id++) {
+#pragma HLS unroll //factor=4
+			buffer_load(cache_L1_a, cache_L1_b, &e_src[i * BUF_PER_PE * PE], &e_dst[i * BUF_PER_PE * PE], pe_id);
+			buffer_compute(cache_L1_a, cache_L1_b, local_out, active_vertex);
+			buffer_store(&out_r[i * BUF_PER_PE * PE], local_out);
+		}
+	}
 }
