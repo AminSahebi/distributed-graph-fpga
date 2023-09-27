@@ -208,7 +208,7 @@ void sssp_kernel_0(u_data* e_src, u_data* e_dst, u_data* out_r, int size, int ve
 //#pragma HLS ARRAY_PARTITION variable=local_out complete dim=1
 
 	for (int i = 0; i < size / (BUF_PER_PE * PE) + 1; i++) {
-//#pragma HLS loop_tripcount min=1 max=PE
+#pragma HLS loop_tripcount min=1 max=PE
 		for (int pe_id = 0; pe_id < PE; pe_id++) {
 #pragma HLS unroll //factor=4
 			buffer_load(cache_L1_a, cache_L1_b, &e_src[i * BUF_PER_PE * PE], &e_dst[i * BUF_PER_PE * PE], pe_id);
