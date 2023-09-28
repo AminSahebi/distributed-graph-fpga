@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                wcc_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          6b02cf3c-9d10-25f4-c398-9f67898474e7
+   UUID (xclbin):          be917958-2012-fc1b-7044-1fb3e4c44a54
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -39,7 +39,7 @@ Scalable Clocks
    Name:      DATA_CLK
    Index:     0
    Type:      DATA
-   Frequency: 300 MHz
+   Frequency: 279 MHz
 
    Name:      KERNEL_CLK
    Index:     1
@@ -64,7 +64,7 @@ System Clocks
    Type:           SCALABLE 
    Default Freq:   300 MHz
    Requested Freq: 300 MHz
-   Achieved Freq:  300 MHz
+   Achieved Freq:  279.2 MHz
 
    Name:           ss_ucs_aclk_kernel_01 
    Type:           SCALABLE 
@@ -141,7 +141,7 @@ Kernel: wcc_kernel_0
 
 Definition
 ----------
-   Signature: wcc_kernel_0 (void* e_src, void* e_dst, void* out_r, unsigned int size, unsigned int vertices, unsigned int src_vertex)
+   Signature: wcc_kernel_0 (void* e_src, void* e_dst, void* out_r, unsigned int size, unsigned int vertices)
 
 Ports
 -----
@@ -153,7 +153,7 @@ Ports
 
    Port:          S_AXI_CONTROL
    Mode:          slave
-   Range (bytes): 0x4C
+   Range (bytes): 0x44
    Data Width:    32 bits
    Port Type:     addressable
 
@@ -186,11 +186,6 @@ Instance:        wcc_kernel_0_1
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          src_vertex
-   Register Offset:   0x44
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
 --------------------------
 Instance:        wcc_kernel_0_2
    Base Address: 0xc20000
@@ -217,11 +212,6 @@ Instance:        wcc_kernel_0_2
 
    Argument:          vertices
    Register Offset:   0x3C
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
-   Argument:          src_vertex
-   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -254,11 +244,6 @@ Instance:        wcc_kernel_0_3
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          src_vertex
-   Register Offset:   0x44
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
 --------------------------
 Instance:        wcc_kernel_0_4
    Base Address: 0xc40000
@@ -285,11 +270,6 @@ Instance:        wcc_kernel_0_4
 
    Argument:          vertices
    Register Offset:   0x3C
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
-   Argument:          src_vertex
-   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -322,11 +302,6 @@ Instance:        wcc_kernel_0_5
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          src_vertex
-   Register Offset:   0x44
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
 --------------------------
 Instance:        wcc_kernel_0_6
    Base Address: 0x1020000
@@ -353,11 +328,6 @@ Instance:        wcc_kernel_0_6
 
    Argument:          vertices
    Register Offset:   0x3C
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
-   Argument:          src_vertex
-   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -390,11 +360,6 @@ Instance:        wcc_kernel_0_7
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          src_vertex
-   Register Offset:   0x44
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
 --------------------------
 Instance:        wcc_kernel_0_8
    Base Address: 0x1040000
@@ -421,11 +386,6 @@ Instance:        wcc_kernel_0_8
 
    Argument:          vertices
    Register Offset:   0x3C
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
-   Argument:          src_vertex
-   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -458,11 +418,6 @@ Instance:        wcc_kernel_0_9
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          src_vertex
-   Register Offset:   0x44
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
 --------------------------
 Instance:        wcc_kernel_0_10
    Base Address: 0x1410000
@@ -489,11 +444,6 @@ Instance:        wcc_kernel_0_10
 
    Argument:          vertices
    Register Offset:   0x3C
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
-   Argument:          src_vertex
-   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -526,11 +476,6 @@ Instance:        wcc_kernel_0_11
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          src_vertex
-   Register Offset:   0x44
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
 --------------------------
 Instance:        wcc_kernel_0_12
    Base Address: 0x1430000
@@ -557,11 +502,6 @@ Instance:        wcc_kernel_0_12
 
    Argument:          vertices
    Register Offset:   0x3C
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
-   Argument:          src_vertex
-   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
@@ -594,11 +534,6 @@ Instance:        wcc_kernel_0_13
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          src_vertex
-   Register Offset:   0x44
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
 --------------------------
 Instance:        wcc_kernel_0_14
    Base Address: 0x1820000
@@ -628,11 +563,6 @@ Instance:        wcc_kernel_0_14
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 
-   Argument:          src_vertex
-   Register Offset:   0x44
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
 --------------------------
 Instance:        wcc_kernel_0_15
    Base Address: 0x1830000
@@ -659,11 +589,6 @@ Instance:        wcc_kernel_0_15
 
    Argument:          vertices
    Register Offset:   0x3C
-   Port:              S_AXI_CONTROL
-   Memory:            <not applicable>
-
-   Argument:          src_vertex
-   Register Offset:   0x44
    Port:              S_AXI_CONTROL
    Memory:            <not applicable>
 ==============================================================================
