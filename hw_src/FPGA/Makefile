@@ -81,7 +81,7 @@ WCC_XCLBIN := wcc_kernel_0.xclbin
 # wcc
 WCC_XOS := wcc_kernel_0.xo
 WCC_XCLBIN := wcc_kernel_0.xclbin
-WCC_CONN := --config $(CURRENT_DIR)/kernel/wcc/connectivity_wcc.cfg #--kernel_frequency=350
+WCC_CONN := --config $(CURRENT_DIR)/kernel/wcc/connectivity_wcc.cfg --kernel_frequency=250
 wcc_hw_srcdir:= $(CURRENT_DIR)/kernel/wcc
 wcc_hw_bindir:= $(CURRENT_DIR)/kernel/wcc/hardware
 wcc_hw_src:= $(wildcard ${wcc_hw_srcdir}/wcc_kernel.cpp)

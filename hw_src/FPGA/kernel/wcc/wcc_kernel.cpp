@@ -4,7 +4,7 @@
 
 #define INF 0xFFFFFFFF
 #define DATA_WIDTH 32
-#define PE 1
+#define PE 4
 #define BUF_PER_PE 64
 
 typedef ap_uint<DATA_WIDTH> u_data;
@@ -62,7 +62,7 @@ loop_cache_block:	for (int i = 0; i < BUF_PER_PE; i++) {
 
 void buffer_load(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u_data* global_data_a, u_data* global_data_b, int pe_id) {
 	for (int j = 0; j < BUF_PER_PE; j++) {
-#pragma HLS UNROLL//pipeline II=1
+#pragma HLS pipeline II=1
 		int addr_a = pe_id * BUF_PER_PE + j;
 		int addr_b = pe_id * BUF_PER_PE + j;
 
@@ -79,24 +79,21 @@ void buffer_load(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE
 }
 
 
-// Data structure to represent connected components
-u32 connected_components[BUF_PER_PE];
-
-// Helper function to initialize components
-void initialize_components() {
+void initialize_components(u32 connected_components[BUF_PER_PE]) {
     for (int i = 0; i < BUF_PER_PE; i++) {
+#pragma HLS pipeline II=1
         connected_components[i] = i; // Each vertex initially belongs to its own component
     }
 }
 
-// Helper function to merge components
-void merge_components(u32 vertex_a, u32 vertex_b) {
+void merge_components(u32 connected_components[BUF_PER_PE], u32 vertex_a, u32 vertex_b) {
     u32 component_a = connected_components[vertex_a];
     u32 component_b = connected_components[vertex_b];
     
     if (component_a != component_b) {
         // Update all vertices in component_b to belong to component_a
         for (int i = 0; i < BUF_PER_PE; i++) {
+#pragma HLS pipeline II=1
             if (connected_components[i] == component_b) {
                 connected_components[i] = component_a;
             }
@@ -104,29 +101,29 @@ void merge_components(u32 vertex_a, u32 vertex_b) {
     }
 }
 
-// Modify the SSSP_kernel to perform WCC
-void WCC_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_out[BUF_PER_PE]) {
+void WCC_kernel(u32 local_in_a[BUF_PER_PE], u32 local_in_b[BUF_PER_PE], u32 local_out[BUF_PER_PE], u32 connected_components[BUF_PER_PE]) {
     for (int j = 0; j < BUF_PER_PE; j++) {
+#pragma HLS unroll//pipeline II=1
         u32 src = local_in_a[j]; // Edge source buffer
         u32 dst = local_in_b[j]; // Edge destination buffer
 
-        merge_components(src, dst); // Merge components based on edge information
+        merge_components(connected_components, src, dst); // Merge components based on edge information
     }
 
     // Write the connected component information to local_out
     for (int j = 0; j < BUF_PER_PE; j++) {
+#pragma HLS pipeline II=1
         local_out[j] = connected_components[local_in_a[j]];
     }
 }
 
-// Modify the buffer_compute function to call WCC_kernel
-void buffer_compute(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE]) {
+void buffer_compute(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u32 local_out[PE][BUF_PER_PE], u32 connected_components[BUF_PER_PE]) {
     for (int i = 0; i < PE; i++) {
-#pragma HLS LOOP_FLATTEN//unroll
-
+#pragma HLS unroll
         u32 local_in_a[BUF_PER_PE];
-        u32 local_in_b[BUF_PER_PE];
 #pragma HLS ARRAY_PARTITION variable=local_in_a complete
+
+        u32 local_in_b[BUF_PER_PE];
 #pragma HLS ARRAY_PARTITION variable=local_in_b complete
 
         for (int j = 0; j < BUF_PER_PE; j++) {
@@ -135,7 +132,7 @@ void buffer_compute(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b
             local_in_b[j] = cache_L1_b[i][j].entries[j].data;
         }
 
-        WCC_kernel(local_in_a, local_in_b, local_out[i]);
+        WCC_kernel(local_in_a, local_in_b, local_out[i], connected_components);
     }
 }
 
@@ -150,20 +147,26 @@ loop_store_inner:	for (int j = 0; j < BUF_PER_PE; j++) {
 		  }
 }
 
-void wcc_kernel_0(u_data* e_src, u_data* e_dst, u_data* out_r, int size, int vertices) {
-	CacheBlock cache_L1_a[PE][BUF_PER_PE];
-	CacheBlock cache_L1_b[PE][BUF_PER_PE];
-	u32 local_out[PE][BUF_PER_PE];
 
-    initialize_components(); // Initialize connected components
+void wcc_kernel_0(u_data* e_src, u_data* e_dst, u_data* out_r, int size, int vertices, u32 active_vertex) {
+    CacheBlock cache_L1_a[PE][BUF_PER_PE];
+#pragma HLS ARRAY_PARTITION variable=cache_L1_a complete
+   CacheBlock cache_L1_b[PE][BUF_PER_PE];
+#pragma HLS ARRAY_PARTITION variable=cache_L1_b complete
+    u32 local_out[PE][BUF_PER_PE];
+#pragma HLS ARRAY_PARTITION variable=local_out complete
 
-	for (int i = 0; i < size / (BUF_PER_PE * PE) + 1; i++) {
+    u32 connected_components[BUF_PER_PE]; // Define connected_components locally in the function
+#pragma HLS ARRAY_PARTITION variable=connected_components complete
+    initialize_components(connected_components); // Initialize connected components
+
+    for (int i = 0; i < size / (BUF_PER_PE * PE) + 1; i++) {
 #pragma HLS loop_tripcount min=1 max=PE
-		for (int pe_id = 0; pe_id < PE; pe_id++) {
-#pragma HLS unroll //factor=4
-			buffer_load(cache_L1_a, cache_L1_b, &e_src[i * BUF_PER_PE * PE], &e_dst[i * BUF_PER_PE * PE], pe_id);
-			buffer_compute(cache_L1_a, cache_L1_b, local_out);
-			buffer_store(&out_r[i * BUF_PER_PE * PE], local_out);
-		}
-	}
+        for (int pe_id = 0; pe_id < PE; pe_id++) {
+#pragma HLS unroll factor=4
+            buffer_load(cache_L1_a, cache_L1_b, &e_src[i * BUF_PER_PE * PE], &e_dst[i * BUF_PER_PE * PE], pe_id);
+            buffer_compute(cache_L1_a, cache_L1_b, local_out, connected_components);
+            buffer_store(&out_r[i * BUF_PER_PE * PE], local_out);
+        }
+    }
 }
