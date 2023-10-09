@@ -62,7 +62,7 @@ loop_cache_block:	for (int i = 0; i < BUF_PER_PE; i++) {
 
 void buffer_load(CacheBlock cache_L1_a[PE][BUF_PER_PE], CacheBlock cache_L1_b[PE][BUF_PER_PE], u_data* global_data_a, u_data* global_data_b, int pe_id) {
 	for (int j = 0; j < BUF_PER_PE; j++) {
-#pragma HLS pipeline II=1
+#pragma HLS unroll//pipeline II=1
 		int addr_a = pe_id * BUF_PER_PE + j;
 		int addr_b = pe_id * BUF_PER_PE + j;
 
@@ -163,7 +163,7 @@ void wcc_kernel_0(u_data* e_src, u_data* e_dst, u_data* out_r, int size, int ver
     for (int i = 0; i < size / (BUF_PER_PE * PE) + 1; i++) {
 #pragma HLS loop_tripcount min=1 max=PE
         for (int pe_id = 0; pe_id < PE; pe_id++) {
-#pragma HLS unroll factor=4
+#pragma HLS unroll //factor=4
             buffer_load(cache_L1_a, cache_L1_b, &e_src[i * BUF_PER_PE * PE], &e_dst[i * BUF_PER_PE * PE], pe_id);
             buffer_compute(cache_L1_a, cache_L1_b, local_out, connected_components);
             buffer_store(&out_r[i * BUF_PER_PE * PE], local_out);

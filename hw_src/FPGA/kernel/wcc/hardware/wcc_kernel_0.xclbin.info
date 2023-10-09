@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                wcc_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          f9fca66c-4324-cb09-0210-d9f70d3dbac8
+   UUID (xclbin):          16624b8b-e15f-eefa-fcef-c3b9aaba7c8f
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -39,7 +39,7 @@ Scalable Clocks
    Name:      DATA_CLK
    Index:     0
    Type:      DATA
-   Frequency: 147 MHz
+   Frequency: 189 MHz
 
    Name:      KERNEL_CLK
    Index:     1
@@ -64,7 +64,7 @@ System Clocks
    Type:           SCALABLE 
    Default Freq:   300 MHz
    Requested Freq: 250 MHz
-   Achieved Freq:  147.8 MHz
+   Achieved Freq:  189 MHz
 
    Name:           ss_ucs_aclk_kernel_01 
    Type:           SCALABLE 
