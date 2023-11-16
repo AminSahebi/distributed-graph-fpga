@@ -11,7 +11,7 @@ xclbin Information
    Kernels:                pagerank_kernel_0
    Signature:              
    Content:                Bitstream
-   UUID (xclbin):          e9ffba50-ebd6-205d-27a0-ae3e3c679856
+   UUID (xclbin):          5a08f279-2647-21cb-e444-48ae09df8e27
    UUID (IINTF):           a8880c2311a2a42b5fb76899d385acee
    Sections:               BITSTREAM, MEM_TOPOLOGY, IP_LAYOUT, CONNECTIVITY, 
                            CLOCK_FREQ_TOPOLOGY, BUILD_METADATA, 
@@ -148,7 +148,7 @@ Ports
    Port:          M_AXI_GMEM
    Mode:          master
    Range (bytes): 0xFFFFFFFF
-   Data Width:    512 bits
+   Data Width:    64 bits
    Port Type:     addressable
 
    Port:          S_AXI_CONTROL
