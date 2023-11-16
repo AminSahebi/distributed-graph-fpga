@@ -4,8 +4,8 @@
 
 #define DAMPING_FACTOR 0.85
 #define DATA_WIDTH 32
-#define PE 16
-#define BUF_PER_PE 32
+#define PE 8
+#define BUF_PER_PE 64
 
 typedef ap_uint<DATA_WIDTH> u_data;
 
