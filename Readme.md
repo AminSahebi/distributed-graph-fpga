@@ -1,5 +1,5 @@
 # Distributed Large-scale Graph Processing on FPGAs #
-This repository contains all the code to reproduce the evaluation of the work submitted and under review of FGCS journal, 
+This repository contains all the code to reproduce the evaluation of the work submitted and under review of Future Generation Computer Systems (FGCS) journal, 
 
 ## Introduction
 This work proposes an FPGA processing engine that overlaps, hides and customises all data transfers so that the FPGA accelerator is fully utilised. This engine is integrated into a framework for using FPGA clusters and is able to use an offline partitioning method to facilitate the distribution of large-scale graphs. We show how graph partitioning combined with an FPGA architecture will lead to high performance, even when the graph has Millions of vertices and Billions of edges.
