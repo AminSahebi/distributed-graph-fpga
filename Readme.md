@@ -75,6 +75,17 @@ Twitter : http://konect.cc/networks/twitter/
 
 Friendster : http://konect.cc/networks/friendster/
 
+## Related Publications
+*Sahebi, A., Barbone, M., Procaccini, M. et al. Distributed large-scale graph processing on FPGAs. J Big Data 10, 95 (2023). https://doi.org/10.1186/s40537-023-00756-x*
+
+Paper's link: https://journalofbigdata.springeropen.com/articles/10.1186/s40537-023-00756-x
+
+
+## Useful Links
+
+Host Memory Access : https://xilinx.github.io/XRT/master/html/hm.html
+Kernel Mappings : https://docs.amd.com/r/2022.1-English/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory
+Kernel Compilation : https://docs.amd.com/r/2023.1-English/Vitis-Tutorials-Hardware-Acceleration/Kernel-compilation
 
 
 ## Acknowledgement
